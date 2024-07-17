@@ -20,4 +20,14 @@ export default [
     }
   },
   pluginJs.configs.recommended,
+  {
+    files: [
+      "src/database/migrations/**/*.js",
+      "src/database/models/**/*.js",
+      "src/database/seeders/**/*.js"
+    ],
+    rules: {
+      'no-unused-vars': 'off',
+    },
+  },
 ];
