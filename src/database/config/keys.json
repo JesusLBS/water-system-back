@@ -3,14 +3,14 @@
     "username": "root",
     "password": "localPassword",
     "database": "water_system_local",
-    "host": "127.0.0.1",
+    "host": null,
     "dialect": "mysql"
   },
   "qa": {
     "username": "root",
     "password": null,
     "database": "water_system_qa",
-    "host": "127.0.0.1",
+    "host": null,
     "dialect": "mysql"
   }
 }

@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.docker
+    depends_on:
+      - db-mysql
+    container_name: water-system-back
+    environment:
+      - TZ=America/Mexico_City
+    volumes:
+      - .:/home/app
+  db-mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=localPassword
+      - TZ=America/Mexico_City
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:

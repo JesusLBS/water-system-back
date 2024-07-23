@@ -1,6 +1,6 @@
 module.exports = {
-  port: process.env.PORT || 4500,
-  nodeEnv: process.env.NODE_ENV || "qa",
+  port: process.env.NODE_PORT || 4500,
+  nodeEnv: process.env.NODE_ENV || "local",
   database: {
     dbDialect: process.env.DB_DIALECT || "mysql",
     dbUsername: process.env.DB_USERNAME,
