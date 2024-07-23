@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
   backend:
     build: .
@@ -13,6 +14,7 @@ services:
       - TZ=America/Mexico_City
     volumes:
       - .:/home/app
+
   db-mysql:
     image: mysql
     ports:
@@ -22,6 +24,18 @@ services:
       - TZ=America/Mexico_City
     volumes:
       - mysql-data:/var/lib/mysql
+
+  exec:
+    build: .
+    env_file:
+      - .env.docker
+    depends_on:
+      - db-mysql
+    entrypoint: ["sh", "-c", "yarn run ${COMMAND}"]
+    environment:
+      - TZ=America/Mexico_City
+      - COMMAND=
+      - NODE_ENV=docker
 
 volumes:
   mysql-data:
