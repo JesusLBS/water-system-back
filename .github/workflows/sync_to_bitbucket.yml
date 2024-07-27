@@ -3,8 +3,7 @@ name: Sync to Bitbucket
 on:
   push:
     branches:
-      - main
-      - '**/*'
+      - '*'
 
 jobs:
   sync:
@@ -13,23 +12,24 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
     - name: Configure Git
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
 
-    - name: Pull from Bitbucket
+    - name: Add Bitbucket remote
       env:
         BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
         BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
       run: |
         git remote add bitbucket https://$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD@bitbucket.org/jesuslbs/water-system-back.git
-        git pull bitbucket main --rebase
 
-    - name: Push to Bitbucket
+    - name: Force push to Bitbucket
       env:
         BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
         BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
       run: |
-        git push bitbucket --all
+        git push bitbucket --all --force
