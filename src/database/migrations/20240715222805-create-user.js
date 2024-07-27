@@ -31,19 +31,6 @@ module.exports = {
           as: "catRoleId",
         },
       },
-      addressId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-        references: {
-          model: {
-            tableName: "Addresses",
-          },
-          key: "id",
-          as: "addressId",
-        },
-      },
       deletedAt: {
         allowNull: true,
         type: Sequelize.DATE,

@@ -9,8 +9,8 @@ npx sequelize-cli model:generate --name Permission --attributes name:string,desc
 
 # Main models
 npx sequelize-cli model:generate --name Address --attributes address:string,city:string,country:string
-npx sequelize-cli model:generate --name User --attributes uid:string,email:string,catRoleId:integer,addressId:integer
-npx sequelize-cli model:generate --name Profile --attributes userId:integer,name:string,lastName:string,secondLastName:string,mobile:string,birthdate:date,photoUrl:text
+npx sequelize-cli model:generate --name User --attributes uid:string,email:string,catRoleId:integer
+npx sequelize-cli model:generate --name Profile --attributes userId:integer,addressId:integer,name:string,lastName:string,secondLastName:string,mobile:string,birthdate:date,photoUrl:text
 npx sequelize-cli model:generate --name UserHasPermission --attributes permissionId:integer,userId:integer
 npx sequelize-cli model:generate --name File --attributes name:string,catFileId:integer,url:text
 npx sequelize-cli model:generate --name FileOfUser --attributes fileId:integer,userId:integer

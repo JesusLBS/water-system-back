@@ -27,6 +27,16 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      addressId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+          notNull: {
+            msg: "Please enter an address",
+          },
+        },
+      },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
