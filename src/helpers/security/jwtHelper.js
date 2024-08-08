@@ -2,70 +2,67 @@ const jwt = require("jsonwebtoken");
 const CipherHelper = require("./cipherHelper");
 
 class JwtHelper {
-  #payload;
-  #jwtKey;
-  #cryptokey;
-
   constructor(payload, jwtKey, cryptokey) {
-    this.#payload = payload;
-    this.#jwtKey = jwtKey;
-    this.#cryptokey = cryptokey;
+    this.payload = payload;
+    this.jwtKey = jwtKey;
+    this.cryptokey = cryptokey;
   }
 
-  generateJWT() {
-    return new Promise((resolve, reject) => {
-      const encryptedData = this.#cipher(this.#payload).cipherData();
-      jwt.sign(
-        { data: encryptedData },
-        this.#jwtKey,
-        { expiresIn: "2h" },
-        (error, token) => {
-          if (error) {
-            return reject(error);
-          }
-          resolve(token);
-        },
-      );
-    });
+  async generateJWT() {
+    const cipherHelper = new CipherHelper(this.payload, this.cryptokey);
+    const encryptedData = cipherHelper.cipherData();
+    const token = await this.signJWT(
+      { data: encryptedData },
+      this.jwtKey,
+      "1h",
+    );
+    return token;
   }
 
-  validateJWT(apiKey) {
+  async validateJWT(token, apiKey) {
+    const data = await this.verifyJWT(token, this.jwtKey);
+    const cipherHelper = new CipherHelper(data.data, this.cryptokey);
+    const decryptedData = cipherHelper.decipherData();
+    if (decryptedData.apiKey !== apiKey) {
+      throw new Error("Invalid API key");
+    }
+    delete decryptedData.apiKey;
+    return decryptedData;
+  }
+
+  async validateRefreshJWT(token, apiKey) {
+    const {
+      payload: { data: dataDecode },
+    } = jwt.decode(token, { complete: true });
+    const cipherHelper = new CipherHelper(dataDecode, this.cryptokey);
+    const decryptedData = cipherHelper.decipherData();
+    if (decryptedData.apiKey !== apiKey) {
+      throw new Error("Invalid API key");
+    }
+    delete decryptedData.apiKey;
+    return decryptedData;
+  }
+
+  signJWT(payload, secret, expiresIn) {
     return new Promise((resolve, reject) => {
-      jwt.verify(this.#payload, this.#jwtKey, (err, data) => {
-        if (err) {
-          return reject(err.name);
+      jwt.sign(payload, secret, { expiresIn }, (error, token) => {
+        if (error) {
+          return reject(error);
         }
-        const decryptedData = this.#cipher(data.data).decipherData();
-        if (decryptedData.apiKey !== apiKey) {
-          return reject(new Error("Invalid API_KEY"));
-        }
-        delete decryptedData.apiKey;
-        resolve(decryptedData);
+        resolve(token);
       });
     });
   }
 
-  validateRefreshJWT(apiKey) {
+  verifyJWT(token, secret) {
     return new Promise((resolve, reject) => {
-      jwt.verify(this.#payload, this.#jwtKey, (err, data) => {
+      jwt.verify(token, secret, (err, data) => {
         if (err) {
           return reject(err);
         }
-        const {
-          payload: { data: dataDecode },
-        } = jwt.decode(this.#payload, { complete: true });
-        const decryptedData = this.#cipher(dataDecode).decipherData();
-        if (decryptedData.apiKey !== apiKey) {
-          return reject(new Error("Invalid API_KEY"));
-        }
-        delete decryptedData.apiKey;
-        resolve(decryptedData);
+        resolve(data);
       });
     });
-  }
-
-  #cipher(data) {
-    return new CipherHelper(data, this.#cryptokey);
   }
 }
 

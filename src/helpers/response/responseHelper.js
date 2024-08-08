@@ -1,44 +1,55 @@
+const config = require("../../config/config");
+
 class ResponseHelper {
+  static instanceCount = 0;
+  static instance;
 
-    static instanceCount = 0;
-    static instance;
+  constructor(defaultErrorMessage = "An unexpected error has occurred") {
+    if (ResponseHelper.instance) {
+      return ResponseHelper.instance;
+    }
+    ResponseHelper.instanceCount++;
+    console.log(`ResponseHelper instances: ${ResponseHelper.instanceCount}`);
+    this.defaultErrorMessage = defaultErrorMessage;
+    ResponseHelper.instance = this;
+  }
 
-    constructor(defaultErrorMessage = 'An unexpected error has occurred') {
-        if (ResponseHelper.instance) {
-            return ResponseHelper.instance;
-        }
-        ResponseHelper.instanceCount++;
-        console.log(`ResponseHelper instances: ${ResponseHelper.instanceCount}`);
-        this.defaultErrorMessage = defaultErrorMessage;
-        ResponseHelper.instance = this;
+  success(res, data = {}, status = 200) {
+    const response = {
+      ok: true,
+      status,
+      message: "Success request",
+      data: { ...data },
+    };
+    return res.status(status).json(response);
+  }
+
+  error(res, error, status = 500) {
+    console.log("=====================");
+    console.log("======  Error  ======");
+    console.log("===================== \n");
+    console.error(error);
+
+    if (error.statusCode) {
+      status = error.statusCode;
+      error = error.message;
     }
 
-    success(res, data = {}, status = 200) {
-        const response = {
-            ok: true,
-            status,
-            message: "Success request",
-            data: { ...data },
-        };
-        return res.status(status).json(response);
+    const response = {
+      ok: false,
+      status,
+      message: this.defaultErrorMessage,
+    };
+
+    if (config.nodeEnv !== "production") {
+      response.errors = error;
     }
 
-    error(res, error, status = 500) {
-        console.log('=====================');
-        console.log('======   Error ======');
-        console.log('===================== \n');
-        console.error(error);
-        return res.status(status).json({
-            ok: false,
-            status,
-            message: this.defaultErrorMessage,
-            errors: error
-        });
-    }
+    return res.status(status).json(response);
+  }
 
-    destroy(res) {
-        return res.status(204).send();
-    }
-
+  destroy(res) {
+    return res.status(204).send();
+  }
 }
 module.exports = ResponseHelper;

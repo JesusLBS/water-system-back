@@ -11,7 +11,7 @@ module.exports = {
   dialect: database.dbDialect,
   define: {
     timestamps: true,
-    underscored: true,
+    underscored: false,
   },
   timezone: "-06:00",
 };

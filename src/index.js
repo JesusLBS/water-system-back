@@ -1,3 +1,5 @@
+const { notFound } = require("./middlewares/errors/404.middleware");
+const { apiKeyMiddleware } = require("./middlewares/auth/apikey.middleware");
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -10,7 +12,11 @@ app.use(express.json());
 // define a root route
 app.get("/", (req, res) => res.send("Hello World"));
 
-const routerModule = require('./modules/routes/routes');
+app.use("/", apiKeyMiddleware);
+
+const routerModule = require("./modules/routes/routes");
 routerModule(app);
+
+app.use("*", notFound);
 
 module.exports = app;
