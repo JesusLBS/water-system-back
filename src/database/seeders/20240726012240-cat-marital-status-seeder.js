@@ -1,25 +1,29 @@
 "use strict";
 
+const now = new Date();
+
+const data = [
+  {
+    name: "single",
+    description: "Soltero/a",
+    createdAt: now,
+    updatedAt: now,
+  },
+  {
+    name: "married",
+    description: "Casado/a",
+    createdAt: now,
+    updatedAt: now,
+  },
+];
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-     */
+    await queryInterface.bulkInsert("CatMaritalStatuses", data, {});
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete("CatMaritalStatuses", null, {});
   },
 };

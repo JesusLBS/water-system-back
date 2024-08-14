@@ -4,8 +4,8 @@ const now = new Date();
 
 const data = [
   {
-    id: 1,
     uid: "Alop2OSLPPWeXWd1EYHNydkEg492",
+    name: "jesus",
     email: "chichohdzjesus@gmail.com",
     catRoleId: 1, //root
     createdAt: now,
