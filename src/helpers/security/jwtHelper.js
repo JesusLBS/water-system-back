@@ -19,8 +19,8 @@ class JwtHelper {
     return token;
   }
 
-  async validateJWT(token, apiKey) {
-    const data = await this.verifyJWT(token, this.jwtKey);
+  async validateJWT(apiKey) {
+    const data = await this.verifyJWT(this.payload, this.jwtKey);
     const cipherHelper = new CipherHelper(data.data, this.cryptokey);
     const decryptedData = cipherHelper.decipherData();
     if (decryptedData.apiKey !== apiKey) {
@@ -30,10 +30,10 @@ class JwtHelper {
     return decryptedData;
   }
 
-  async validateRefreshJWT(token, apiKey) {
+  async validateRefreshJWT(apiKey) {
     const {
       payload: { data: dataDecode },
-    } = jwt.decode(token, { complete: true });
+    } = jwt.decode(this.payload, { complete: true });
     const cipherHelper = new CipherHelper(dataDecode, this.cryptokey);
     const decryptedData = cipherHelper.decipherData();
     if (decryptedData.apiKey !== apiKey) {
@@ -47,7 +47,11 @@ class JwtHelper {
     return new Promise((resolve, reject) => {
       jwt.sign(payload, secret, { expiresIn }, (error, token) => {
         if (error) {
-          return reject(error);
+          console.error(error);
+          return reject({
+            statusCode: 400,
+            message: "An unexpected error has occurred",
+          });
         }
         resolve(token);
       });
@@ -56,9 +60,10 @@ class JwtHelper {
 
   verifyJWT(token, secret) {
     return new Promise((resolve, reject) => {
-      jwt.verify(token, secret, (err, data) => {
-        if (err) {
-          return reject(err);
+      jwt.verify(token, secret, (error, data) => {
+        if (error) {
+          console.error(error);
+          return reject({ statusCode: 401, message: "Invalid token" });
         }
         resolve(data);
       });

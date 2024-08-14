@@ -4,7 +4,7 @@ class CreateUserUseCase {
   }
 
   async execute(userData) {
-    return await this.userRepository.createUser(userData);
+    return await this.userRepository.store(userData);
   }
 }
 
