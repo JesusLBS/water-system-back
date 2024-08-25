@@ -16,8 +16,8 @@ class AuthController {
   login = async (req, res) => {
     try {
       const { uid } = req.body;
-      const result = await this.authenticateUserUseCase.execute(uid);
-      return this.#response.success(res, result);
+      const data = await this.authenticateUserUseCase.execute(uid);
+      return this.#response.success({ res, data });
     } catch (error) {
       return this.#response.error(res, error);
     }
