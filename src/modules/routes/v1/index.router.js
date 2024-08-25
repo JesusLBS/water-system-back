@@ -1,11 +1,13 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const authModule = require("../../auth");
-const userModule = require("../../users");
+const authModule = require('../../auth');
+const userModule = require('../../users');
+const socioModule = require('../../socios');
 
-// Módulo de autenticación
+//Modules
 authModule(router);
 userModule(router);
+socioModule(router);
 
 module.exports = router;
