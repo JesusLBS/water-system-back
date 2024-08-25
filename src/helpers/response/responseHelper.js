@@ -9,12 +9,11 @@ class ResponseHelper {
       return ResponseHelper.instance;
     }
     ResponseHelper.instanceCount++;
-    console.log(`ResponseHelper instances: ${ResponseHelper.instanceCount}`);
     this.defaultErrorMessage = defaultErrorMessage;
     ResponseHelper.instance = this;
   }
 
-  success(res, data = {}, status = 200) {
+  success({ res, status = 200, data = {} }) {
     const response = {
       ok: true,
       status,

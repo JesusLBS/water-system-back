@@ -1,3 +1,4 @@
+const moment = require("moment");
 class TimeUtil {
   constructor(locale = "es-MX") {
     this.locale = locale;
@@ -18,6 +19,10 @@ class TimeUtil {
       .format(new Date(date))
       .replace(",", "")
       .toUpperCase();
+  }
+
+  getAge(date) {
+    return moment().diff(date, "years", false);
   }
 }
 
