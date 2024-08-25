@@ -17,6 +17,13 @@ const data = [
     createdAt: now,
     updatedAt: now,
   },
+  {
+    id: 3,
+    role: "socio",
+    description: "Socio",
+    createdAt: now,
+    updatedAt: now,
+  },
 ];
 
 /** @type {import('sequelize-cli').Migration} */
