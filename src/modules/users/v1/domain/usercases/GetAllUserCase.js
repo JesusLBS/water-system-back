@@ -58,8 +58,11 @@ class GetAllUserUseCase {
 
     const where = this.buildWhereClause(search, defaultOptions.withTrashed);
 
-    const rows = await this.userRepository.index({ defaultOptions, where });
-    const count = await this.userRepository.countAll();
+    const { count, rows } = await this.userRepository.index({
+      defaultOptions,
+      where,
+    });
+    const countAll = await this.userRepository.countAll(where);
 
     lastPage = Math.ceil(count / defaultOptions.limit);
 
@@ -68,10 +71,13 @@ class GetAllUserUseCase {
     }
 
     const rowsUpdate = rows.map((value) => this.mapUserEntity(value));
+    const headers = this.headersTable();
+
     return {
+      countAll,
       count,
       rows: rowsUpdate,
-      headers: [],
+      headers,
       page: defaultOptions.page,
       lastPage,
       hasMore,
@@ -86,6 +92,7 @@ class GetAllUserUseCase {
         { email: { [Op.like]: `%${search}%` } },
         { "$CatRole.description$": { [Op.like]: `%${search}%` } },
       ],
+      catRoleId: { [Op.ne]: 3 }, //socio
     };
     if (!withTrashed) {
       where.deletedAt = { [Op.ne]: null };
@@ -109,6 +116,20 @@ class GetAllUserUseCase {
       CatRole.description,
       ...Object.values(transformedDates),
     );
+  }
+
+  headersTable() {
+    const headers = [
+      { header: "#", key: "uid" },
+      { header: "Nombre", key: "name" },
+      { header: "Email", key: "email" },
+      { header: "Rol", key: "role" },
+      { header: "Estatus", key: "deletedAt" },
+      { header: "Creado", key: "createdAt" },
+      { header: "Actualizado", key: "updatedAt" },
+      { header: "Acciones", key: "actions" },
+    ];
+    return headers;
   }
 }
 

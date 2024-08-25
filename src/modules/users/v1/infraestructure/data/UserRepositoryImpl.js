@@ -3,12 +3,16 @@ const db = require("../../../../../database/models/index");
 
 class UserRepositoryImpl extends UserRepository {
   async index({ defaultOptions, where }) {
-    let { limit, page, sort, direction, withTrashed } = defaultOptions;
+    const { limit, page, sort, direction, withTrashed } = defaultOptions;
 
-    const rows = await db.User.scope("raw").findAll({
+    const { count, rows } = await db.User.scope("raw").findAndCountAll({
       where,
       include: [
-        { model: db.CatRole, attributes: ["description"], required: true },
+        {
+          model: db.CatRole,
+          attributes: ["description"],
+          required: true,
+        },
       ],
       order: [[sort, direction]],
       offset: (page - 1) * limit,
@@ -16,63 +20,75 @@ class UserRepositoryImpl extends UserRepository {
       limit,
     });
 
-    return rows;
+    return { count, rows };
   }
 
-  countAll = async () => {
-    return await db.User.scope("raw").count({ paranoid: false });
+  countAll = async (where) => {
+    return await db.User.scope("raw").count({
+      where,
+      include: [
+        {
+          model: db.CatRole,
+          attributes: ["id"],
+          required: true,
+        },
+      ],
+      paranoid: false,
+    });
   };
 
-  async store(body) {
-    const user = await db.User.create(body);
-    if (!user) return null;
-    return true;
+  async store(body, options = {}) {
+    const transaction = options.transaction;
+    const row = await db.User.create(body, { transaction });
+    if (!row) return null;
+    return row;
   }
 
   async edit(uid) {
-    const user = await db.User.scope("raw").findOne({ where: { uid } });
-    if (!user) return null;
-    return user;
+    const row = await db.User.scope("raw").findOne({ where: { uid } });
+    if (!row) return null;
+    return row;
   }
 
   async update(body, options = {}) {
     const transaction = options.transaction;
-    const uid = body.uid;
-    const user = await db.User.findOne({ where: { uid }, transaction });
-    if (!user) return null;
-    await user.update(body, { transaction });
-    return true;
+    const { uid, ...rest } = body;
+    const row = await db.User.findOne({ where: { uid }, transaction });
+    if (!row) return null;
+
+    await row.update({ ...rest }, { transaction });
+    return row;
   }
 
   async destroy(uid, options = {}) {
     const transaction = options.transaction;
-    const user = await db.User.findOne({
+    const row = await db.User.findOne({
       where: { uid },
       paranoid: false,
       transaction,
     });
-    if (!user) return null;
-    await user.destroy({ force: true, transaction });
+    if (!row) return null;
+    await row.destroy({ force: true, transaction });
     return true;
   }
 
   async deactivate(uid, options = {}) {
     const transaction = options.transaction;
-    const user = await db.User.findOne({ where: { uid }, transaction });
-    if (!user) return null;
-    await user.destroy({ transaction });
+    const row = await db.User.findOne({ where: { uid }, transaction });
+    if (!row) return null;
+    await row.destroy({ transaction });
     return true;
   }
 
   async activate(uid, options = {}) {
     const transaction = options.transaction;
-    const user = await db.User.findOne({
+    const row = await db.User.findOne({
       where: { uid },
       paranoid: false,
       transaction,
     });
-    if (!user) return null;
-    await user.restore({ transaction });
+    if (!row) return null;
+    await row.restore({ transaction });
     return true;
   }
 }

@@ -21,9 +21,9 @@ class UserController {
         limit: req.params.limit,
         withTrashed: req.params.withTrashed,
       };
-      const result = await this.userUseCases.getAllUser.execute(params);
+      const data = await this.userUseCases.getAllUser.execute(params);
 
-      return this.#response.success(res, result);
+      return this.#response.success({ res, data });
     } catch (error) {
       return this.#response.error(res, error);
     }
@@ -36,8 +36,8 @@ class UserController {
         catRoleId,
         ...rest,
       };
-      const result = await this.userUseCases.createUser.execute(body);
-      return this.#response.success(res, result, 201);
+      await this.userUseCases.createUser.execute(body);
+      return this.#response.success({ res, status: 201 });
     } catch (error) {
       return this.#response.error(res, error);
     }
@@ -47,9 +47,9 @@ class UserController {
     try {
       const uid = req.params.dataId;
 
-      const result = await this.userUseCases.showUser.execute(uid);
+      const data = await this.userUseCases.showUser.execute(uid);
 
-      return this.#response.success(res, result);
+      return this.#response.success({ res, data });
     } catch (error) {
       return this.#response.error(res, error);
     }
@@ -65,7 +65,7 @@ class UserController {
 
       await this.userUseCases.updateUser.execute(body);
 
-      return this.#response.success(res);
+      return this.#response.success({ res });
     } catch (error) {
       return this.#response.error(res, error);
     }
@@ -74,8 +74,8 @@ class UserController {
   deactivate = async (req, res) => {
     try {
       const uid = req.body.dataId;
-      const result = await this.userUseCases.deactivateUser.execute(uid);
-      return this.#response.success(res, result);
+      const data = await this.userUseCases.deactivateUser.execute(uid);
+      return this.#response.success({ res, data });
     } catch (error) {
       return this.#response.error(res, error);
     }
@@ -84,8 +84,8 @@ class UserController {
   activate = async (req, res) => {
     try {
       const uid = req.body.dataId;
-      const result = await this.userUseCases.activateUser.execute(uid);
-      return this.#response.success(res, result);
+      const data = await this.userUseCases.activateUser.execute(uid);
+      return this.#response.success({ res, data });
     } catch (error) {
       return this.#response.error(res, error);
     }
