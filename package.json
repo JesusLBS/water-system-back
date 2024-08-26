@@ -9,6 +9,8 @@
     "dev": "node --watch --env-file .env.dev app.js",
     "docker": "node --watch --env-file .env.docker app.js",
     "start": "node --env-file .env app.js",
+    "manage:module": "node scripts/manage-module.js create",
+    "manage:module:rollback": "node scripts/manage-module.js rollback",
     "db:create": "echo $NODE_ENV && npx sequelize-cli db:create --config src/database/config/keys.js --env $NODE_ENV",
     "db:drop": "echo $NODE_ENV && npx sequelize-cli db:drop --config src/database/config/keys.js --env $NODE_ENV",
     "migrate": "echo $NODE_ENV && npx sequelize-cli db:migrate --config src/database/config/keys.js --env $NODE_ENV",
@@ -54,6 +56,7 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.7",
     "npm-run-all2": "^6.2.2",
+    "pluralize": "^8.0.0",
     "prettier": "^3.3.2",
     "sequelize-cli": "^6.6.2"
   },
