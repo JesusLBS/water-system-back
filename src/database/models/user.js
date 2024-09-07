@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -9,8 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.belongsTo(models.CatRole, { foreignKey: "catRoleId" });
-      User.hasOne(models.Profile, { foreignKey: "userId" });
+      User.belongsTo(models.CatRole, { foreignKey: 'catRoleId' });
+      User.hasOne(models.Profile, { foreignKey: 'userId' });
+      User.hasOne(models.Socio, { foreignKey: 'userId' });
     }
   }
   User.init(
@@ -21,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true,
           notNull: {
-            msg: "Please enter your user uid",
+            msg: 'Please enter your user uid',
           },
         },
       },
@@ -30,11 +31,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Please enter a name",
+            msg: 'Please enter a name',
           },
           len: {
             args: [1, 50],
-            msg: "Name must be between 1 and 50 characters long",
+            msg: 'Name must be between 1 and 50 characters long',
           },
         },
       },
@@ -45,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
           isEmail: true,
           notNull: {
-            msg: "Please enter your email",
+            msg: 'Please enter your email',
           },
         },
       },
@@ -55,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true,
           notNull: {
-            msg: "Please enter a role",
+            msg: 'Please enter a role',
           },
         },
       },
@@ -63,18 +64,18 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       paranoid: true,
-      modelName: "User",
-      tableName: "Users",
+      modelName: 'User',
+      tableName: 'Users',
       scopes: {
         raw: {
           raw: true,
           nest: true,
         },
         desc: {
-          order: [["createdAt", "desc"]],
+          order: [['createdAt', 'desc']],
         },
       },
-    },
+    }
   );
   return User;
 };

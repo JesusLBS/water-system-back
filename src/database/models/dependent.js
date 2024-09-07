@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Dependent extends Model {
@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Dependent.belongsTo(models.Socio, { foreignKey: 'socioId' });
     }
   }
 
@@ -21,10 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true,
           notNull: {
-            msg: "Please enter a socio ID",
+            msg: 'Please enter a socio ID',
           },
           isInt: {
-            msg: "Socio ID must be an integer",
+            msg: 'Socio ID must be an integer',
           },
         },
       },
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true,
           notNull: {
-            msg: "Please specify if the person is the family head",
+            msg: 'Please specify if the person is the family head',
           },
         },
         defaultValue: 0,
@@ -44,11 +44,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Please enter a name",
+            msg: 'Please enter a name',
           },
           len: {
             args: [1, 50],
-            msg: "Name must be between 1 and 50 characters long",
+            msg: 'Name must be between 1 and 50 characters long',
           },
         },
       },
@@ -57,11 +57,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Please enter a last name",
+            msg: 'Please enter a last name',
           },
           len: {
             args: [1, 50],
-            msg: "Last name must be between 1 and 50 characters long",
+            msg: 'Last name must be between 1 and 50 characters long',
           },
         },
       },
@@ -70,11 +70,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Please enter a last name",
+            msg: 'Please enter a last name',
           },
           len: {
             args: [1, 50],
-            msg: "Last name must be between 1 and 50 characters long",
+            msg: 'Last name must be between 1 and 50 characters long',
           },
         },
       },
@@ -83,11 +83,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Please enter a mobile number",
+            msg: 'Please enter a mobile number',
           },
           len: {
             args: [10, 15],
-            msg: "Mobile number must be between 10 and 15 characters long",
+            msg: 'Mobile number must be between 10 and 15 characters long',
           },
         },
       },
@@ -96,10 +96,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Please enter a birthdate",
+            msg: 'Please enter a birthdate',
           },
           isDate: {
-            msg: "Birthdate must be a valid date",
+            msg: 'Birthdate must be a valid date',
           },
         },
       },
@@ -109,10 +109,10 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true,
           notNull: {
-            msg: "Please enter a relationship ID",
+            msg: 'Please enter a relationship ID',
           },
           isInt: {
-            msg: "Relationship ID must be an integer",
+            msg: 'Relationship ID must be an integer',
           },
         },
       },
@@ -120,18 +120,18 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       paranoid: true,
-      modelName: "Dependent",
-      tableName: "Dependents",
+      modelName: 'Dependent',
+      tableName: 'Dependents',
       scopes: {
         raw: {
           raw: true,
           nest: true,
         },
         desc: {
-          order: [["createdAt", "desc"]],
+          order: [['createdAt', 'desc']],
         },
       },
-    },
+    }
   );
 
   return Dependent;

@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Socio extends Model {
     /**
@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Socio.belongsTo(models.User, { foreignKey: "userId" });
+      Socio.belongsTo(models.User, { foreignKey: 'userId' });
+      Socio.hasMany(models.Dependent, { foreignKey: 'socioId' });
     }
   }
   Socio.init(
@@ -19,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true,
           notNull: {
-            msg: "Please enter a user ID",
+            msg: 'Please enter a user ID',
           },
           isInt: {
-            msg: "User ID must be an integer",
+            msg: 'User ID must be an integer',
           },
         },
       },
@@ -34,18 +35,18 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       paranoid: true,
-      modelName: "Socio",
-      tableName: "Socios",
+      modelName: 'Socio',
+      tableName: 'Socios',
       scopes: {
         raw: {
           raw: true,
           nest: true,
         },
         desc: {
-          order: [["createdAt", "desc"]],
+          order: [['createdAt', 'desc']],
         },
       },
-    },
+    }
   );
   return Socio;
 };
