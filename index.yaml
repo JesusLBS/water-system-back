@@ -1,0 +1,332 @@
+openapi: "3.0.1"
+info:
+  title: Water System Back
+  version: "1.0.0"
+  description: "API para autenticación, administración de usuarios, dashboard y catálogos. Paths diseñados para agrupar operaciones sobre el mismo recurso."
+
+servers:
+  - url: "{{base_url}}/v1"
+    description: "Use environment variable {{base_url}}"
+
+tags:
+  - name: auth
+    description: "Endpoints de autenticación"
+  - name: admin/users
+    description: "Operaciones sobre usuarios desde administración"
+  - name: dashboard/profile
+    description: "Dashboard / perfil"
+
+paths:
+  # AUTH
+  /auth/login:
+    post:
+      summary: "Login"
+      tags: [auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: "Auth response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+      security:
+        - apiKeyAuth: []
+
+  /auth/logout:
+    post:
+      summary: "Logout"
+      tags: [auth]
+      responses:
+        "204":
+          description: "Logged out"
+      security:
+        - bearerAuth: []
+          apiKeyAuth: []
+
+
+  # ADMIN / USERS
+  /admin/users:
+    get:
+      summary: "List users (paginated, filterable)"
+      tags: [admin/users]
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: "Search by name or email"
+      responses:
+        "200":
+          description: "User list"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserListResponse"
+      security:
+        - bearerAuth: []
+          apiKeyAuth: []
+
+    post:
+      summary: "Create user"
+      tags: [admin/users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreate"
+      responses:
+        "201":
+          description: "User created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      security:
+        - bearerAuth: []
+          apiKeyAuth: []
+
+  /admin/users/{user_id}:
+    parameters:
+      - $ref: "#/components/parameters/userId"
+    get:
+      summary: "Get user by id"
+      tags: [admin/users]
+      responses:
+        "200":
+          description: "User object"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      security:
+        - bearerAuth: []
+          apiKeyAuth: []
+
+    patch:
+      summary: "Update user (partial)"
+      tags: [admin/users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdate"
+      responses:
+        "200":
+          description: "User updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      security:
+        - bearerAuth: []
+          apiKeyAuth: []
+
+    delete:
+      summary: "Delete user (permanent)"
+      tags: [admin/users]
+      responses:
+        "204":
+          description: "User permanently deleted"
+      security:
+        - bearerAuth: []
+          apiKeyAuth: []
+
+  /admin/users/{user_id}/activate:
+    post:
+      summary: "Activate a user"
+      tags: [admin/users]
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      responses:
+        "200":
+          description: "User activated successfully"
+      security:
+        - bearerAuth: []
+          apiKeyAuth: []
+
+  /admin/users/{user_id}/deactivate:
+    post:
+      summary: "Deactivate a user"
+      tags: [admin/users]
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      responses:
+        "200":
+          description: "User deactivated successfully"
+      security:
+        - bearerAuth: []
+          apiKeyAuth: []
+
+  # DASHBOARD / PROFILE
+  /dashboard/profile:
+    get:
+      summary: "Get my profile"
+      tags: [dashboard/profile]
+      responses:
+        "200":
+          description: "Authenticated user profile"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      security:
+        - bearerAuth: []
+          apiKeyAuth: []
+
+    patch:
+      summary: "Edit my profile (partial)"
+      tags: [dashboard/profile]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdate"
+      responses:
+        "200":
+          description: "Profile updated"
+      security:
+        - bearerAuth: []
+          apiKeyAuth: []
+
+    post:
+      summary: "Update my password"
+      tags: [dashboard/profile]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PasswordUpdate"
+      responses:
+        "200":
+          description: "Password updated"
+      security:
+        - bearerAuth: []
+          apiKeyAuth: []
+
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: "x-api-key header required"
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "Bearer token in Authorization header"
+
+  parameters:
+    userId:
+      name: user_id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: "Numeric user ID"
+
+  schemas:
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        active:
+          type: boolean
+
+    UserCreate:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - first_name
+        - last_name
+        - email
+        - password
+
+    UserUpdate:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        active:
+          type: boolean
+        action:
+          type: string
+          enum: ["activate", "deactivate"]
+          description: "Optional action alternative to 'active' flag"
+
+    UserListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+        meta:
+          type: object
+
+    PasswordUpdate:
+      type: object
+      properties:
+        current_password:
+          type: string
+        new_password:
+          type: string
+      required:
+        - current_password
+        - new_password

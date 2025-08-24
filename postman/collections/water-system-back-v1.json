@@ -1,0 +1,1180 @@
+{
+	"info": {
+		"_postman_id": "ff99b6c9-79e5-496d-8c26-988c4faa612f",
+		"name": "water-system-back-v1",
+		"description": "API para autenticación, administración de usuarios, dashboard y catálogos. Paths diseñados para agrupar operaciones sobre el mismo recurso.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19932658-ff99b6c9-79e5-496d-8c26-988c4faa612f"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"item": [
+						{
+							"name": "Login",
+							"id": "fd0591c4-d625-4e91-976d-5874f6e4d5ea",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "x-api-key",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"id\",\n  \"password\": \"Lorem\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "8d0ae619-64c2-4a04-bace-555c8220f71c",
+									"name": "Auth response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "x-api-key",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"id\",\n  \"password\": \"Lorem\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"uuid": "af3c31c7-6a3c-4d0b-87af-79e092999dba"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"token\": \"eiusmod anim eu\"\n}"
+								}
+							]
+						}
+					],
+					"id": "a366d54d-b878-4184-8d0c-376c1d7f9517"
+				},
+				{
+					"name": "logout",
+					"item": [
+						{
+							"name": "Logout",
+							"id": "890a79df-7545-4c1b-9470-8b378efda4da",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/logout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "11a2a456-5d9f-4ec0-a9b4-6ef8dad919c6",
+									"name": "Logged out",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/auth/logout",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"logout"
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					],
+					"id": "213bdd83-419d-465c-9efe-93d1f7fd59c9"
+				}
+			],
+			"id": "f4163121-018c-4974-9a73-6a94c78c3eb9"
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "{user_id}",
+							"item": [
+								{
+									"name": "activate",
+									"item": [
+										{
+											"name": "Activate a user",
+											"id": "bd71c890-5294-487b-a259-00ec8266455d",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{bearerToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/admin/users/:user_id/activate",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"users",
+														":user_id",
+														"activate"
+													],
+													"variable": [
+														{
+															"key": "user_id",
+															"value": "3635768",
+															"description": "(Required) Numeric user ID"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"id": "795f7e8f-fc7b-41ab-910c-4da4830a6d6d",
+													"name": "User activated successfully",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"description": "Added as a part of security scheme: bearer",
+																"key": "Authorization",
+																"value": "Bearer <token>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/admin/users/:user_id/activate",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"admin",
+																"users",
+																":user_id",
+																"activate"
+															],
+															"variable": [
+																{
+																	"key": "user_id"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": [],
+													"body": null
+												}
+											]
+										}
+									],
+									"id": "029e797b-c7f8-4c93-be0f-615daf7ffd1a"
+								},
+								{
+									"name": "deactivate",
+									"item": [
+										{
+											"name": "Deactivate a user",
+											"id": "0d9fd17c-f9ae-4f16-af3f-081041b80a99",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{bearerToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/admin/users/:user_id/deactivate",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"users",
+														":user_id",
+														"deactivate"
+													],
+													"variable": [
+														{
+															"key": "user_id",
+															"value": "3635768",
+															"description": "(Required) Numeric user ID"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"id": "1b011c7d-3dde-4067-912f-58b0ae04fe20",
+													"name": "User deactivated successfully",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"description": "Added as a part of security scheme: bearer",
+																"key": "Authorization",
+																"value": "Bearer <token>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/admin/users/:user_id/deactivate",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"admin",
+																"users",
+																":user_id",
+																"deactivate"
+															],
+															"variable": [
+																{
+																	"key": "user_id"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": [],
+													"body": null
+												}
+											]
+										}
+									],
+									"id": "ef44cde8-643b-4e5e-bf6f-ec84648f7fe1"
+								},
+								{
+									"name": "Get user by id",
+									"id": "8fe3a2a7-4bda-47ac-a87d-d0554315710a",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/admin/users/:user_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"users",
+												":user_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "3635768",
+													"description": "(Required) Numeric user ID"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "d600f61e-9f11-499a-a2f2-87bd7be47cb2",
+											"name": "User object",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/admin/users/:user_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"users",
+														":user_id"
+													],
+													"variable": [
+														{
+															"key": "user_id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"uuid": "7ea394e0-4d2b-4b20-ab71-15340bfdc416"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"id\": 8193545,\n  \"first_name\": \"commodo incididunt sunt\",\n  \"last_name\": \"qui sunt deserunt ullamco\",\n  \"email\": \"ut\",\n  \"active\": false\n}"
+										}
+									]
+								},
+								{
+									"name": "Update user (partial)",
+									"id": "903ddbea-caaf-41e3-9b6f-2691ce43e3ca",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"first_name\": \"laborum\",\n  \"last_name\": \"aliquip i\",\n  \"email\": \"id pariatur\",\n  \"active\": false,\n  \"action\": \"deactivate\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/users/:user_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"users",
+												":user_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "3635768",
+													"description": "(Required) Numeric user ID"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "1e976510-e95c-4ccb-aeea-9c02b8b7f840",
+											"name": "User updated",
+											"originalRequest": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"first_name\": \"laborum\",\n  \"last_name\": \"aliquip i\",\n  \"email\": \"id pariatur\",\n  \"active\": false,\n  \"action\": \"deactivate\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/admin/users/:user_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"users",
+														":user_id"
+													],
+													"variable": [
+														{
+															"key": "user_id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"uuid": "4e56048a-9e77-46dc-9ab0-fbe2a3ef2826"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"id\": 8193545,\n  \"first_name\": \"commodo incididunt sunt\",\n  \"last_name\": \"qui sunt deserunt ullamco\",\n  \"email\": \"ut\",\n  \"active\": false\n}"
+										}
+									]
+								},
+								{
+									"name": "Delete user (permanent)",
+									"id": "36316687-0198-4850-b67a-695cff9eace9",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/admin/users/:user_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"users",
+												":user_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "3635768",
+													"description": "(Required) Numeric user ID"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "f686e712-8ce8-4139-ae06-0fb0c4627ea1",
+											"name": "User permanently deleted",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/admin/users/:user_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"users",
+														":user_id"
+													],
+													"variable": [
+														{
+															"key": "user_id"
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": null
+										}
+									]
+								}
+							],
+							"id": "103283a5-3988-44bf-9633-9abbffd86553"
+						},
+						{
+							"name": "List users (paginated, filterable)",
+							"id": "7423c80e-2bf3-430c-b6be-b8b06a93ff4d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/admin/users?page=1&per_page=20&search=deser",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "20"
+										},
+										{
+											"key": "search",
+											"value": "deser",
+											"description": "Search by name or email"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "78d8bbd3-0f99-4b17-9dff-a1e77ead136b",
+									"name": "User list",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/admin/users?page=1&per_page=20&search=deser",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"users"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "20"
+												},
+												{
+													"description": "Search by name or email",
+													"key": "search",
+													"value": "deser"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"uuid": "6f572b4b-3ef8-4eb8-ac4f-760e41f4a314"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"data\": [\n    {\n      \"id\": -39080915,\n      \"first_name\": \"Ut cillum amet ad\",\n      \"last_name\": \"ad velit quis commodo\",\n      \"email\": \"velit\",\n      \"active\": false\n    },\n    {\n      \"id\": -51099811,\n      \"first_name\": \"nulla commodo ad\",\n      \"last_name\": \"ullamco culpa\",\n      \"email\": \"adipis\",\n      \"active\": false\n    }\n  ],\n  \"meta\": {}\n}"
+								}
+							]
+						},
+						{
+							"name": "Create user",
+							"id": "0af86b8b-ef45-4e64-b346-df284b21f51a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"first_name\": \"ea ullamco sit ut\",\n  \"last_name\": \"Lorem u\",\n  \"email\": \"Lorem officia adipisicing eu anim\",\n  \"password\": \"Lorem est\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "200cb041-5ff9-4977-a8b9-5ca57d30bf04",
+									"name": "User created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"first_name\": \"ea ullamco sit ut\",\n  \"last_name\": \"Lorem u\",\n  \"email\": \"Lorem officia adipisicing eu anim\",\n  \"password\": \"Lorem est\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"users"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"uuid": "3c029cfc-5bbc-4265-9636-39aeb14df95b"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": 8193545,\n  \"first_name\": \"commodo incididunt sunt\",\n  \"last_name\": \"qui sunt deserunt ullamco\",\n  \"email\": \"ut\",\n  \"active\": false\n}"
+								}
+							]
+						}
+					],
+					"id": "880f2e0c-c2c4-4c5d-a3f7-6eb5aaeda090"
+				}
+			],
+			"id": "cc25bad4-c5ce-4a6d-a8c0-579b791522f6"
+		},
+		{
+			"name": "dashboard",
+			"item": [
+				{
+					"name": "profile",
+					"item": [
+						{
+							"name": "Get my profile",
+							"id": "7b6d2dcb-abaa-4193-9de4-08f5542c1a88",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/dashboard/profile",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"dashboard",
+										"profile"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "c262e218-1c66-40ad-8973-d4b612639aa6",
+									"name": "Authenticated user profile",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/dashboard/profile",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"dashboard",
+												"profile"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"uuid": "7a2bcff0-5c10-47d0-b104-a32762422ceb"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": 8193545,\n  \"first_name\": \"commodo incididunt sunt\",\n  \"last_name\": \"qui sunt deserunt ullamco\",\n  \"email\": \"ut\",\n  \"active\": false\n}"
+								}
+							]
+						},
+						{
+							"name": "Edit my profile (partial)",
+							"id": "b878bcbd-91b4-4de5-9893-f60a4068bf8e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"first_name\": \"laborum\",\n  \"last_name\": \"aliquip i\",\n  \"email\": \"id pariatur\",\n  \"active\": false,\n  \"action\": \"deactivate\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/dashboard/profile",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"dashboard",
+										"profile"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "d2919e8e-80cd-4475-97b0-5adaec5e2873",
+									"name": "Profile updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"first_name\": \"laborum\",\n  \"last_name\": \"aliquip i\",\n  \"email\": \"id pariatur\",\n  \"active\": false,\n  \"action\": \"deactivate\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/dashboard/profile",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"dashboard",
+												"profile"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "Update my password",
+							"id": "ae2122e6-ccc2-4e37-8869-908f2596b9cb",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"current_password\": \"nostrud\",\n  \"new_password\": \"velit nostrud\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/dashboard/profile",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"dashboard",
+										"profile"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "e5ffa946-9da9-42d6-91fb-9d2112ebeab2",
+									"name": "Password updated",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"current_password\": \"nostrud\",\n  \"new_password\": \"velit nostrud\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/dashboard/profile",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"dashboard",
+												"profile"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					],
+					"id": "8adc9ccf-3d3a-4faa-9a2d-8003af60159b"
+				}
+			],
+			"id": "96ac18c4-3d01-4b2b-b4be-a10b7d3a2cce"
+		}
+	],
+	"variable": [
+		{
+			"id": "e1b1ce26-0348-4208-9081-fadd6b5e3e8e",
+			"key": "baseUrl",
+			"value": "{{base_url}}/v1"
+		}
+	]
+}
