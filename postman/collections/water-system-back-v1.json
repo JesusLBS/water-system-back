@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "ff99b6c9-79e5-496d-8c26-988c4faa612f",
+		"_postman_id": "d7060214-0fb5-4383-a421-16bcb2601790",
 		"name": "water-system-back-v1",
-		"description": "API para autenticación, administración de usuarios, dashboard y catálogos. Paths diseñados para agrupar operaciones sobre el mismo recurso.",
+		"description": "API para autenticación, administración de usuarios, dashboard y catálogos. Paths diseñados para agrupar operaciones sobre el mismo recurso etc.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "19932658-ff99b6c9-79e5-496d-8c26-988c4faa612f"
+		"_uid": "19932658-d7060214-0fb5-4383-a421-16bcb2601790"
 	},
 	"item": [
 		{
@@ -15,7 +15,7 @@
 					"item": [
 						{
 							"name": "Login",
-							"id": "fd0591c4-d625-4e91-976d-5874f6e4d5ea",
+							"id": "648fc9dc-0fa2-4cc6-ad42-5f523353adc6",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -53,7 +53,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"id\",\n  \"password\": \"Lorem\"\n}",
+									"raw": "{\n  \"email\": \"string\",\n  \"password\": \"string\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -74,7 +74,7 @@
 							},
 							"response": [
 								{
-									"id": "8d0ae619-64c2-4a04-bace-555c8220f71c",
+									"id": "f07f7b05-1b7c-403f-8ee7-191e7b0da910",
 									"name": "Auth response",
 									"originalRequest": {
 										"method": "POST",
@@ -95,7 +95,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"email\": \"id\",\n  \"password\": \"Lorem\"\n}",
+											"raw": "{\n  \"email\": \"string\",\n  \"password\": \"string\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -120,24 +120,23 @@
 									"header": [
 										{
 											"key": "Content-Type",
-											"value": "application/json",
-											"uuid": "af3c31c7-6a3c-4d0b-87af-79e092999dba"
+											"value": "application/json"
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"token\": \"eiusmod anim eu\"\n}"
+									"body": "{\n  \"token\": \"string\"\n}"
 								}
 							]
 						}
 					],
-					"id": "a366d54d-b878-4184-8d0c-376c1d7f9517"
+					"id": "6124ea17-48b3-48fb-ae75-1bbbc41fba30"
 				},
 				{
 					"name": "logout",
 					"item": [
 						{
 							"name": "Logout",
-							"id": "890a79df-7545-4c1b-9470-8b378efda4da",
+							"id": "1459bd6a-de2d-4d62-92d4-ea7ee37f7dd0",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -167,7 +166,7 @@
 							},
 							"response": [
 								{
-									"id": "11a2a456-5d9f-4ec0-a9b4-6ef8dad919c6",
+									"id": "4765359e-4470-4946-9106-fc49018bac1e",
 									"name": "Logged out",
 									"originalRequest": {
 										"method": "POST",
@@ -193,16 +192,15 @@
 									"code": 204,
 									"_postman_previewlanguage": "text",
 									"header": [],
-									"cookie": [],
-									"body": null
+									"cookie": []
 								}
 							]
 						}
 					],
-					"id": "213bdd83-419d-465c-9efe-93d1f7fd59c9"
+					"id": "24752039-3d3e-4f7b-a222-30706fca58bc"
 				}
 			],
-			"id": "f4163121-018c-4974-9a73-6a94c78c3eb9"
+			"id": "086f2ae2-96d2-46f7-bd41-acf13de2560b"
 		},
 		{
 			"name": "admin",
@@ -218,7 +216,7 @@
 									"item": [
 										{
 											"name": "Activate a user",
-											"id": "bd71c890-5294-487b-a259-00ec8266455d",
+											"id": "e979f055-25ed-4f59-a60c-cb4b549471aa",
 											"protocolProfileBehavior": {
 												"disableBodyPruning": true
 											},
@@ -249,7 +247,7 @@
 													"variable": [
 														{
 															"key": "user_id",
-															"value": "3635768",
+															"value": "6463",
 															"description": "(Required) Numeric user ID"
 														}
 													]
@@ -257,7 +255,7 @@
 											},
 											"response": [
 												{
-													"id": "795f7e8f-fc7b-41ab-910c-4da4830a6d6d",
+													"id": "29fce914-062c-4e50-a878-16395ac86c14",
 													"name": "User activated successfully",
 													"originalRequest": {
 														"method": "POST",
@@ -290,20 +288,19 @@
 													"code": 200,
 													"_postman_previewlanguage": "text",
 													"header": [],
-													"cookie": [],
-													"body": null
+													"cookie": []
 												}
 											]
 										}
 									],
-									"id": "029e797b-c7f8-4c93-be0f-615daf7ffd1a"
+									"id": "bf20f87c-6a6c-42f6-8e5d-c6727228be34"
 								},
 								{
 									"name": "deactivate",
 									"item": [
 										{
 											"name": "Deactivate a user",
-											"id": "0d9fd17c-f9ae-4f16-af3f-081041b80a99",
+											"id": "ce8fff7a-4c2f-462e-aad2-1555c53c8fbc",
 											"protocolProfileBehavior": {
 												"disableBodyPruning": true
 											},
@@ -334,7 +331,7 @@
 													"variable": [
 														{
 															"key": "user_id",
-															"value": "3635768",
+															"value": "6463",
 															"description": "(Required) Numeric user ID"
 														}
 													]
@@ -342,7 +339,7 @@
 											},
 											"response": [
 												{
-													"id": "1b011c7d-3dde-4067-912f-58b0ae04fe20",
+													"id": "fa2c93d1-62bd-4676-b918-bc558b40e286",
 													"name": "User deactivated successfully",
 													"originalRequest": {
 														"method": "POST",
@@ -375,17 +372,16 @@
 													"code": 200,
 													"_postman_previewlanguage": "text",
 													"header": [],
-													"cookie": [],
-													"body": null
+													"cookie": []
 												}
 											]
 										}
 									],
-									"id": "ef44cde8-643b-4e5e-bf6f-ec84648f7fe1"
+									"id": "ff783f84-5863-4268-85e3-38b1fd1e8b5d"
 								},
 								{
 									"name": "Get user by id",
-									"id": "8fe3a2a7-4bda-47ac-a87d-d0554315710a",
+									"id": "a72abf48-a3c3-4fc2-970c-417eeb07da05",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -420,7 +416,7 @@
 											"variable": [
 												{
 													"key": "user_id",
-													"value": "3635768",
+													"value": "6463",
 													"description": "(Required) Numeric user ID"
 												}
 											]
@@ -428,7 +424,7 @@
 									},
 									"response": [
 										{
-											"id": "d600f61e-9f11-499a-a2f2-87bd7be47cb2",
+											"id": "caf4e90f-ddf3-4250-9163-48cc22b8ba75",
 											"name": "User object",
 											"originalRequest": {
 												"method": "GET",
@@ -466,18 +462,17 @@
 											"header": [
 												{
 													"key": "Content-Type",
-													"value": "application/json",
-													"uuid": "7ea394e0-4d2b-4b20-ab71-15340bfdc416"
+													"value": "application/json"
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"id\": 8193545,\n  \"first_name\": \"commodo incididunt sunt\",\n  \"last_name\": \"qui sunt deserunt ullamco\",\n  \"email\": \"ut\",\n  \"active\": false\n}"
+											"body": "{\n  \"id\": 1383,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
 										}
 									]
 								},
 								{
 									"name": "Update user (partial)",
-									"id": "903ddbea-caaf-41e3-9b6f-2691ce43e3ca",
+									"id": "0ee1a86d-bc4a-4119-807e-8e732fd864de",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -505,7 +500,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"first_name\": \"laborum\",\n  \"last_name\": \"aliquip i\",\n  \"email\": \"id pariatur\",\n  \"active\": false,\n  \"action\": \"deactivate\"\n}",
+											"raw": "{\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": true,\n  \"action\": \"activate\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -526,7 +521,7 @@
 											"variable": [
 												{
 													"key": "user_id",
-													"value": "3635768",
+													"value": "6463",
 													"description": "(Required) Numeric user ID"
 												}
 											]
@@ -534,7 +529,7 @@
 									},
 									"response": [
 										{
-											"id": "1e976510-e95c-4ccb-aeea-9c02b8b7f840",
+											"id": "cb6feb06-60f3-4ac1-9151-b64e5fc61ad6",
 											"name": "User updated",
 											"originalRequest": {
 												"method": "PATCH",
@@ -555,7 +550,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n  \"first_name\": \"laborum\",\n  \"last_name\": \"aliquip i\",\n  \"email\": \"id pariatur\",\n  \"active\": false,\n  \"action\": \"deactivate\"\n}",
+													"raw": "{\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": true,\n  \"action\": \"activate\"\n}",
 													"options": {
 														"raw": {
 															"headerFamily": "json",
@@ -586,18 +581,17 @@
 											"header": [
 												{
 													"key": "Content-Type",
-													"value": "application/json",
-													"uuid": "4e56048a-9e77-46dc-9ab0-fbe2a3ef2826"
+													"value": "application/json"
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"id\": 8193545,\n  \"first_name\": \"commodo incididunt sunt\",\n  \"last_name\": \"qui sunt deserunt ullamco\",\n  \"email\": \"ut\",\n  \"active\": false\n}"
+											"body": "{\n  \"id\": 1383,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
 										}
 									]
 								},
 								{
 									"name": "Delete user (permanent)",
-									"id": "36316687-0198-4850-b67a-695cff9eace9",
+									"id": "01c30bda-78a2-4bfa-8d7e-e81650effcc7",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -627,7 +621,7 @@
 											"variable": [
 												{
 													"key": "user_id",
-													"value": "3635768",
+													"value": "6463",
 													"description": "(Required) Numeric user ID"
 												}
 											]
@@ -635,7 +629,7 @@
 									},
 									"response": [
 										{
-											"id": "f686e712-8ce8-4139-ae06-0fb0c4627ea1",
+											"id": "28abf99f-b007-43b4-b438-38ac12c71e15",
 											"name": "User permanently deleted",
 											"originalRequest": {
 												"method": "DELETE",
@@ -667,17 +661,16 @@
 											"code": 204,
 											"_postman_previewlanguage": "text",
 											"header": [],
-											"cookie": [],
-											"body": null
+											"cookie": []
 										}
 									]
 								}
 							],
-							"id": "103283a5-3988-44bf-9633-9abbffd86553"
+							"id": "cc96ac4c-7dad-4c05-a501-bc287110d3b6"
 						},
 						{
 							"name": "List users (paginated, filterable)",
-							"id": "7423c80e-2bf3-430c-b6be-b8b06a93ff4d",
+							"id": "10427049-6e8c-4ecb-8478-ea52b8bed1ba",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -700,7 +693,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/admin/users?page=1&per_page=20&search=deser",
+									"raw": "{{baseUrl}}/admin/users?page=1&per_page=20&search=string",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -719,7 +712,7 @@
 										},
 										{
 											"key": "search",
-											"value": "deser",
+											"value": "string",
 											"description": "Search by name or email"
 										}
 									]
@@ -727,7 +720,7 @@
 							},
 							"response": [
 								{
-									"id": "78d8bbd3-0f99-4b17-9dff-a1e77ead136b",
+									"id": "68cae47b-f4fc-4f45-a43a-6ea1f16145b9",
 									"name": "User list",
 									"originalRequest": {
 										"method": "GET",
@@ -743,7 +736,7 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/admin/users?page=1&per_page=20&search=deser",
+											"raw": "{{baseUrl}}/admin/users?page=1&per_page=20&search=string",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -763,7 +756,7 @@
 												{
 													"description": "Search by name or email",
 													"key": "search",
-													"value": "deser"
+													"value": "string"
 												}
 											]
 										}
@@ -774,18 +767,17 @@
 									"header": [
 										{
 											"key": "Content-Type",
-											"value": "application/json",
-											"uuid": "6f572b4b-3ef8-4eb8-ac4f-760e41f4a314"
+											"value": "application/json"
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"data\": [\n    {\n      \"id\": -39080915,\n      \"first_name\": \"Ut cillum amet ad\",\n      \"last_name\": \"ad velit quis commodo\",\n      \"email\": \"velit\",\n      \"active\": false\n    },\n    {\n      \"id\": -51099811,\n      \"first_name\": \"nulla commodo ad\",\n      \"last_name\": \"ullamco culpa\",\n      \"email\": \"adipis\",\n      \"active\": false\n    }\n  ],\n  \"meta\": {}\n}"
+									"body": "{\n  \"data\": [\n    {\n      \"id\": 2118,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"email\": \"string\",\n      \"active\": true\n    },\n    {\n      \"id\": 821,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"email\": \"string\",\n      \"active\": true\n    }\n  ],\n  \"meta\": {}\n}"
 								}
 							]
 						},
 						{
 							"name": "Create user",
-							"id": "0af86b8b-ef45-4e64-b346-df284b21f51a",
+							"id": "c2c430f4-59f8-445c-8cfe-bb8759b55691",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -813,7 +805,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"first_name\": \"ea ullamco sit ut\",\n  \"last_name\": \"Lorem u\",\n  \"email\": \"Lorem officia adipisicing eu anim\",\n  \"password\": \"Lorem est\"\n}",
+									"raw": "{\n  \"first_name\": \"strin\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"password\": \"string\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -834,7 +826,7 @@
 							},
 							"response": [
 								{
-									"id": "200cb041-5ff9-4977-a8b9-5ca57d30bf04",
+									"id": "cacdba74-9d6e-469f-a4ab-d7a539fe7fe5",
 									"name": "User created",
 									"originalRequest": {
 										"method": "POST",
@@ -855,7 +847,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"first_name\": \"ea ullamco sit ut\",\n  \"last_name\": \"Lorem u\",\n  \"email\": \"Lorem officia adipisicing eu anim\",\n  \"password\": \"Lorem est\"\n}",
+											"raw": "{\n  \"first_name\": \"strin\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"password\": \"string\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -880,20 +872,19 @@
 									"header": [
 										{
 											"key": "Content-Type",
-											"value": "application/json",
-											"uuid": "3c029cfc-5bbc-4265-9636-39aeb14df95b"
+											"value": "application/json"
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"id\": 8193545,\n  \"first_name\": \"commodo incididunt sunt\",\n  \"last_name\": \"qui sunt deserunt ullamco\",\n  \"email\": \"ut\",\n  \"active\": false\n}"
+									"body": "{\n  \"id\": 1383,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
 								}
 							]
 						}
 					],
-					"id": "880f2e0c-c2c4-4c5d-a3f7-6eb5aaeda090"
+					"id": "3cfbc0a6-96a9-4f45-8b12-f62d48f13ee5"
 				}
 			],
-			"id": "cc25bad4-c5ce-4a6d-a8c0-579b791522f6"
+			"id": "69dba909-d10d-40f9-80a9-5c611600957a"
 		},
 		{
 			"name": "dashboard",
@@ -903,7 +894,7 @@
 					"item": [
 						{
 							"name": "Get my profile",
-							"id": "7b6d2dcb-abaa-4193-9de4-08f5542c1a88",
+							"id": "e6f4e8d7-46be-47d6-9fe9-73dd255a9436",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -938,7 +929,7 @@
 							},
 							"response": [
 								{
-									"id": "c262e218-1c66-40ad-8973-d4b612639aa6",
+									"id": "9c767d04-221c-41b0-90fd-a30ca75ad72c",
 									"name": "Authenticated user profile",
 									"originalRequest": {
 										"method": "GET",
@@ -970,18 +961,17 @@
 									"header": [
 										{
 											"key": "Content-Type",
-											"value": "application/json",
-											"uuid": "7a2bcff0-5c10-47d0-b104-a32762422ceb"
+											"value": "application/json"
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"id\": 8193545,\n  \"first_name\": \"commodo incididunt sunt\",\n  \"last_name\": \"qui sunt deserunt ullamco\",\n  \"email\": \"ut\",\n  \"active\": false\n}"
+									"body": "{\n  \"id\": 1383,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
 								}
 							]
 						},
 						{
 							"name": "Edit my profile (partial)",
-							"id": "b878bcbd-91b4-4de5-9893-f60a4068bf8e",
+							"id": "3f8ccf2f-db24-4a79-bbb7-af2c64c2546b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1005,7 +995,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"first_name\": \"laborum\",\n  \"last_name\": \"aliquip i\",\n  \"email\": \"id pariatur\",\n  \"active\": false,\n  \"action\": \"deactivate\"\n}",
+									"raw": "{\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": true,\n  \"action\": \"activate\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -1026,7 +1016,7 @@
 							},
 							"response": [
 								{
-									"id": "d2919e8e-80cd-4475-97b0-5adaec5e2873",
+									"id": "0f0e9b8a-97ac-4187-b3de-8fddff5d6047",
 									"name": "Profile updated",
 									"originalRequest": {
 										"method": "PATCH",
@@ -1043,7 +1033,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"first_name\": \"laborum\",\n  \"last_name\": \"aliquip i\",\n  \"email\": \"id pariatur\",\n  \"active\": false,\n  \"action\": \"deactivate\"\n}",
+											"raw": "{\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": true,\n  \"action\": \"activate\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -1066,14 +1056,13 @@
 									"code": 200,
 									"_postman_previewlanguage": "text",
 									"header": [],
-									"cookie": [],
-									"body": null
+									"cookie": []
 								}
 							]
 						},
 						{
 							"name": "Update my password",
-							"id": "ae2122e6-ccc2-4e37-8869-908f2596b9cb",
+							"id": "b3bbd3df-357b-4723-af67-cb8a11d30de9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1097,7 +1086,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"current_password\": \"nostrud\",\n  \"new_password\": \"velit nostrud\"\n}",
+									"raw": "{\n  \"current_password\": \"string\",\n  \"new_password\": \"string\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -1118,7 +1107,7 @@
 							},
 							"response": [
 								{
-									"id": "e5ffa946-9da9-42d6-91fb-9d2112ebeab2",
+									"id": "23e93afa-8d69-4bb3-bb4d-21aa52e55d24",
 									"name": "Password updated",
 									"originalRequest": {
 										"method": "POST",
@@ -1135,7 +1124,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"current_password\": \"nostrud\",\n  \"new_password\": \"velit nostrud\"\n}",
+											"raw": "{\n  \"current_password\": \"string\",\n  \"new_password\": \"string\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -1158,21 +1147,20 @@
 									"code": 200,
 									"_postman_previewlanguage": "text",
 									"header": [],
-									"cookie": [],
-									"body": null
+									"cookie": []
 								}
 							]
 						}
 					],
-					"id": "8adc9ccf-3d3a-4faa-9a2d-8003af60159b"
+					"id": "3db91c0b-7e11-4422-a39c-de805ed326c9"
 				}
 			],
-			"id": "96ac18c4-3d01-4b2b-b4be-a10b7d3a2cce"
+			"id": "16fe2618-977b-46a9-8bf8-66f29063a54b"
 		}
 	],
 	"variable": [
 		{
-			"id": "e1b1ce26-0348-4208-9081-fadd6b5e3e8e",
+			"id": "1bc54a50-bd71-4450-a9f1-717024a10227",
 			"key": "baseUrl",
 			"value": "{{base_url}}/v1"
 		}
