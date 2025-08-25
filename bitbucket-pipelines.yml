@@ -8,28 +8,60 @@ pipelines:
           caches:
             - node
           script:
-            - set -euo pipefail
-
+            # 1) Node & npm versions
             - echo "1) Node & npm versions"
             - node -v
             - npm -v
 
+            # 2) Install required tools
             - echo "2) Install tools"
-            - npm install -g @apidevtools/swagger-cli openapi-to-postmanv2
+            - npm install -g @apidevtools/swagger-cli openapi-to-postmanv2 jq
 
-            - echo "3) Ensure collections directory exists"
-            - mkdir -p postman/collections
-
-            - echo "4) Validate OpenAPI"
+            # 3) Validate OpenAPI
+            - echo "3) Validate OpenAPI"
             - swagger-cli validate index.yaml || (echo "OpenAPI validation failed" && exit 1)
 
-            - echo "5) Convert OpenAPI to Postman collection"
+            # 4) Convert OpenAPI -> Postman Collection
+            - echo "4) Convert OpenAPI -> Postman Collection"
+            - mkdir -p postman/collections
             - openapi2postmanv2 -s index.yaml -o postman/collections/collection-to-upload.json -p || (echo "Conversion failed" && exit 1)
 
-            - echo "6) Show generated file"
+            # 5) Show generated file
+            - echo "5) Generated file info"
             - ls -lh postman/collections/collection-to-upload.json
+            - jq -r '.info.name + " / " + (.info._postman_id // "no-id")' postman/collections/collection-to-upload.json || true
 
-            - echo "7) Sync collection to Postman using Node script"
-            - node syncPostman.js
+            # 6) Sync Collection to Postman (create if not exists)
+            - echo "6) Sync collection to Postman"
+            - |
+              COLLECTION_FILE="postman/collections/collection-to-upload.json"
+              STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+                -X GET "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
+                -H "X-Api-Key: $POSTMAN_API_KEY")
 
-            - echo "8) Done"
+              if [ "$STATUS_CODE" == "200" ]; then
+                echo "Collection exists, updating..."
+                RESP=$(jq -n --argfile c $COLLECTION_FILE '{collection: $c}' | \
+                  curl -s -w "\n%{http_code}" -X PUT "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
+                  -H "X-Api-Key: $POSTMAN_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  --data-binary @-)
+              else
+                echo "Collection does not exist, creating..."
+                RESP=$(jq -n --argfile c $COLLECTION_FILE '{collection: $c}' | \
+                  curl -s -w "\n%{http_code}" -X POST "https://api.getpostman.com/collections" \
+                  -H "X-Api-Key: $POSTMAN_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  --data-binary @-)
+              fi
+
+              echo "$RESP" > postman_update_response.txt
+              CODE=$(tail -n 1 postman_update_response.txt)
+              if [ "$CODE" != "200" ] && [ "$CODE" != "201" ]; then
+                echo "Postman update failed with code $CODE"
+                cat postman_update_response.txt
+                exit 1
+              fi
+
+            # 7) Done
+            - echo "Postman collection sync completed successfully"
