@@ -1,50 +1,43 @@
-image: node:18
+image: alpine:3.19
 
 pipelines:
   branches:
     feature/postman:
       - step:
           name: Sync Postman Collection
-          caches:
-            - node
           script:
-            - echo "1) Ensure collections directory exists"
-            - mkdir -p postman/collections
+            # 1) Install required tools
+            - apk add --no-cache curl jq
 
-            - echo "2) Use existing JSON collection"
+            # 2) Validate JSON file exists
+            - echo "1) Validating JSON collection file..."
             - COLLECTION_FILE="postman/collections/water-system-back-v1.json"
+            - if [ ! -f "$COLLECTION_FILE" ]; then echo "❌ Collection file not found"; exit 1; fi
+            - echo "✅ Found: $COLLECTION_FILE"
+            - jq '.info.name' "$COLLECTION_FILE"
 
-            - echo "3) Check if collection exists"
-            - STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+            # 3) Check if collection exists on Postman
+            - echo "2) Check if collection exists on Postman"
+            - STATUS_CODE=$(curl -s -o /dev/null -w '%{http_code}' \
                 -X GET "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
                 -H "X-Api-Key: $POSTMAN_API_KEY")
 
-            - echo "4) Prepare JSON payload"
-            - COLLECTION_JSON=$(cat $COLLECTION_FILE | sed ':a;N;$!ba;s/\n/ /g')  # remove newlines
-
-            - echo "5) Sync collection to Postman"
+            # 4) Update or create collection
             - |
-              if [ "$STATUS_CODE" == "200" ]; then
-                echo "Collection exists, updating..."
-                RESP=$(curl -s -w "\n%{http_code}" -X PUT "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
-                  -H "X-Api-Key: $POSTMAN_API_KEY" \
-                  -H "Content-Type: application/json" \
-                  --data-binary "{\"collection\": $COLLECTION_JSON}")
+              if [ "$STATUS_CODE" = "200" ]; then
+                echo "✅ Collection exists, updating..."
+                jq -c '{collection: .}' "$COLLECTION_FILE" | \
+                  curl -s -X PUT "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
+                    -H "X-Api-Key: $POSTMAN_API_KEY" \
+                    -H "Content-Type: application/json" \
+                    -d @- | jq
               else
-                echo "Collection does not exist, creating..."
-                RESP=$(curl -s -w "\n%{http_code}" -X POST "https://api.getpostman.com/collections" \
-                  -H "X-Api-Key: $POSTMAN_API_KEY" \
-                  -H "Content-Type: application/json" \
-                  --data-binary "{\"collection\": $COLLECTION_JSON}")
+                echo "❌ Collection does not exist, creating in workspace: $POSTMAN_WORKSPACE_ID..."
+                jq -c '{collection: .}' "$COLLECTION_FILE" | \
+                  curl -s -X POST "https://api.getpostman.com/collections?workspace=$POSTMAN_WORKSPACE_ID" \
+                    -H "X-Api-Key: $POSTMAN_API_KEY" \
+                    -H "Content-Type: application/json" \
+                    -d @- | jq
               fi
 
-            - echo "$RESP" > postman_update_response.txt
-            - CODE=$(tail -n 1 postman_update_response.txt)
-            - |
-              if [ "$CODE" != "200" ] && [ "$CODE" != "201" ]; then
-                echo "Postman update failed with code $CODE"
-                cat postman_update_response.txt
-                exit 1
-              fi
-
-            - echo "6) Postman collection sync completed successfully"
+            - echo "✅ Postman collection sync completed successfully"
