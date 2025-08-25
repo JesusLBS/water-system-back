@@ -11,7 +11,7 @@ pipelines:
 
             # 2) Set variables
             - OPENAPI_FILE="index.yaml"
-            - TMP_COLLECTION_JSON="$(mktemp /tmp/postman_collection.XXXXXX.json)"
+            - TMP_COLLECTION_JSON="postman/collections/water-system-back-v1.json"  # archivo fijo en workspace
             - API_URL="https://api.getpostman.com"
 
             # 3) Verify OpenAPI file exists
