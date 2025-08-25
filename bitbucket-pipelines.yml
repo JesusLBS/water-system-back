@@ -1,5 +1,3 @@
-image: node:18
-
 pipelines:
   branches:
     feature/postman:
@@ -7,46 +5,72 @@ pipelines:
           name: Validate / Convert & Sync Postman Collection
           caches:
             - node
-          script:
-            - set -euo pipefail
+          script: |
+            set -euo pipefail
+            echo "1) Node & npm versions"
+            node -v
+            npm -v
 
-            - echo "1) Node & npm versions"
-            - node -v
-            - npm -v
+            echo "2) Install tools"
+            npm install -g @apidevtools/swagger-cli openapi-to-postmanv2 jq
 
-            - echo "2) Install tools"
-            - npm install -g @apidevtools/swagger-cli openapi-to-postmanv2 jq
+            echo "3) Ensure collections directory exists"
+            mkdir -p postman/collections
 
-            - echo "3) Ensure collections directory exists"
-            - mkdir -p postman/collections
+            # Use existing collection JSON or convert OpenAPI
+            if [ -f postman/collections/water-system-back-v1.json ]; then
+              echo "Using committed postman/collections/water-system-back-v1.json"
+              cp postman/collections/water-system-back-v1.json postman/collections/collection-to-upload.json
+            else
+              echo "Committed collection JSON not found - converting index.yaml -> Postman collection"
+              swagger-cli validate index.yaml || (echo "OpenAPI validation failed" && exit 1)
+              openapi2postmanv2 -s index.yaml -o postman/collections/collection-to-upload.json -p || (echo "Conversion failed" && exit 1)
+            fi
 
-            # Use existing collection JSON if present, otherwise convert index.yaml
-            - >
-              if [ -f postman/collections/water-system-back-v1.json ]; then
-                # Use committed collection JSON
-                echo "Using committed postman/collections/water-system-back-v1.json";
-                cp postman/collections/water-system-back-v1.json postman/collections/collection-to-upload.json;
-              else
-                # Convert OpenAPI definition to Postman Collection
-                echo "Committed collection JSON not found - converting index.yaml -> Postman collection";
-                # Validate OpenAPI first
-                swagger-cli validate index.yaml || (echo "OpenAPI validation failed" && exit 1);
-                # Convert OpenAPI to Postman collection JSON
-                openapi2postmanv2 -s index.yaml -o postman/collections/collection-to-upload.json -p || (echo "Conversion failed" && exit 1);
+            echo "4) Show generated file details"
+            ls -lh postman/collections/collection-to-upload.json
+            jq -r '.info.name + " / " + (.info._postman_id // "no-id")' postman/collections/collection-to-upload.json || true
+
+            echo "5) Prepare payload"
+            jq -n --argfile c postman/collections/collection-to-upload.json '{collection: $c}' > /tmp/collection_payload.json
+            echo "Payload size:" $(wc -c /tmp/collection_payload.json) "bytes"
+
+            # Sync collection
+            if [ -z "${POSTMAN_COLLECTION_UID:-}" ]; then
+              echo "No POSTMAN_COLLECTION_UID provided - creating collection in workspace $POSTMAN_WORKSPACE_ID"
+              RESP=$(curl -s -w "\n%{http_code}" -X POST "https://api.getpostman.com/collections?workspace=$POSTMAN_WORKSPACE_ID" \
+                -H "X-Api-Key: $POSTMAN_API_KEY" \
+                -H "Content-Type: application/json" \
+                --data-binary @/tmp/collection_payload.json)
+              echo "$RESP" > postman_create_response.txt
+              CODE=$(tail -n 1 postman_create_response.txt)
+              if [ "$CODE" != "200" ] && [ "$CODE" != "201" ]; then
+                echo "Postman POST failed with code $CODE"
+                cat postman_create_response.txt
+                exit 1
               fi
-
-            - echo "4) Show generated file details"
-            - ls -lh postman/collections/collection-to-upload.json
-            - jq -r '.info.name + " / " + (.info._postman_id // "no-id")' postman/collections/collection-to-upload.json || true
-
-            - echo "5) Prepare payload (wrap as { \"collection\": ... })"
-            - jq -n --argfile c postman/collections/collection-to-upload.json '{collection: $c}' > /tmp/collection_payload.json
-            - echo "Payload size:" $(wc -c /tmp/collection_payload.json) "bytes"
-
-            # If POSTMAN_COLLECTION_UID is empty, force create
-            - >
-              if [ -z "${POSTMAN_COLLECTION_UID:-}" ]; then
-                echo "No POSTMAN_COLLECTION_UID provided - creating collection in workspace $POSTMAN_WORKSPACE_ID";
+              echo "POST ok"
+              cat postman_create_response.txt
+            else
+              GET_CODE=$(curl -s -o /dev/null -w "%{http_code}" -H "X-Api-Key: $POSTMAN_API_KEY" "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" || echo "000")
+              echo "GET status: $GET_CODE for UID $POSTMAN_COLLECTION_UID"
+              if [ "$GET_CODE" = "200" ]; then
+                echo "Collection exists -> updating (PUT)"
+                RESP=$(curl -s -w "\n%{http_code}" -X PUT "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
+                  -H "X-Api-Key: $POSTMAN_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  --data-binary @/tmp/collection_payload.json)
+                echo "$RESP" > postman_update_response.txt
+                CODE=$(tail -n 1 postman_update_response.txt)
+                if [ "$CODE" != "200" ] && [ "$CODE" != "201" ]; then
+                  echo "Postman PUT failed with code $CODE"
+                  cat postman_update_response.txt
+                  exit 1
+                fi
+                echo "PUT ok"
+                cat postman_update_response.txt
+              elif [ "$GET_CODE" = "404" ]; then
+                echo "Collection UID not found -> creating (POST)"
                 RESP=$(curl -s -w "\n%{http_code}" -X POST "https://api.getpostman.com/collections?workspace=$POSTMAN_WORKSPACE_ID" \
                   -H "X-Api-Key: $POSTMAN_API_KEY" \
                   -H "Content-Type: application/json" \
@@ -61,43 +85,9 @@ pipelines:
                 echo "POST ok"
                 cat postman_create_response.txt
               else
-                # Check if collection exists (GET)
-                GET_CODE=$(curl -s -o /dev/null -w "%{http_code}" -H "X-Api-Key: $POSTMAN_API_KEY" "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" || echo "000")
-                echo "GET status: $GET_CODE for UID $POSTMAN_COLLECTION_UID"
-                if [ "$GET_CODE" = "200" ]; then
-                  echo "Collection exists -> updating (PUT) collection $POSTMAN_COLLECTION_UID"
-                  RESP=$(curl -s -w "\n%{http_code}" -X PUT "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
-                    -H "X-Api-Key: $POSTMAN_API_KEY" \
-                    -H "Content-Type: application/json" \
-                    --data-binary @/tmp/collection_payload.json)
-                  echo "$RESP" > postman_update_response.txt
-                  CODE=$(tail -n 1 postman_update_response.txt)
-                  if [ "$CODE" != "200" ] && [ "$CODE" != "201" ]; then
-                    echo "Postman PUT failed with code $CODE"
-                    cat postman_update_response.txt
-                    exit 1
-                  fi
-                  echo "PUT ok"
-                  cat postman_update_response.txt
-                elif [ "$GET_CODE" = "404" ]; then
-                  echo "Collection UID not found -> creating (POST) in workspace $POSTMAN_WORKSPACE_ID"
-                  RESP=$(curl -s -w "\n%{http_code}" -X POST "https://api.getpostman.com/collections?workspace=$POSTMAN_WORKSPACE_ID" \
-                    -H "X-Api-Key: $POSTMAN_API_KEY" \
-                    -H "Content-Type: application/json" \
-                    --data-binary @/tmp/collection_payload.json)
-                  echo "$RESP" > postman_create_response.txt
-                  CODE=$(tail -n 1 postman_create_response.txt)
-                  if [ "$CODE" != "200" ] && [ "$CODE" != "201" ]; then
-                    echo "Postman POST failed with code $CODE"
-                    cat postman_create_response.txt
-                    exit 1
-                  fi
-                  echo "POST ok"
-                  cat postman_create_response.txt
-                else
-                  echo "Unexpected GET code: $GET_CODE"
-                  exit 1
-                fi
+                echo "Unexpected GET code: $GET_CODE"
+                exit 1
               fi
+            fi
 
-            - echo "6) Done"
+            echo "6) Done"
