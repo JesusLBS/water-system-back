@@ -2,7 +2,7 @@ openapi: "3.0.1"
 info:
   title: Water System Back
   version: "1.0.0"
-  description: "API para autenticación, administración de usuarios, dashboard y catálogos. Paths diseñados para agrupar operaciones sobre el mismo recurso etc."
+  description: "API para autenticación, administración de usuarios, dashboard y catálogos. Paths diseñados para agrupar operaciones sobre el mismo recurso."
 
 servers:
   - url: "{{base_url}}/v1"
