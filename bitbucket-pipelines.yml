@@ -9,26 +9,33 @@ pipelines:
             - node
           script:
             - set -euo pipefail
+
             - echo "1) Node & npm versions"
             - node -v
             - npm -v
+
             - echo "2) Install tools"
             - npm install -g @apidevtools/swagger-cli openapi-to-postmanv2 jq
+
             - echo "3) Ensure collections directory exists"
             - mkdir -p postman/collections
+
             - echo "4) Validate OpenAPI"
-            - swagger-cli validate index.yaml
+            - swagger-cli validate index.yaml || (echo "OpenAPI validation failed" && exit 1)
+
             - echo "5) Convert OpenAPI to Postman collection"
-            - openapi2postmanv2 -s index.yaml -o postman/collections/collection-to-upload.json -p
+            - openapi2postmanv2 -s index.yaml -o postman/collections/collection-to-upload.json -p || (echo "Conversion failed" && exit 1)
+
             - echo "6) Show generated file"
             - ls -lh postman/collections/collection-to-upload.json
             - jq -r '.info.name + " / " + (.info._postman_id // "no-id")' postman/collections/collection-to-upload.json || true
+
             - echo "7) Sync collection to Postman"
             - |
               RESP=$(curl -s -w "\n%{http_code}" -X PUT "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
-              -H "X-Api-Key: $POSTMAN_API_KEY" \
-              -H "Content-Type: application/json" \
-              --data-binary @postman/collections/collection-to-upload.json)
+                -H "X-Api-Key: $POSTMAN_API_KEY" \
+                -H "Content-Type: application/json" \
+                --data-binary @postman/collections/collection-to-upload.json)
               echo "$RESP" > postman_update_response.txt
               CODE=$(tail -n 1 postman_update_response.txt)
               if [ "$CODE" != "200" ] && [ "$CODE" != "201" ]; then
@@ -36,4 +43,5 @@ pipelines:
                 cat postman_update_response.txt
                 exit 1
               fi
+
             - echo "8) Done"
