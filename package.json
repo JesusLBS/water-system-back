@@ -22,7 +22,8 @@
     "seed:rollback": "echo $NODE_ENV && npx sequelize-cli db:seed:undo --config src/database/config/keys.js --env $NODE_ENV",
     "seed:rollback-all": "echo $NODE_ENV && npx sequelize-cli db:seed:undo:all --config src/database/config/keys.js --env $NODE_ENV",
     "migrate:seed": "run-s migrate seed:all",
-    "db:reset": "run-s migrate:rollback migrate seed:all"
+    "db:reset": "run-s migrate:rollback migrate seed:all",
+    "sync:postman": "node --env-file .env syncPostman.js"
   },
   "repository": {
     "type": "git",
@@ -46,6 +47,7 @@
     "moment": "^2.30.1",
     "morgan": "^1.10.0",
     "mysql2": "^3.10.2",
+    "openapi-to-postmanv2": "^5.0.1",
     "sequelize": "^6.37.3",
     "winston": "^3.13.1"
   },
