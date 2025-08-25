@@ -19,19 +19,23 @@ pipelines:
                 -X GET "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
                 -H "X-Api-Key: $POSTMAN_API_KEY")
 
+            - echo "4) Prepare JSON payload"
+            - COLLECTION_JSON=$(cat $COLLECTION_FILE | sed ':a;N;$!ba;s/\n/ /g')  # remove newlines
+
+            - echo "5) Sync collection to Postman"
             - |
               if [ "$STATUS_CODE" == "200" ]; then
                 echo "Collection exists, updating..."
                 RESP=$(curl -s -w "\n%{http_code}" -X PUT "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
                   -H "X-Api-Key: $POSTMAN_API_KEY" \
                   -H "Content-Type: application/json" \
-                  --data-binary "{\"collection\": $(cat $COLLECTION_FILE)}")
+                  --data-binary "{\"collection\": $COLLECTION_JSON}")
               else
                 echo "Collection does not exist, creating..."
                 RESP=$(curl -s -w "\n%{http_code}" -X POST "https://api.getpostman.com/collections" \
                   -H "X-Api-Key: $POSTMAN_API_KEY" \
                   -H "Content-Type: application/json" \
-                  --data-binary "{\"collection\": $(cat $COLLECTION_FILE)}")
+                  --data-binary "{\"collection\": $COLLECTION_JSON}")
               fi
 
             - echo "$RESP" > postman_update_response.txt
@@ -43,4 +47,4 @@ pipelines:
                 exit 1
               fi
 
-            - echo "4) Postman collection sync completed successfully"
+            - echo "6) Postman collection sync completed successfully"
