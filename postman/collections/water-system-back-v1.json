@@ -14,8 +14,8 @@
 					"name": "login",
 					"item": [
 						{
-							"name": "Login",
-							"id": "648fc9dc-0fa2-4cc6-ad42-5f523353adc6",
+							"name": "Login-test",
+							"id": "13575a0d-ee14-4310-99fb-38b84f18c0c5",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -62,19 +62,19 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/auth/login",
+									"raw": "{{baseUrl}}/auth/login-test",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"auth",
-										"login"
+										"login-test"
 									]
 								}
 							},
 							"response": [
 								{
-									"id": "f07f7b05-1b7c-403f-8ee7-191e7b0da910",
+									"id": "88284667-d991-49ca-a8fb-de630d0b85bc",
 									"name": "Auth response",
 									"originalRequest": {
 										"method": "POST",
@@ -104,13 +104,13 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/auth/login",
+											"raw": "{{baseUrl}}/auth/login-test",
 											"host": [
 												"{{baseUrl}}"
 											],
 											"path": [
 												"auth",
-												"login"
+												"login-test"
 											]
 										}
 									},
@@ -1162,7 +1162,8 @@
 		{
 			"id": "1bc54a50-bd71-4450-a9f1-717024a10227",
 			"key": "baseUrl",
-			"value": "{{base_url}}/v1"
+			"value": "{{base_url}}/v1",
+			"type": "string"
 		}
 	]
 }

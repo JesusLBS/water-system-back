@@ -18,9 +18,9 @@ tags:
 
 paths:
   # AUTH
-  /auth/login:
+  /auth/login-test:
     post:
-      summary: "Login"
+      summary: "Login-test"
       tags: [auth]
       requestBody:
         required: true
