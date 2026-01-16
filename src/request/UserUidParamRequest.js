@@ -1,20 +1,18 @@
-const { param } = require("express-validator");
-const ValidateHelper = require("../helpers/validation/ validateHelper");
-const errorValueParameter = "The parameter is required";
+const { param } = require('express-validator');
+const ValidateHelper = require('../helpers/validation/validateHelper');
+
 const valid = new ValidateHelper();
 
 exports.UserUidParamRequest = [
-  param("dataId", errorValueParameter)
+  param('dataId')
     .exists()
-    .withMessage("Id is required")
-    .not()
-    .isIn(["null", "undefined", "", "''", ":dataId"])
-    .withMessage("Id is not valid")
+    .withMessage('dataId is required')
+    .notEmpty()
+    .withMessage('dataId cannot be empty')
     .isAlphanumeric()
-    .withMessage("Id must be alphanumeric")
-    .custom((value) => valid.isValid(value)),
+    .withMessage('dataId must be alphanumeric'),
 ];
 
 exports.UserUidParamValidation = (req, res, next) => {
-  valid.validationResult(req, res, next);
+  valid.handleValidation(req, res, next);
 };
