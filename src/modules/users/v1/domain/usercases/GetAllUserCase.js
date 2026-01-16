@@ -1,135 +1,114 @@
-const { Op } = require("sequelize");
-const { User } = require("../entities/User");
-const TimeUtil = require("../../../../../utils/TimeUtil");
-const timeUtil = new TimeUtil("es-MX");
-
+const { Op } = require('sequelize');
+const { User } = require('../entities/User');
+const TimeUtil = require('../../../../../utils/TimeUtil');
+const timeUtil = new TimeUtil('es-MX');
 class GetAllUserUseCase {
   constructor(userRepository) {
     this.userRepository = userRepository;
   }
 
-  defaultOptions = () => ({
-    limit: 10,
-    page: 1,
-    sort: "name",
-    direction: "ASC",
-    withTrashed: true,
-    search: "",
-    hasMore: false,
-    lastPage: 1,
-  });
-
-  async execute(params) {
-    let defaultOptions = this.defaultOptions();
-    let { search, hasMore, lastPage } = defaultOptions;
-    let { sort, direction, page, limit, withTrashed } = params;
-
-    const isValid = [
-      undefined,
-      "''",
-      null,
-      "null",
-      ":search",
-      ":sort",
-      ":direction",
-      ":page",
-      ":limit",
-      ":withTrashed",
-    ];
-
-    if (!isValid.includes(params.search)) {
-      search = params.search;
-    }
-    if (!isValid.includes(sort)) {
-      defaultOptions.sort = sort;
-    }
-    if (!isValid.includes(direction)) {
-      defaultOptions.direction = direction;
-    }
-    if (!isValid.includes(page)) {
-      defaultOptions.page = +page;
-    }
-    if (!isValid.includes(limit)) {
-      defaultOptions.limit = +limit;
-    }
-    if (!isValid.includes(withTrashed)) {
-      defaultOptions.withTrashed = +withTrashed ? true : false;
-    }
-
-    const where = this.buildWhereClause(search, defaultOptions.withTrashed);
-
-    const { count, rows } = await this.userRepository.index({
-      defaultOptions,
-      where,
-    });
-    const countAll = await this.userRepository.countAll(where);
-
-    lastPage = Math.ceil(count / defaultOptions.limit);
-
-    if (count > defaultOptions.page * defaultOptions.limit) {
-      hasMore = true;
-    }
-
-    const rowsUpdate = rows.map((value) => this.mapUserEntity(value));
-    const headers = this.headersTable();
-
+  // Default pagination and filter options
+  defaultOptions() {
     return {
-      countAll,
-      count,
-      rows: rowsUpdate,
-      headers,
-      page: defaultOptions.page,
-      lastPage,
-      hasMore,
+      search: '',
+      limit: 10,
+      page: 1,
+      sort: 'name',
+      direction: 'ASC',
+      withTrashed: 'all', // active | inactive | all
     };
   }
 
+  sanitizeParams(params) {
+    return Object.fromEntries(Object.entries(params).filter(([, value]) => value !== undefined));
+  }
+
+  normalizePagination(options) {
+    const limit = Math.min(Math.max(Number(options.limit) || 10, 1), 100);
+    const page = Math.max(Number(options.page) || 1, 1);
+    return { limit, page };
+  }
+
+  async execute(params) {
+    const cleanParams = this.sanitizeParams(params);
+
+    const options = {
+      ...this.defaultOptions(),
+      ...cleanParams,
+    };
+
+    const { limit, page } = this.normalizePagination(options);
+
+    const where = this.buildWhereClause(options.search, options.withTrashed);
+
+    const { count, rows } = await this.userRepository.index({
+      options: { ...options, limit, page },
+      where,
+    });
+
+    const countAll = await this.userRepository.countAll({
+      catRoleId: { [Op.ne]: 3 },
+    });
+    const baseWhere = { catRoleId: { [Op.ne]: 3 } };
+    const { active, inactive } = await this.userRepository.countByStatus(baseWhere);
+    const lastPage = Math.max(Math.ceil(count / limit), 1);
+    const from = count === 0 ? 0 : (page - 1) * limit + 1;
+    const to = Math.min(page * limit, count);
+
+    return {
+      rows: rows.map((row) => this.mapUserEntity(row)),
+      meta: {
+        total: countAll,
+        active,
+        inactive,
+        filtered: count,
+        perPage: limit,
+        currentPage: page,
+        lastPage,
+        from,
+        to,
+        hasNextPage: page < lastPage,
+        hasPrevPage: page > 1,
+      },
+    };
+  }
+
+  // Build search and status filters
   buildWhereClause(search, withTrashed) {
     const where = {
       [Op.or]: [
         { uid: { [Op.like]: `%${search}%` } },
         { name: { [Op.like]: `%${search}%` } },
         { email: { [Op.like]: `%${search}%` } },
-        { "$CatRole.description$": { [Op.like]: `%${search}%` } },
+        { '$CatRole.description$': { [Op.like]: `%${search}%` } },
       ],
-      catRoleId: { [Op.ne]: 3 }, //socio
+      catRoleId: { [Op.ne]: 3 }, // exclude socio
     };
-    if (!withTrashed) {
+
+    if (withTrashed === 'active') {
+      where.deletedAt = null;
+    }
+
+    if (withTrashed === 'inactive') {
       where.deletedAt = { [Op.ne]: null };
     }
+
     return where;
   }
 
   mapUserEntity(value) {
-    const { uid, name, email, CatRole, ...rest } = value;
-
-    const transformedDates = {
-      createdAt: timeUtil.transformTime(rest.createdAt),
-      updatedAt: timeUtil.transformTime(rest.updatedAt),
-      deletedAt: timeUtil.transformTime(rest.deletedAt),
-    };
-
-    return new User(
-      uid,
-      name,
-      email,
-      CatRole.description,
-      ...Object.values(transformedDates),
+    const user = new User(
+      value.uid,
+      value.name,
+      value.email,
+      value.CatRole?.description || null,
+      value.deletedAt ? 'inactive' : 'active',
+      timeUtil.transformTime(value.createdAt),
+      timeUtil.transformTime(value.updatedAt),
+      value.deletedAt
     );
-  }
 
-  headersTable() {
-    const headers = [
-      { header: "#", key: "uid" },
-      { header: "Nombre", key: "name" },
-      { header: "Email", key: "email" },
-      { header: "Rol", key: "role" },
-      { header: "Estatus", key: "deletedAt" },
-      { header: "Creado", key: "createdAt" },
-      { header: "Actualizado", key: "updatedAt" },
-      { header: "Acciones", key: "actions" },
-    ];
-    return headers;
+    return user.toResponse();
   }
 }
 
