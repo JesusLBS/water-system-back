@@ -4,12 +4,7 @@ const ValidateHelper = require('../helpers/validation/validateHelper');
 const valid = new ValidateHelper();
 
 exports.UserRequest = [
-  check('uid')
-    .optional() // allow update without uid if handled elsewhere
-    .notEmpty()
-    .withMessage('uid is required')
-    .isAlphanumeric()
-    .withMessage('uid must be alphanumeric'),
+  check('uid').notEmpty().withMessage('uid is required').isUUID().withMessage('uid must be a valid UUID'),
 
   check('name').exists().withMessage('name is required').notEmpty().withMessage('name cannot be empty').isString(),
 

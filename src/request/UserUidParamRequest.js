@@ -4,13 +4,7 @@ const ValidateHelper = require('../helpers/validation/validateHelper');
 const valid = new ValidateHelper();
 
 exports.UserUidParamRequest = [
-  param('dataId')
-    .exists()
-    .withMessage('dataId is required')
-    .notEmpty()
-    .withMessage('dataId cannot be empty')
-    .isAlphanumeric()
-    .withMessage('dataId must be alphanumeric'),
+  param('dataId').exists().withMessage('dataId is required').notEmpty().withMessage('dataId cannot be empty'),
 ];
 
 exports.UserUidParamValidation = (req, res, next) => {
