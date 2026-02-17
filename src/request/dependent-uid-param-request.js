@@ -1,5 +1,5 @@
 const { param } = require('express-validator');
-const ValidateHelper = require('../helpers/validation/ validateHelper');
+const ValidateHelper = require('../helpers/validation/validateHelper');
 const errorValueParameter = 'The parameter is required';
 const valid = new ValidateHelper();
 

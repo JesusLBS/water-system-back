@@ -36,6 +36,13 @@ Este proyecto es una API backend desarrollada en Node.js que utiliza MySQL como 
    # Instala las dependencias
    yarn install
 
+## Documentación técnica
+
+Este proyecto incluye documentación sobre decisiones técnicas y refactors relevantes
+realizados durante su evolución.
+
+- [Refactor módulo Users](./docs/refactors/users-module.md)
+
 ### Licencia
 
 Este proyecto no está licenciado para uso público. Todos los derechos reservados. Para obtener permisos de uso, contacta al propietario del proyecto en chichohdzjesus@gmail.com.

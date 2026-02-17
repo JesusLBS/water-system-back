@@ -1,6 +1,6 @@
-const ResponseHelper = require("../../../../../helpers/response/responseHelper");
-const UserUseCases = require("../../domain/usercases/UserUseCases");
-const UserRepositoryImpl = require("../../infraestructure/data/UserRepositoryImpl");
+const ResponseHelper = require('../../../../../helpers/response/responseHelper');
+const UserUseCases = require('../../domain/usercases/UserUseCases');
+const UserRepositoryImpl = require('../../infraestructure/data/UserRepositoryImpl');
 
 class UserController {
   #response;
@@ -14,13 +14,14 @@ class UserController {
   index = async (req, res) => {
     try {
       const params = {
-        search: req.params.search,
-        sort: req.params.sort,
-        direction: req.params.direction,
-        page: req.params.page,
-        limit: req.params.limit,
-        withTrashed: req.params.withTrashed,
+        search: req.query.search,
+        sort: req.query.sort,
+        direction: req.query.direction,
+        page: req.query.page ? Number(req.query.page) : undefined,
+        limit: req.query.limit ? Number(req.query.limit) : undefined,
+        withTrashed: req.query.withTrashed,
       };
+
       const data = await this.userUseCases.getAllUser.execute(params);
 
       return this.#response.success({ res, data });

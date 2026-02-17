@@ -1,8 +1,6 @@
-const {
-  validJWTMiddleware,
-} = require("../../middlewares/auth/auth.middleware");
-const userRouter = require("./v1/index");
+const { validJWTMiddleware } = require('../../middlewares/auth/auth.middleware');
+const userRouter = require('./v1/index');
 
 module.exports = (router) => {
-  router.use("/admin/user", validJWTMiddleware, userRouter);
+  router.use('/admin/users', validJWTMiddleware, userRouter);
 };
