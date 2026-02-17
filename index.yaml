@@ -18,9 +18,9 @@ tags:
 
 paths:
   # AUTH
-  /auth/login-test:
+  /auth/login:
     post:
-      summary: "Login-test"
+      summary: "Login"
       tags: [auth]
       requestBody:
         required: true
@@ -248,14 +248,13 @@ components:
   schemas:
     LoginRequest:
       type: object
+      additionalProperties: false
       properties:
-        email:
+        uid:
           type: string
-        password:
-          type: string
+          example: "{{uid}}"
       required:
-        - email
-        - password
+        - uid
 
     AuthResponse:
       type: object
