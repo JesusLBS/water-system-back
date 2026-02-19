@@ -1,24 +1,25 @@
 const db = require('../../../../../database/models/index');
 const SocioRepository = require('../../domain/repositories/SocioRepository');
+const { Op } = require('sequelize');
 
 class SocioRepositoryImpl extends SocioRepository {
-  async index({ defaultOptions, where }) {
-    let { limit, page, sort, direction, withTrashed } = defaultOptions;
+  async index({ options, where }) {
+    const { limit, page, sort, direction } = options;
 
     const { count, rows } = await db.Socio.scope('raw').findAndCountAll({
       where,
+      distinc: true,
       attributes: ['totalDependents', 'createdAt', 'updatedAt', 'deletedAt'],
       include: [
         {
           model: db.User,
           attributes: ['uid', 'name', 'email'],
-          paranoid: withTrashed,
+          paranoid: false,
           required: true,
           include: [
             {
               model: db.Profile,
               attributes: ['lastName', 'secondLastName'],
-              required: true,
             },
           ],
         },
@@ -26,32 +27,47 @@ class SocioRepositoryImpl extends SocioRepository {
       order: [[sort, direction]],
       offset: (page - 1) * limit,
       limit,
-      paranoid: withTrashed,
+      paranoid: false,
     });
 
     return { count, rows };
   }
 
-  countAll = async () => {
+  async countAll(baseWhere) {
     return await db.Socio.scope('raw').count({
+      where: baseWhere,
       include: [
         {
           model: db.User,
           attributes: ['id'],
           required: true,
           paranoid: false,
-          include: [
-            {
-              model: db.Profile,
-              attributes: ['userId'],
-              required: true,
-            },
-          ],
         },
       ],
       paranoid: false,
     });
-  };
+  }
+
+  async countByStatus(baseWhere) {
+    const [active, inactive] = await Promise.all([
+      db.Socio.count({
+        where: {
+          ...baseWhere,
+          deletedAt: null,
+        },
+        paranoid: false,
+      }),
+      db.Socio.count({
+        where: {
+          ...baseWhere,
+          deletedAt: { [Op.ne]: null },
+        },
+        paranoid: false,
+      }),
+    ]);
+
+    return { active, inactive };
+  }
 
   async store(body, options = {}) {
     const transaction = options.transaction;

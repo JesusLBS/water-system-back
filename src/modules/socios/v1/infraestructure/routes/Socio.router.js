@@ -7,7 +7,7 @@ const router = express.Router();
 const controller = new SocioController();
 
 router
-  .get('/:limit/:page/:sort/:direction/:withTrashed/:search', controller.index)
+  .get('/', controller.index)
   .post('/', SocioRequest, SocioValidation, controller.store)
   .put('/', SocioRequest, SocioValidation, controller.update)
   .post('/deactivate', UserUidBodyRequest, UserUidBodyValidation, controller.deactivate)

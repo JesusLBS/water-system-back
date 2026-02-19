@@ -8,79 +8,66 @@ class GetAllSocioUseCase {
     this.socioRepository = socioRepository;
   }
 
-  defaultOptions = () => ({
-    limit: 10,
-    page: 1,
-    sort: 'id',
-    direction: 'ASC',
-    withTrashed: true,
-    search: '',
-    hasMore: false,
-    lastPage: 1,
-  });
+  defaultOptions() {
+    return {
+      search: '',
+      limit: 10,
+      page: 1,
+      sort: 'id',
+      direction: 'ASC',
+      withTrashed: 'active', // active | inactive | all
+    };
+  }
+
+  sanitizeParams(params) {
+    return Object.fromEntries(Object.entries(params).filter(([, value]) => value !== undefined));
+  }
+
+  normalizePagination(options) {
+    const limit = Math.min(Math.max(Number(options.limit) || 10, 1), 100);
+    const page = Math.max(Number(options.page) || 1, 1);
+    return { limit, page };
+  }
 
   async execute(params) {
-    let defaultOptions = this.defaultOptions();
+    const cleanParams = this.sanitizeParams(params);
 
-    let { search, hasMore, lastPage } = defaultOptions;
-    let { sort, direction, page, limit, withTrashed } = params;
+    const options = {
+      ...this.defaultOptions(),
+      ...cleanParams,
+    };
 
-    const isValid = [
-      undefined,
-      "''",
-      null,
-      'null',
-      ':search',
-      ':sort',
-      ':direction',
-      ':page',
-      ':limit',
-      ':withTrashed',
-    ];
+    const { limit, page } = this.normalizePagination(options);
 
-    if (!isValid.includes(params.search)) {
-      search = params.search;
-    }
-    if (!isValid.includes(sort)) {
-      defaultOptions.sort = sort;
-    }
-    if (!isValid.includes(direction)) {
-      defaultOptions.direction = direction;
-    }
-    if (!isValid.includes(page)) {
-      defaultOptions.page = +page;
-    }
-    if (!isValid.includes(limit)) {
-      defaultOptions.limit = +limit;
-    }
-    if (!isValid.includes(withTrashed)) {
-      defaultOptions.withTrashed = +withTrashed ? true : false;
-    }
-
-    const where = this.buildWhereClause(search, defaultOptions.withTrashed);
+    const where = this.buildWhereClause(options.search, options.withTrashed);
 
     const { count, rows } = await this.socioRepository.index({
-      defaultOptions,
+      options: { ...options, limit, page },
       where,
     });
-    const countAll = await this.socioRepository.countAll();
 
-    lastPage = Math.ceil(count / defaultOptions.limit);
+    const countAll = await this.socioRepository.countAll({});
 
-    if (count > defaultOptions.page * defaultOptions.limit) {
-      hasMore = true;
-    }
+    const { active, inactive } = await this.socioRepository.countByStatus({});
+    const lastPage = Math.max(Math.ceil(count / limit), 1);
+    const from = count === 0 ? 0 : (page - 1) * limit + 1;
+    const to = Math.min(page * limit, count);
 
-    const rowsUpdate = rows.map((value) => this.mapDataEntity(value));
-    const headers = this.headersTable();
     return {
-      countAll,
-      count,
-      rows: rowsUpdate,
-      headers,
-      page: defaultOptions.page,
-      lastPage,
-      hasMore,
+      rows: rows.map((row) => this.mapDataEntity(row)),
+      meta: {
+        total: countAll,
+        active,
+        inactive,
+        filtered: count,
+        perPage: limit,
+        currentPage: page,
+        lastPage,
+        from,
+        to,
+        hasNextPage: page < lastPage,
+        hasPrevPage: page > 1,
+      },
     };
   }
 
@@ -103,43 +90,37 @@ class GetAllSocioUseCase {
         ],
       });
     });
-    if (!withTrashed) {
-      where[Op.and].push({ '$User.deletedAt$': { [Op.ne]: null } });
+
+    if (withTrashed === 'active') {
+      where.deletedAt = null;
     }
+
+    if (withTrashed === 'inactive') {
+      where.deletedAt = { [Op.ne]: null };
+    }
+
     return where;
   }
 
   mapDataEntity(value) {
     const { User, totalDependents, ...rest } = value;
-    const {
-      Profile: { lastName, secondLastName },
+    const { Profile, uid, name, email } = User;
+    const lastName = Profile?.lastName;
+    const secondLastName = Profile?.secondLastName;
+
+    const fullName = [name, lastName, secondLastName].filter((v) => v != null).join(' ');
+
+    const socio = new Socio(
       uid,
-      name,
+      fullName,
       email,
-    } = User;
-    const fullName = `${name} ${lastName} ${secondLastName}`;
-
-    const transformedDates = {
-      createdAt: timeUtil.transformTime(rest.createdAt),
-      updatedAt: timeUtil.transformTime(rest.updatedAt),
-      deletedAt: timeUtil.transformTime(rest.deletedAt),
-    };
-
-    return new Socio(uid, fullName, email, totalDependents, ...Object.values(transformedDates));
-  }
-
-  headersTable() {
-    const headers = [
-      { header: '#', key: 'uid' },
-      { header: 'Nombre', key: 'fullName' },
-      { header: 'Email', key: 'email' },
-      { header: 'Dependientes', key: 'totalDependents' },
-      { header: 'Estatus', key: 'deletedAt' },
-      { header: 'Creado', key: 'createdAt' },
-      { header: 'Actualizado', key: 'updatedAt' },
-      { header: 'Acciones', key: 'actions' },
-    ];
-    return headers;
+      totalDependents,
+      rest.deletedAt ? 'inactive' : 'active',
+      timeUtil.transformTime(rest.createdAt),
+      timeUtil.transformTime(rest.updatedAt),
+      rest.deletedAt
+    );
+    return socio.toResponse();
   }
 }
 
