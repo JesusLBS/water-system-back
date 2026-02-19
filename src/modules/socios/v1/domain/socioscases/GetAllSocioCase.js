@@ -13,8 +13,8 @@ class GetAllSocioUseCase {
       search: '',
       limit: 10,
       page: 1,
-      sort: 'id',
-      direction: 'ASC',
+      sort: 'updatedAt',
+      direction: 'DESC',
       withTrashed: 'active', // active | inactive | all
     };
   }

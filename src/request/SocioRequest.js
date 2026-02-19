@@ -1,20 +1,34 @@
 const { check } = require('express-validator');
 const ValidateHelper = require('../helpers/validation/validateHelper');
-const errorValueParameter = 'The parameter is required';
+
 const valid = new ValidateHelper();
 
 exports.SocioRequest = [
-  check('userData', errorValueParameter)
+  check('userData')
     .exists()
-    .custom((value) => valid.isValid(value)),
-  check('addressData', errorValueParameter)
+    .withMessage('userData is required')
+    .notEmpty()
+    .withMessage('userData cannot be empty')
+    .isObject()
+    .withMessage('userData must be an object'),
+
+  check('addressData')
     .exists()
-    .custom((value) => valid.isValid(value)),
-  check('profileData', errorValueParameter)
+    .withMessage('addressData is required')
+    .notEmpty()
+    .withMessage('addressData cannot be empty')
+    .isObject()
+    .withMessage('addressData must be an object'),
+
+  check('profileData')
     .exists()
-    .custom((value) => valid.isValid(value)),
+    .withMessage('profileData is required')
+    .notEmpty()
+    .withMessage('profileData cannot be empty')
+    .isObject()
+    .withMessage('profileData must be an object'),
 ];
 
 exports.SocioValidation = (req, res, next) => {
-  valid.validationResult(req, res, next);
+  valid.handleValidation(req, res, next);
 };

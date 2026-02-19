@@ -89,7 +89,6 @@ class SocioRepositoryImpl extends SocioRepository {
             {
               model: db.Profile,
               attributes: ['lastName', 'secondLastName', 'mobile', 'birthdate'],
-              required: true,
               include: [
                 {
                   model: db.Address,
