@@ -1,12 +1,25 @@
 class Socio {
-  constructor(uid, fullName, email, totalDependents, createdAt, updatedAt, deletedAt) {
+  constructor(uid, fullName, email, totalDependents, status, createdAt, updatedAt, deletedAt) {
     this.uid = uid;
     this.fullName = fullName;
     this.email = email;
     this.totalDependents = totalDependents;
+    this.status = status;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.deletedAt = deletedAt;
+  }
+
+  toResponse() {
+    return {
+      uid: this.uid,
+      fullName: this.fullName,
+      email: this.email,
+      totalDependents: this.totalDependents,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
   }
 }
 
