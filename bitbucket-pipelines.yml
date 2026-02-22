@@ -6,45 +6,73 @@ pipelines:
       - step:
           name: Sync Postman Collection
           script:
+            - set -e
+
             # 1) Install required tools
-            - apk add --no-cache curl jq bash
+            - apk add --no-cache curl jq
 
-            # 2) Set static variables (for testing)
+            # 2) Variables
             - COLLECTION_FILE="postman/collections/water-system-back-v1.json"
+            - API_URL="https://api.getpostman.com"
+            - RESPONSE_FILE="response.json"
 
-            # 3) Validate JSON collection file
+            # 3) Validate JSON file
             - |
               if [ ! -f "$COLLECTION_FILE" ]; then
-                echo "❌ Collection file not found: $COLLECTION_FILE"
+                echo "Collection file not found"
                 exit 1
               fi
-              echo "✅ Found collection file at: $COLLECTION_FILE"
-              echo "   Extracting name field with jq:"
-              jq '.info.name' "$COLLECTION_FILE"
 
-            # 4) Check if collection exists on Postman
-            - |
-              STATUS_CODE=$(curl -s -o /dev/null -w '%{http_code}' \
-                -X GET "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
-                -H "X-Api-Key: $POSTMAN_API_KEY")
+              jq empty "$COLLECTION_FILE" || {
+                echo "Invalid JSON file"
+                exit 1
+              }
 
-            # 5) Update or create collection
+            # 4) Validate API Key
             - |
-              if [ "$STATUS_CODE" = "200" ]; then
-                echo "✅ Collection exists, updating..."
-                jq -c '{collection: .}' "$COLLECTION_FILE" | \
-                  curl -s -X PUT "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
-                    -H "X-Api-Key: $POSTMAN_API_KEY" \
-                    -H "Content-Type: application/json" \
-                    -d @- | jq
-              else
-                echo "❌ Collection does not exist, creating in workspace: $POSTMAN_WORKSPACE_ID..."
-                jq -c '{collection: .}' "$COLLECTION_FILE" | \
-                  curl -s -X POST "https://api.getpostman.com/collections?workspace=$POSTMAN_WORKSPACE_ID" \
-                    -H "X-Api-Key: $POSTMAN_API_KEY" \
-                    -H "Content-Type: application/json" \
-                    -d @- | jq
+              AUTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+                -H "X-Api-Key: $POSTMAN_API_KEY" \
+                "$API_URL/workspaces")
+
+              if [ "$AUTH_STATUS" != "200" ]; then
+                echo "Invalid POSTMAN_API_KEY"
+                exit 1
               fi
 
-            # 6) Done
-            - echo "✅ Postman collection sync completed successfully"
+            # 5) Check if collection exists
+            - |
+              STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+                -X GET "$API_URL/collections/$POSTMAN_COLLECTION_UID" \
+                -H "X-Api-Key: $POSTMAN_API_KEY")
+
+            # 6) Update or Create (no command substitution)
+            - |
+              if [ "$STATUS_CODE" = "200" ]; then
+                echo "Updating collection..."
+
+                HTTP_STATUS=$(jq -c '{collection: .}' "$COLLECTION_FILE" | \
+                  curl -s -o "$RESPONSE_FILE" -w "%{http_code}" \
+                  -X PUT "$API_URL/collections/$POSTMAN_COLLECTION_UID" \
+                  -H "X-Api-Key: $POSTMAN_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  -d @-)
+
+              else
+                echo "Creating collection..."
+
+                HTTP_STATUS=$(jq -c '{collection: .}' "$COLLECTION_FILE" | \
+                  curl -s -o "$RESPONSE_FILE" -w "%{http_code}" \
+                  -X POST "$API_URL/collections?workspace=$POSTMAN_WORKSPACE_ID" \
+                  -H "X-Api-Key: $POSTMAN_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  -d @-)
+              fi
+
+              cat "$RESPONSE_FILE" | jq .
+
+              if [ "$HTTP_STATUS" != "200" ] && [ "$HTTP_STATUS" != "201" ]; then
+                echo "Postman API failed with status $HTTP_STATUS"
+                exit 1
+              fi
+
+            - echo "Collection sync completed successfully"
