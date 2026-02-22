@@ -9,12 +9,16 @@ pipelines:
             # 1) Install required tools
             - apk add --no-cache curl jq bash
 
-            # 2) Set variables
+            # 2) Install OpenAPI converter globally
+            - echo "Installing openapi-to-postmanv2..."
+            - npm install -g openapi-to-postmanv2
+
+            # 3) Set variables
             - OPENAPI_FILE="index.yaml"
-            - TMP_COLLECTION_JSON="postman/collections/water-system-back-v1.json"  # archivo fijo en workspace
+            - TMP_COLLECTION_JSON="postman/collections/water-system-back-v1.json"
             - API_URL="https://api.getpostman.com"
 
-            # 3) Verify OpenAPI file exists
+            # 4) Verify OpenAPI file exists
             - |
               if [ ! -f "$OPENAPI_FILE" ]; then
                 echo "❌ OpenAPI file not found: $OPENAPI_FILE"
@@ -22,30 +26,44 @@ pipelines:
               fi
               echo "✅ OpenAPI file exists: $OPENAPI_FILE"
 
-            # 4) Convert OpenAPI → Postman JSON
+            # 5) Convert OpenAPI → Postman JSON
             - |
-              echo "1) Converting OpenAPI to Postman JSON..."
-              npx -y openapi-to-postmanv2 -s "$OPENAPI_FILE" -o "$TMP_COLLECTION_JSON" -p >/dev/null
+              echo "Converting OpenAPI to Postman JSON..."
+              openapi2postmanv2 -s "$OPENAPI_FILE" -o "$TMP_COLLECTION_JSON" -p
+
               if [ ! -s "$TMP_COLLECTION_JSON" ]; then
                 echo "❌ Conversion failed, JSON is empty"
                 exit 1
               fi
-              COLLECTION_NAME="$(jq -r '.info.name' "$TMP_COLLECTION_JSON")"
+
+              COLLECTION_NAME="$(jq -r '.info.name // empty' "$TMP_COLLECTION_JSON")"
+
+              if [ -z "$COLLECTION_NAME" ]; then
+                echo "❌ Collection name not found in JSON"
+                exit 1
+              fi
+
               echo "✅ Conversion OK. Collection name: $COLLECTION_NAME"
 
-            # 5) Helper function to find UID by name
+            # 6) Helper function to find UID by name
             - |
               find_uid_by_name() {
-                curl -s -X GET "$API_URL/collections" -H "X-Api-Key: $POSTMAN_API_KEY" \
-                | jq -r --arg NAME "$COLLECTION_NAME" '.collections[] | select(.name==$NAME) | .uid' | head -n1
+                curl -s -X GET "$API_URL/collections" \
+                  -H "X-Api-Key: $POSTMAN_API_KEY" \
+                | jq -r --arg NAME "$COLLECTION_NAME" \
+                  '.collections[] | select(.name==$NAME) | .uid' | head -n1
               }
 
-            # 6) Determine if collection exists
+            # 7) Determine if collection exists
             - |
               TARGET_UID="$POSTMAN_COLLECTION_UID"
               EXISTS=0
+
               if [ -n "$TARGET_UID" ]; then
-                CODE=$(curl -s -o /dev/null -w "%{http_code}" -X GET "$API_URL/collections/$TARGET_UID" -H "X-Api-Key: $POSTMAN_API_KEY")
+                CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+                  -X GET "$API_URL/collections/$TARGET_UID" \
+                  -H "X-Api-Key: $POSTMAN_API_KEY")
+
                 if [ "$CODE" = "200" ]; then
                   EXISTS=1
                 else
@@ -58,25 +76,27 @@ pipelines:
                 [ -n "$TARGET_UID" ] && EXISTS=1
               fi
 
-            # 7) Prepare payload
+            # 8) Prepare payload
             - |
               PAYLOAD_CMD=(jq -c '{collection: .}' "$TMP_COLLECTION_JSON")
 
-            # 8) Update or create collection
+            # 9) Update or create collection
             - |
               if [ $EXISTS -eq 1 ]; then
-                echo "2) Updating existing collection (UID: $TARGET_UID)..."
+                echo "Updating existing collection (UID: $TARGET_UID)..."
                 "${PAYLOAD_CMD[@]}" | curl -s -X PUT "$API_URL/collections/$TARGET_UID" \
                   -H "X-Api-Key: $POSTMAN_API_KEY" \
-                  -H "Content-Type: application/json" -d @- | jq
+                  -H "Content-Type: application/json" \
+                  -d @- | jq
               else
-                echo "2) Creating collection in workspace: $POSTMAN_WORKSPACE_ID..."
+                echo "Creating collection in workspace: $POSTMAN_WORKSPACE_ID..."
                 "${PAYLOAD_CMD[@]}" | curl -s -X POST "$API_URL/collections?workspace=$POSTMAN_WORKSPACE_ID" \
                   -H "X-Api-Key: $POSTMAN_API_KEY" \
-                  -H "Content-Type: application/json" -d @- | jq
+                  -H "Content-Type: application/json" \
+                  -d @- | jq
               fi
 
-            # 9) Cleanup
+            # 10) Cleanup
             - |
               rm -f "$TMP_COLLECTION_JSON"
               echo "✅ Postman collection sync completed successfully"
