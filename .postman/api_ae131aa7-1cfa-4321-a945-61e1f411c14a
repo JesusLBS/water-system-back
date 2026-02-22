@@ -9,7 +9,7 @@ id = ae131aa7-1cfa-4321-a945-61e1f411c14a
 
 [config.relations.collections]
 rootDirectory = postman/collections
-files[] = {"id":"19932658-e7b06905-e20b-4854-b067-50929a2d1b8d","path":"water-system-back-v1.json","metaData":{"generateCollectionPreferences":"{\"requestNameSource\":\"Fallback\",\"indentCharacter\":\"Space\",\"parametersResolution\":\"Example\",\"folderStrategy\":\"Paths\",\"nestedFolderHierarchy\":false,\"includeAuthInfoInExample\":true,\"enableOptionalParameters\":true,\"keepImplicitHeaders\":false,\"includeDeprecated\":true,\"alwaysInheritAuthentication\":false,\"updateCollectionSync\":true,\"requestParametersResolution\":\"Example\",\"exampleParametersResolution\":\"Example\"}"}}
+files[] = {"id":"19932658-230f9ccf-d387-4c0f-869f-3cef286e1ede","path":"water-system-back-v1.json","metaData":{"generateCollectionPreferences":"{\"requestNameSource\":\"Fallback\",\"indentCharacter\":\"Space\",\"parametersResolution\":\"Example\",\"folderStrategy\":\"Paths\",\"nestedFolderHierarchy\":false,\"includeAuthInfoInExample\":true,\"enableOptionalParameters\":true,\"keepImplicitHeaders\":false,\"includeDeprecated\":true,\"alwaysInheritAuthentication\":false,\"updateCollectionSync\":true,\"requestParametersResolution\":\"Example\",\"exampleParametersResolution\":\"Example\"}"}}
 
 [config.relations.collections.metaData]
 

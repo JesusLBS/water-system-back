@@ -15,6 +15,8 @@ tags:
     description: "Operaciones sobre usuarios desde administración"
   - name: dashboard/profile
     description: "Dashboard / perfil"
+  - name: admin/socios
+    description: "Operaciones sobre socios desde administración"
 
 paths:
   # AUTH
@@ -47,7 +49,6 @@ paths:
           description: "Logged out"
       security:
         - bearerAuth: []
-          apiKeyAuth: []
 
 
   # ADMIN / USERS
@@ -80,7 +81,6 @@ paths:
                 $ref: "#/components/schemas/UserListResponse"
       security:
         - bearerAuth: []
-          apiKeyAuth: []
 
     post:
       summary: "Create user"
@@ -100,7 +100,6 @@ paths:
                 $ref: "#/components/schemas/User"
       security:
         - bearerAuth: []
-          apiKeyAuth: []
 
   /admin/users/{user_id}:
     parameters:
@@ -117,7 +116,6 @@ paths:
                 $ref: "#/components/schemas/User"
       security:
         - bearerAuth: []
-          apiKeyAuth: []
 
     patch:
       summary: "Update user (partial)"
@@ -137,7 +135,6 @@ paths:
                 $ref: "#/components/schemas/User"
       security:
         - bearerAuth: []
-          apiKeyAuth: []
 
     delete:
       summary: "Delete user (permanent)"
@@ -147,7 +144,6 @@ paths:
           description: "User permanently deleted"
       security:
         - bearerAuth: []
-          apiKeyAuth: []
 
   /admin/users/{user_id}/activate:
     post:
@@ -160,7 +156,6 @@ paths:
           description: "User activated successfully"
       security:
         - bearerAuth: []
-          apiKeyAuth: []
 
   /admin/users/{user_id}/deactivate:
     post:
@@ -173,7 +168,6 @@ paths:
           description: "User deactivated successfully"
       security:
         - bearerAuth: []
-          apiKeyAuth: []
 
   # DASHBOARD / PROFILE
   /dashboard/profile:
@@ -189,7 +183,6 @@ paths:
                 $ref: "#/components/schemas/User"
       security:
         - bearerAuth: []
-          apiKeyAuth: []
 
     patch:
       summary: "Edit my profile (partial)"
@@ -205,7 +198,6 @@ paths:
           description: "Profile updated"
       security:
         - bearerAuth: []
-          apiKeyAuth: []
 
     post:
       summary: "Update my password"
@@ -221,7 +213,125 @@ paths:
           description: "Password updated"
       security:
         - bearerAuth: []
-          apiKeyAuth: []
+
+  # ADMIN / SOCIOS
+  /admin/socios:
+    get:
+      summary: "List socios (paginated, filterable)"
+      tags: [admin/socios]
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: "Search socios"
+      responses:
+        "200":
+          description: "Socio list"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SocioListResponse"
+      security:
+        - bearerAuth: []
+
+    post:
+      summary: "Create socio"
+      tags: [admin/socios]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SocioCreate"
+      responses:
+        "201":
+          description: "Socio created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Socio"
+      security:
+        - bearerAuth: []
+
+  /admin/socios/{socio_id}:
+    parameters:
+      - $ref: "#/components/parameters/socioId"
+
+    get:
+      summary: "Get socio by id"
+      tags: [admin/socios]
+      responses:
+        "200":
+          description: "Socio object"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Socio"
+      security:
+        - bearerAuth: []
+
+    patch:
+      summary: "Update socio (partial)"
+      tags: [admin/socios]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SocioUpdate"
+      responses:
+        "200":
+          description: "Socio updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Socio"
+      security:
+        - bearerAuth: []
+
+    delete:
+      summary: "Delete socio (permanent)"
+      tags: [admin/socios]
+      responses:
+        "204":
+          description: "Socio permanently deleted"
+      security:
+        - bearerAuth: []
+
+  /admin/socios/{socio_id}/activate:
+    post:
+      summary: "Activate a socio"
+      tags: [admin/socios]
+      parameters:
+        - $ref: "#/components/parameters/socioId"
+      responses:
+        "200":
+          description: "Socio activated successfully"
+      security:
+        - bearerAuth: []
+
+  /admin/socios/{socio_id}/deactivate:
+    post:
+      summary: "Deactivate a socio"
+      tags: [admin/socios]
+      parameters:
+        - $ref: "#/components/parameters/socioId"
+      responses:
+        "200":
+          description: "Socio deactivated successfully"
+      security:
+        - bearerAuth: []
 
 components:
   securitySchemes:
@@ -244,6 +354,14 @@ components:
       schema:
         type: integer
       description: "Numeric user ID"
+    socioId:
+      name: socio_id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: "Numeric socio ID"
+
 
   schemas:
     LoginRequest:
@@ -329,3 +447,49 @@ components:
       required:
         - current_password
         - new_password
+
+    Socio:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        active:
+          type: boolean
+
+    SocioCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+      required:
+        - name
+        - email
+
+    SocioUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        active:
+          type: boolean
+        action:
+          type: string
+          enum: ["activate", "deactivate"]
+
+    SocioListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Socio"
+        meta:
+          type: object

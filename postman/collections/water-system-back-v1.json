@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "e7b06905-e20b-4854-b067-50929a2d1b8d",
+		"_postman_id": "230f9ccf-d387-4c0f-869f-3cef286e1ede",
 		"name": "water-system-back-v1",
 		"description": "API para autenticación, administración de usuarios, dashboard y catálogos. Paths diseñados para agrupar operaciones sobre el mismo recurso.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "19932658-e7b06905-e20b-4854-b067-50929a2d1b8d"
+		"_uid": "19932658-230f9ccf-d387-4c0f-869f-3cef286e1ede"
 	},
 	"item": [
 		{
@@ -19,7 +19,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "be284b26-67d9-4bd2-9945-cb11a95b36d3",
+										"id": "a2b4f1cd-50ee-468c-81b4-8cc25409d606",
 										"exec": [
 											"// Safe JSON parse",
 											"let responseJson = {};",
@@ -47,7 +47,8 @@
 											"    pm.environment.set(\"bearerToken\", responseJson.data.token);",
 											"} else {",
 											"    console.error(\"Token not found in response\");",
-											"}"
+											"}",
+											""
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -55,7 +56,7 @@
 									}
 								}
 							],
-							"id": "3412504c-9db7-4f9f-82ad-713b90f5e581",
+							"id": "a2a6e722-1422-4c43-90fa-df592d4f0c35",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -114,7 +115,7 @@
 							},
 							"response": [
 								{
-									"id": "bbbfaa53-255b-4449-a210-bd02e4fa8c5d",
+									"id": "2189ba92-33a9-4c99-9a7a-e7142ac4ba43",
 									"name": "Auth response",
 									"originalRequest": {
 										"method": "POST",
@@ -169,14 +170,14 @@
 							]
 						}
 					],
-					"id": "63fd3798-6a83-4346-851c-ee4983e59b2e"
+					"id": "6e783423-5030-4373-a647-796fe0d69ea0"
 				},
 				{
 					"name": "logout",
 					"item": [
 						{
 							"name": "Logout",
-							"id": "abb19907-aeb2-46e8-9c48-5056ab577ca4",
+							"id": "c8e7b815-05dd-49d0-a5b0-f40901e2f60c",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -206,7 +207,7 @@
 							},
 							"response": [
 								{
-									"id": "63fb79f0-595b-453b-b447-a6105706405e",
+									"id": "67debaf8-a498-4319-a4bd-cae302f5d606",
 									"name": "Logged out",
 									"originalRequest": {
 										"method": "POST",
@@ -237,10 +238,10 @@
 							]
 						}
 					],
-					"id": "923f3edf-1448-44cb-acf1-c93dc2665bec"
+					"id": "d2913e3a-5eb6-4578-a454-d2a748946da2"
 				}
 			],
-			"id": "331067f6-362b-4242-9b03-305fd7346b42"
+			"id": "1cb7a7ba-30a8-4099-9c31-324187cf73a3"
 		},
 		{
 			"name": "admin",
@@ -256,7 +257,7 @@
 									"item": [
 										{
 											"name": "Activate a user",
-											"id": "40c25503-6f24-4a4d-8ab1-562a635ff4cf",
+											"id": "fb347c54-f25d-4077-91f3-14be3c1466b4",
 											"protocolProfileBehavior": {
 												"disableBodyPruning": true
 											},
@@ -287,7 +288,7 @@
 													"variable": [
 														{
 															"key": "user_id",
-															"value": "2890",
+															"value": "5156",
 															"description": "Numeric user ID"
 														}
 													]
@@ -295,7 +296,7 @@
 											},
 											"response": [
 												{
-													"id": "ea04e11c-c915-4202-a9ec-7d2b3999a36d",
+													"id": "816f03fe-b3d0-48de-b164-a9a7bf09968a",
 													"name": "User activated successfully",
 													"originalRequest": {
 														"method": "POST",
@@ -320,7 +321,7 @@
 															"variable": [
 																{
 																	"key": "user_id",
-																	"value": "2890",
+																	"value": "5156",
 																	"description": "Numeric user ID"
 																}
 															]
@@ -335,14 +336,14 @@
 											]
 										}
 									],
-									"id": "9266786e-8fc8-488a-926e-b73a8b570281"
+									"id": "932ed7ae-6580-4e9a-804f-bcef40116c52"
 								},
 								{
 									"name": "deactivate",
 									"item": [
 										{
 											"name": "Deactivate a user",
-											"id": "f5fb9916-c16c-4077-b02b-25ca2727910a",
+											"id": "4a61468b-81c0-4a08-86fe-43bebe04ef79",
 											"protocolProfileBehavior": {
 												"disableBodyPruning": true
 											},
@@ -373,7 +374,7 @@
 													"variable": [
 														{
 															"key": "user_id",
-															"value": "2890",
+															"value": "5156",
 															"description": "Numeric user ID"
 														}
 													]
@@ -381,7 +382,7 @@
 											},
 											"response": [
 												{
-													"id": "27516b67-1c8e-43ff-8b6a-04b29e9f3202",
+													"id": "5d39864f-6ac4-49c7-a1e2-b5ecedce7394",
 													"name": "User deactivated successfully",
 													"originalRequest": {
 														"method": "POST",
@@ -406,7 +407,7 @@
 															"variable": [
 																{
 																	"key": "user_id",
-																	"value": "2890",
+																	"value": "5156",
 																	"description": "Numeric user ID"
 																}
 															]
@@ -421,11 +422,11 @@
 											]
 										}
 									],
-									"id": "5baba683-e1a6-4c2f-ba64-0e5f87ac1201"
+									"id": "bf43d133-53a7-4be8-8c6b-fabb4606a551"
 								},
 								{
 									"name": "Get user by id",
-									"id": "4a67c467-9a72-485d-a4be-6f2cc1990d7c",
+									"id": "2ba804c4-fda7-4283-8d30-37f3bd0aae49",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -460,7 +461,7 @@
 											"variable": [
 												{
 													"key": "user_id",
-													"value": "2890",
+													"value": "5156",
 													"description": "Numeric user ID"
 												}
 											]
@@ -468,7 +469,7 @@
 									},
 									"response": [
 										{
-											"id": "0774eabd-13bf-40d0-81de-402d7e248ccb",
+											"id": "7cb114be-ecd6-43c4-af57-c480ffb6602c",
 											"name": "User object",
 											"originalRequest": {
 												"method": "GET",
@@ -496,7 +497,7 @@
 													"variable": [
 														{
 															"key": "user_id",
-															"value": "2890",
+															"value": "5156",
 															"description": "Numeric user ID"
 														}
 													]
@@ -512,13 +513,13 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"id\": 2203,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
+											"body": "{\n  \"id\": 4602,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
 										}
 									]
 								},
 								{
 									"name": "Update user (partial)",
-									"id": "33035dae-5faa-4fa9-b819-61f715631b69",
+									"id": "6b7601a8-6207-4fff-a589-e6eec0a23b1f",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -567,7 +568,7 @@
 											"variable": [
 												{
 													"key": "user_id",
-													"value": "2890",
+													"value": "5156",
 													"description": "Numeric user ID"
 												}
 											]
@@ -575,7 +576,7 @@
 									},
 									"response": [
 										{
-											"id": "01fe23ae-3ef9-4784-af0f-01c24d2b516f",
+											"id": "ee0b8a22-e0ca-49a6-b318-e2e4c40aea90",
 											"name": "User updated",
 											"originalRequest": {
 												"method": "PATCH",
@@ -617,7 +618,7 @@
 													"variable": [
 														{
 															"key": "user_id",
-															"value": "2890",
+															"value": "5156",
 															"description": "Numeric user ID"
 														}
 													]
@@ -633,13 +634,13 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"id\": 2203,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
+											"body": "{\n  \"id\": 4602,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
 										}
 									]
 								},
 								{
 									"name": "Delete user (permanent)",
-									"id": "53ac9184-a317-4b0a-8beb-59306405e514",
+									"id": "9eaf9327-1a3f-45b5-a68d-328e9960b496",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -669,7 +670,7 @@
 											"variable": [
 												{
 													"key": "user_id",
-													"value": "2890",
+													"value": "5156",
 													"description": "Numeric user ID"
 												}
 											]
@@ -677,7 +678,7 @@
 									},
 									"response": [
 										{
-											"id": "e3940509-c356-48ee-bc43-c442ad1eea6d",
+											"id": "af9724e8-4eb4-45e9-9c85-73a86e4317cc",
 											"name": "User permanently deleted",
 											"originalRequest": {
 												"method": "DELETE",
@@ -701,7 +702,7 @@
 													"variable": [
 														{
 															"key": "user_id",
-															"value": "2890",
+															"value": "5156",
 															"description": "Numeric user ID"
 														}
 													]
@@ -716,11 +717,11 @@
 									]
 								}
 							],
-							"id": "4b1e0b83-3fa3-4e4e-b5c4-98656fe5281f"
+							"id": "f9582979-571b-4570-b7f7-8f9a686f3472"
 						},
 						{
 							"name": "List users (paginated, filterable)",
-							"id": "d28aa2ed-da0d-4282-a41b-ded7f3dd2582",
+							"id": "a8d1ac05-f820-4336-9593-ed975982895e",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -770,7 +771,7 @@
 							},
 							"response": [
 								{
-									"id": "57875d6c-abc2-44bd-bf90-8a7bd50d6675",
+									"id": "4ccb2947-4c56-4076-a115-da42393a78eb",
 									"name": "User list",
 									"originalRequest": {
 										"method": "GET",
@@ -821,13 +822,13 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"data\": [\n    {\n      \"id\": 3030,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"email\": \"string\",\n      \"active\": false\n    },\n    {\n      \"id\": 862,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"email\": \"string\",\n      \"active\": false\n    }\n  ],\n  \"meta\": {}\n}"
+									"body": "{\n  \"data\": [\n    {\n      \"id\": 633,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"email\": \"string\",\n      \"active\": false\n    },\n    {\n      \"id\": 7401,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"email\": \"string\",\n      \"active\": true\n    }\n  ],\n  \"meta\": {}\n}"
 								}
 							]
 						},
 						{
 							"name": "Create user",
-							"id": "679da758-790c-4ef5-a3c7-71ec094b3342",
+							"id": "d8a6e9b5-8106-4e63-ba68-f7161b57b4cc",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -876,7 +877,7 @@
 							},
 							"response": [
 								{
-									"id": "3089b551-45a9-4dbf-88da-bf5a7af7dd6a",
+									"id": "f17ee445-d309-469d-b377-56e5b904e9eb",
 									"name": "User created",
 									"originalRequest": {
 										"method": "POST",
@@ -926,15 +927,766 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"id\": 2203,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
+									"body": "{\n  \"id\": 4602,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
 								}
 							]
 						}
 					],
-					"id": "0ce29a57-691f-4479-bad6-edff375962c7"
+					"id": "d84bc573-9596-4ca2-aaec-91f1833dd0ca"
+				},
+				{
+					"name": "socios",
+					"item": [
+						{
+							"name": "{socio_id}",
+							"item": [
+								{
+									"name": "activate",
+									"item": [
+										{
+											"name": "Activate a socio",
+											"id": "489ad070-05d0-4ef4-a5f3-a8d5bc4042e0",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{bearerToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"dataId\": \"a8e2c5e3-e2c9-438b-9483-9161997f003f\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/admin/socios/restore",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"socios",
+														"restore"
+													]
+												}
+											},
+											"response": [
+												{
+													"id": "f99bcefc-f585-43ae-85f7-bedd21222ab8",
+													"name": "Socio activated successfully",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"description": "Added as a part of security scheme: bearer",
+																"key": "Authorization",
+																"value": "Bearer <token>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/admin/socios/:socio_id/activate",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"admin",
+																"socios",
+																":socio_id",
+																"activate"
+															],
+															"variable": [
+																{
+																	"key": "socio_id",
+																	"value": "5156",
+																	"description": "Numeric socio ID"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": []
+												}
+											]
+										}
+									],
+									"id": "1e099728-44f7-4009-8ff9-71ecd2dd4f5e"
+								},
+								{
+									"name": "deactivate",
+									"item": [
+										{
+											"name": "Deactivate a socio",
+											"id": "a65d9f7d-dd7e-4f2d-8263-9ecddb670ecd",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{bearerToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"dataId\": \"a8e2c5e3-e2c9-438b-9483-9161997f003f\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/admin/socios/deactivate",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"socios",
+														"deactivate"
+													]
+												}
+											},
+											"response": [
+												{
+													"id": "fcaac99e-5c10-4ab1-9eae-519e919dabbd",
+													"name": "Socio deactivated successfully",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"description": "Added as a part of security scheme: bearer",
+																"key": "Authorization",
+																"value": "Bearer <token>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/admin/socios/:socio_id/deactivate",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"admin",
+																"socios",
+																":socio_id",
+																"deactivate"
+															],
+															"variable": [
+																{
+																	"key": "socio_id",
+																	"value": "5156",
+																	"description": "Numeric socio ID"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": []
+												}
+											]
+										}
+									],
+									"id": "5c3242cf-db29-434e-ba1b-76277d9a7ef3"
+								},
+								{
+									"name": "Get socio by id",
+									"id": "6a427ef4-b584-4350-80c1-51d4a6565c66",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/admin/socios/:socio_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"socios",
+												":socio_id"
+											],
+											"variable": [
+												{
+													"key": "socio_id",
+													"value": "f38f2c22-e706-40b6-bfe5-ea4d2e1e0378",
+													"description": "Numeric socio ID"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "c1f7e36a-c764-43a4-8621-1cc0e0b4e61e",
+											"name": "Socio object",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/admin/socios/:socio_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"socios",
+														":socio_id"
+													],
+													"variable": [
+														{
+															"key": "socio_id",
+															"value": "5156",
+															"description": "Numeric socio ID"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"id\": 2835,\n  \"name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
+										}
+									]
+								},
+								{
+									"name": "Update socio (partial)",
+									"id": "8813e95e-af20-4d34-b6f1-adab1690bcf5",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"userData\": {\n        \"uid\": \"a8e2c5e3-e2c9-438b-9483-9161997f003f\",\n        \"name\": \"update nam user\",\n        \"email\": \"user_sw73ix@example.com\"\n    },\n    \"addressData\": {\n        \"address\": \"update\",\n        \"city\": \"update\"\n    },\n    \"profileData\": {\n        \"lastName\": \"Last_sw73ix\",\n        \"secondLastName\": \"Second_sw73ix\",\n        \"mobile\": \"7781342804\",\n        \"birthdate\": \"1996-03-15\"\n    }\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/socios",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"socios"
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "364af76c-cfad-4e39-9861-e45fdefa29ad",
+											"name": "Socio updated",
+											"originalRequest": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"name\": \"string\",\n  \"email\": \"string\",\n  \"active\": true,\n  \"action\": \"activate\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/admin/socios/:socio_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"socios",
+														":socio_id"
+													],
+													"variable": [
+														{
+															"key": "socio_id",
+															"value": "5156",
+															"description": "Numeric socio ID"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"id\": 2835,\n  \"name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
+										}
+									]
+								},
+								{
+									"name": "Delete socio (permanent)",
+									"id": "ad257a26-fb1f-4b54-8190-03c8c8283c94",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/admin/socios/:socio_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"socios",
+												":socio_id"
+											],
+											"variable": [
+												{
+													"key": "socio_id",
+													"value": "a8e2c5e3-e2c9-438b-9483-9161997f003f",
+													"description": "Numeric socio ID"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "5922e436-342d-42e6-a124-e149e20d97a5",
+											"name": "Socio permanently deleted",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/admin/socios/:socio_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"socios",
+														":socio_id"
+													],
+													"variable": [
+														{
+															"key": "socio_id",
+															"value": "5156",
+															"description": "Numeric socio ID"
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": []
+										}
+									]
+								}
+							],
+							"id": "77154122-c392-4bba-bf3f-947bae821a16"
+						},
+						{
+							"name": "List socios (paginated, filterable)",
+							"id": "4de9c179-4f56-4e3e-92d3-aab002498a09",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/admin/socios?withTrashed=active",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"socios"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "per_page",
+											"value": "20",
+											"disabled": true
+										},
+										{
+											"key": "search",
+											"value": "string",
+											"description": "Search socios",
+											"disabled": true
+										},
+										{
+											"key": "withTrashed",
+											"value": "active",
+											"description": "active | inactive | all"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "24f7129b-f143-4f2a-bf6d-e4238c11c8d9",
+									"name": "Socio list",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/admin/socios?page=1&per_page=20&search=string",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"socios"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "20"
+												},
+												{
+													"description": "Search socios",
+													"key": "search",
+													"value": "string"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"data\": [\n    {\n      \"id\": 8556,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"active\": false\n    },\n    {\n      \"id\": 9269,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"active\": false\n    }\n  ],\n  \"meta\": {}\n}"
+								}
+							]
+						},
+						{
+							"name": "Create socio",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "9a17a568-da2b-46f5-803c-eeb139187449",
+										"exec": [
+											"// Generate random UUID (v4)",
+											"const uid = crypto.randomUUID();",
+											"",
+											"// Generate random string",
+											"const randomString = Math.random().toString(36).substring(2, 8);",
+											"",
+											"// Generate random email",
+											"const email = `user_${randomString}@example.com`;",
+											"",
+											"// Generate random phone (10 digits)",
+											"const mobile = Math.floor(1000000000 + Math.random() * 9000000000);",
+											"",
+											"// Generate random birthdate (between 1980 and 2005)",
+											"const start = new Date(1980, 0, 1).getTime();",
+											"const end = new Date(2005, 11, 31).getTime();",
+											"const birthdate = new Date(start + Math.random() * (end - start))",
+											"    .toISOString()",
+											"    .split('T')[0];",
+											"",
+											"// Generate random dependents",
+											"const totalDependents = Math.floor(Math.random() * 5);",
+											"",
+											"// Build request body",
+											"const body = {",
+											"    userData: {",
+											"        uid: uid,",
+											"        name: `User_${randomString}`,",
+											"        email: email,",
+											"        roleId: 1",
+											"    },",
+											"    profileData: {",
+											"        lastName: `Last_${randomString}`,",
+											"        secondLastName: `Second_${randomString}`,",
+											"        mobile: mobile,",
+											"        birthdate: birthdate",
+											"    },",
+											"    addressData: {",
+											"        address: `Street_${randomString}`,",
+											"        city: `City_${randomString}`",
+											"    },",
+											"    socioData: {",
+											"        totalDependents: totalDependents",
+											"    }",
+											"};",
+											"",
+											"// Set body as environment variable",
+											"pm.environment.set(\"socioBody\", JSON.stringify(body));",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "c2d43727-1b96-4a24-97cd-25015bc9747e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{socioBody}}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/socios",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"socios"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "239db5be-de2f-419c-a002-ce6d2a0b2ff5",
+									"name": "Socio created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"string\",\n  \"email\": \"string\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/socios",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"socios"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": 2835,\n  \"name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
+								}
+							]
+						}
+					],
+					"id": "aedfd24b-fae5-4535-9a2a-d75bbff445a5"
 				}
 			],
-			"id": "9636c345-50e7-48ff-a2dc-0e87a5f8b806"
+			"id": "d7f14017-7f05-4744-8955-9b600ad618c6"
 		},
 		{
 			"name": "dashboard",
@@ -944,7 +1696,7 @@
 					"item": [
 						{
 							"name": "Get my profile",
-							"id": "c4a65c4e-ec6a-4f43-8765-892160937e66",
+							"id": "a3450db6-01fb-45bb-957c-8abf12cec253",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -979,7 +1731,7 @@
 							},
 							"response": [
 								{
-									"id": "d609d51d-3ece-46fd-a313-e81b5f28fb72",
+									"id": "c7fca48b-30f4-442e-bc8d-8fe6ba658ab6",
 									"name": "Authenticated user profile",
 									"originalRequest": {
 										"method": "GET",
@@ -1015,13 +1767,13 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"id\": 2203,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
+									"body": "{\n  \"id\": 4602,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"email\": \"string\",\n  \"active\": false\n}"
 								}
 							]
 						},
 						{
 							"name": "Edit my profile (partial)",
-							"id": "d501f969-5995-4361-b8e1-6603f2496f3e",
+							"id": "643ee98d-e491-412a-a01f-8930a2b59810",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1066,7 +1818,7 @@
 							},
 							"response": [
 								{
-									"id": "744af555-ec46-47ea-bf11-c0c786a288f6",
+									"id": "dfb3369c-0a43-4109-aa31-271577143edb",
 									"name": "Profile updated",
 									"originalRequest": {
 										"method": "PATCH",
@@ -1112,7 +1864,7 @@
 						},
 						{
 							"name": "Update my password",
-							"id": "a8f7586f-402b-4369-8bab-1d7c06fca49d",
+							"id": "90627203-8c2a-4b66-80b0-a11a686f816f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1157,7 +1909,7 @@
 							},
 							"response": [
 								{
-									"id": "5a25259c-2191-46d9-860a-710852ebc2ca",
+									"id": "90dabf9a-5158-4df5-a4c9-0bb0ccb383b0",
 									"name": "Password updated",
 									"originalRequest": {
 										"method": "POST",
@@ -1202,15 +1954,15 @@
 							]
 						}
 					],
-					"id": "2603d23f-072c-464b-9336-8a004913d220"
+					"id": "678fcb3e-55de-44ee-8bf6-8b311e1af55d"
 				}
 			],
-			"id": "4650e344-9461-4283-bc91-dd4288d2d4ce"
+			"id": "a37a4045-3b1a-4f53-b31a-d59ee12b8c92"
 		}
 	],
 	"variable": [
 		{
-			"id": "f5e313e7-55ba-40c8-a533-e05367eff24e",
+			"id": "2622c36f-5dd3-46e9-a161-76af6e879a87",
 			"key": "baseUrl",
 			"value": "{{base_url}}/v1"
 		}
