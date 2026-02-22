@@ -1,4 +1,4 @@
-image: node:20-alpine
+image: alpine:3.19
 
 pipelines:
   branches:
@@ -9,94 +9,42 @@ pipelines:
             # 1) Install required tools
             - apk add --no-cache curl jq bash
 
-            # 2) Install OpenAPI converter globally
-            - echo "Installing openapi-to-postmanv2..."
-            - npm install -g openapi-to-postmanv2
+            # 2) Set static variables (for testing)
+            - COLLECTION_FILE="postman/collections/water-system-back-v1.json"
 
-            # 3) Set variables
-            - OPENAPI_FILE="index.yaml"
-            - TMP_COLLECTION_JSON="postman/collections/water-system-back-v1.json"
-            - API_URL="https://api.getpostman.com"
-
-            # 4) Verify OpenAPI file exists
+            # 3) Validate JSON collection file
             - |
-              if [ ! -f "$OPENAPI_FILE" ]; then
-                echo "❌ OpenAPI file not found: $OPENAPI_FILE"
+              if [ ! -f "$COLLECTION_FILE" ]; then
+                echo "❌ Collection file not found: $COLLECTION_FILE"
                 exit 1
               fi
-              echo "✅ OpenAPI file exists: $OPENAPI_FILE"
+              echo "✅ Found collection file at: $COLLECTION_FILE"
+              echo "   Extracting name field with jq:"
+              jq '.info.name' "$COLLECTION_FILE"
 
-            # 5) Convert OpenAPI → Postman JSON
+            # 4) Check if collection exists on Postman
             - |
-              echo "Converting OpenAPI to Postman JSON..."
-              openapi2postmanv2 -s "$OPENAPI_FILE" -o "$TMP_COLLECTION_JSON" -p
+              STATUS_CODE=$(curl -s -o /dev/null -w '%{http_code}' \
+                -X GET "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
+                -H "X-Api-Key: $POSTMAN_API_KEY")
 
-              if [ ! -s "$TMP_COLLECTION_JSON" ]; then
-                echo "❌ Conversion failed, JSON is empty"
-                exit 1
-              fi
-
-              COLLECTION_NAME="$(jq -r '.info.name // empty' "$TMP_COLLECTION_JSON")"
-
-              if [ -z "$COLLECTION_NAME" ]; then
-                echo "❌ Collection name not found in JSON"
-                exit 1
-              fi
-
-              echo "✅ Conversion OK. Collection name: $COLLECTION_NAME"
-
-            # 6) Helper function to find UID by name
+            # 5) Update or create collection
             - |
-              find_uid_by_name() {
-                curl -s -X GET "$API_URL/collections" \
-                  -H "X-Api-Key: $POSTMAN_API_KEY" \
-                | jq -r --arg NAME "$COLLECTION_NAME" \
-                  '.collections[] | select(.name==$NAME) | .uid' | head -n1
-              }
-
-            # 7) Determine if collection exists
-            - |
-              TARGET_UID="$POSTMAN_COLLECTION_UID"
-              EXISTS=0
-
-              if [ -n "$TARGET_UID" ]; then
-                CODE=$(curl -s -o /dev/null -w "%{http_code}" \
-                  -X GET "$API_URL/collections/$TARGET_UID" \
-                  -H "X-Api-Key: $POSTMAN_API_KEY")
-
-                if [ "$CODE" = "200" ]; then
-                  EXISTS=1
-                else
-                  echo "⚠️ UID $TARGET_UID not found, searching by name..."
-                  TARGET_UID="$(find_uid_by_name || true)"
-                  [ -n "$TARGET_UID" ] && EXISTS=1
-                fi
+              if [ "$STATUS_CODE" = "200" ]; then
+                echo "✅ Collection exists, updating..."
+                jq -c '{collection: .}' "$COLLECTION_FILE" | \
+                  curl -s -X PUT "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
+                    -H "X-Api-Key: $POSTMAN_API_KEY" \
+                    -H "Content-Type: application/json" \
+                    -d @- | jq
               else
-                TARGET_UID="$(find_uid_by_name || true)"
-                [ -n "$TARGET_UID" ] && EXISTS=1
+                echo "❌ Collection does not exist, creating in workspace: $POSTMAN_WORKSPACE_ID..."
+                jq -c '{collection: .}' "$COLLECTION_FILE" | \
+                  curl -s -X POST "https://api.getpostman.com/collections?workspace=$POSTMAN_WORKSPACE_ID" \
+                    -H "X-Api-Key: $POSTMAN_API_KEY" \
+                    -H "Content-Type: application/json" \
+                    -d @- | jq
               fi
 
-            # 8) Prepare payload
-            - |
-              PAYLOAD_CMD=(jq -c '{collection: .}' "$TMP_COLLECTION_JSON")
-
-            # 9) Update or create collection
-            - |
-              if [ $EXISTS -eq 1 ]; then
-                echo "Updating existing collection (UID: $TARGET_UID)..."
-                "${PAYLOAD_CMD[@]}" | curl -s -X PUT "$API_URL/collections/$TARGET_UID" \
-                  -H "X-Api-Key: $POSTMAN_API_KEY" \
-                  -H "Content-Type: application/json" \
-                  -d @- | jq
-              else
-                echo "Creating collection in workspace: $POSTMAN_WORKSPACE_ID..."
-                "${PAYLOAD_CMD[@]}" | curl -s -X POST "$API_URL/collections?workspace=$POSTMAN_WORKSPACE_ID" \
-                  -H "X-Api-Key: $POSTMAN_API_KEY" \
-                  -H "Content-Type: application/json" \
-                  -d @- | jq
-              fi
-
-            # 10) Cleanup
-            - |
-              rm -f "$TMP_COLLECTION_JSON"
-              echo "✅ Postman collection sync completed successfully"
+            # 6) Done
+            - echo "✅ Postman collection sync completed successfully"
