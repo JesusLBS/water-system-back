@@ -17,6 +17,8 @@ tags:
     description: "Dashboard / perfil"
   - name: admin/socios
     description: "Operaciones sobre socios desde administración"
+  - name: admin/water-lines
+    description: "Operaciones sobre líneas de agua desde administración"
 
 paths:
   # AUTH
@@ -333,6 +335,141 @@ paths:
       security:
         - bearerAuth: []
 
+  # ADMIN / WATER LINES
+  /admin/water-lines:
+    get:
+      summary: "List water lines (paginated, filterable)"
+      tags: [admin/water-lines]
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: "Search water lines"
+      responses:
+        "200":
+          description: "Water line list"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WaterLineListResponse"
+      security:
+        - bearerAuth: []
+
+    post:
+      summary: "Create water line"
+      tags: [admin/water-lines]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WaterLineCreate"
+      responses:
+        "201":
+          description: "Water line created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WaterLine"
+      security:
+        - bearerAuth: []
+
+  /admin/water-lines/options:
+    get:
+      summary: "Get water lines for select options"
+      tags: [admin/water-lines]
+      responses:
+        "200":
+          description: "Water line options list"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WaterLineOption"
+      security:
+        - bearerAuth: []
+
+  /admin/water-lines/{water_line_id}:
+    parameters:
+      - $ref: "#/components/parameters/waterLineId"
+
+    get:
+      summary: "Get water line by id"
+      tags: [admin/water-lines]
+      responses:
+        "200":
+          description: "Water line object"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WaterLine"
+      security:
+        - bearerAuth: []
+
+    patch:
+      summary: "Update water line (partial)"
+      tags: [admin/water-lines]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WaterLineUpdate"
+      responses:
+        "200":
+          description: "Water line updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WaterLine"
+      security:
+        - bearerAuth: []
+
+    delete:
+      summary: "Delete water line (permanent)"
+      tags: [admin/water-lines]
+      responses:
+        "204":
+          description: "Water line permanently deleted"
+      security:
+        - bearerAuth: []
+
+  /admin/water-lines/{water_line_id}/activate:
+    post:
+      summary: "Activate a water line"
+      tags: [admin/water-lines]
+      parameters:
+        - $ref: "#/components/parameters/waterLineId"
+      responses:
+        "200":
+          description: "Water line activated successfully"
+      security:
+        - bearerAuth: []
+
+  /admin/water-lines/{water_line_id}/deactivate:
+    post:
+      summary: "Deactivate a water line"
+      tags: [admin/water-lines]
+      parameters:
+        - $ref: "#/components/parameters/waterLineId"
+      responses:
+        "200":
+          description: "Water line deactivated successfully"
+      security:
+        - bearerAuth: []
+
 components:
   securitySchemes:
     apiKeyAuth:
@@ -361,7 +498,13 @@ components:
       schema:
         type: integer
       description: "Numeric socio ID"
-
+    waterLineId:
+      name: water_line_id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: "Numeric water line ID"
 
   schemas:
     LoginRequest:
@@ -462,14 +605,71 @@ components:
 
     SocioCreate:
       type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
       required:
-        - name
-        - email
+        - userData
+        - profileData
+        - addressData
+        - socioData
+      properties:
+
+        userData:
+          type: object
+          required:
+            - uid
+            - name
+            - email
+            - roleId
+          properties:
+            uid:
+              type: string
+              format: uuid
+            name:
+              type: string
+            email:
+              type: string
+              format: email
+            roleId:
+              type: integer
+
+        profileData:
+          type: object
+          required:
+            - lastName
+            - secondLastName
+            - mobile
+            - birthdate
+          properties:
+            lastName:
+              type: string
+            secondLastName:
+              type: string
+            mobile:
+              type: string
+            birthdate:
+              type: string
+              format: date
+
+        addressData:
+          type: object
+          required:
+            - address
+            - city
+          properties:
+            address:
+              type: string
+            city:
+              type: string
+
+        socioData:
+          type: object
+          required:
+            - totalDependents
+          properties:
+            totalDependents:
+              type: integer
+              minimum: 0
+
+      example: "{{socioBody}}"
 
     SocioUpdate:
       type: object

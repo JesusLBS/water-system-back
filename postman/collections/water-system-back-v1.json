@@ -1684,6 +1684,779 @@
 						}
 					],
 					"id": "aedfd24b-fae5-4535-9a2a-d75bbff445a5"
+				},
+				{
+					"name": "water-lines",
+					"item": [
+						{
+							"name": "options",
+							"item": [
+								{
+									"name": "Get water lines for select options",
+									"id": "0d10655c-e660-4073-a012-717c366554e7",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/admin/water-lines/options",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"water-lines",
+												"options"
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "a75eb4c2-89c7-419d-b88e-2341931ceb96",
+											"name": "Water line options list",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/admin/water-lines/options",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"water-lines",
+														"options"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "[\n  {\n    \"value\": \"reference #/components/schemas/WaterLineOption not found in the OpenAPI spec\"\n  },\n  {\n    \"value\": \"reference #/components/schemas/WaterLineOption not found in the OpenAPI spec\"\n  }\n]"
+										}
+									]
+								}
+							],
+							"id": "3de16787-885b-4dad-bb2c-1b392e563de4"
+						},
+						{
+							"name": "{water_line_id}",
+							"item": [
+								{
+									"name": "activate",
+									"item": [
+										{
+											"name": "Activate a water line",
+											"id": "2233480b-fa56-4684-a705-e96a75c430ff",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{bearerToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/admin/water-lines/:water_line_id/activate",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"water-lines",
+														":water_line_id",
+														"activate"
+													],
+													"variable": [
+														{
+															"key": "water_line_id",
+															"value": "7116",
+															"description": "Numeric water line ID"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"id": "52fe37db-4c77-4ef3-8c9b-11e39f9c1b6e",
+													"name": "Water line activated successfully",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"description": "Added as a part of security scheme: bearer",
+																"key": "Authorization",
+																"value": "Bearer <token>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/admin/water-lines/:water_line_id/activate",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"admin",
+																"water-lines",
+																":water_line_id",
+																"activate"
+															],
+															"variable": [
+																{
+																	"key": "water_line_id",
+																	"value": "7116",
+																	"description": "Numeric water line ID"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": []
+												}
+											]
+										}
+									],
+									"id": "4194d151-313e-4885-8bbe-00b02ff27575"
+								},
+								{
+									"name": "deactivate",
+									"item": [
+										{
+											"name": "Deactivate a water line",
+											"id": "2f98e56f-d17a-4f1d-a50c-e8d5b8d7b478",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{bearerToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/admin/water-lines/:water_line_id/deactivate",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"water-lines",
+														":water_line_id",
+														"deactivate"
+													],
+													"variable": [
+														{
+															"key": "water_line_id",
+															"value": "7116",
+															"description": "Numeric water line ID"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"id": "102c16f3-e681-40a1-9a7f-c3223c2a33c3",
+													"name": "Water line deactivated successfully",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"description": "Added as a part of security scheme: bearer",
+																"key": "Authorization",
+																"value": "Bearer <token>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/admin/water-lines/:water_line_id/deactivate",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"admin",
+																"water-lines",
+																":water_line_id",
+																"deactivate"
+															],
+															"variable": [
+																{
+																	"key": "water_line_id",
+																	"value": "7116",
+																	"description": "Numeric water line ID"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": []
+												}
+											]
+										}
+									],
+									"id": "ee39e834-24b4-4846-a30f-6a1317d83dcf"
+								},
+								{
+									"name": "Get water line by id",
+									"id": "baa316b1-a499-4ad3-9353-3fdc8308f5d3",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/admin/water-lines/:water_line_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"water-lines",
+												":water_line_id"
+											],
+											"variable": [
+												{
+													"key": "water_line_id",
+													"value": "7116",
+													"description": "Numeric water line ID"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "1c91e4e5-650b-4a16-b11c-db8740cae972",
+											"name": "Water line object",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/admin/water-lines/:water_line_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"water-lines",
+														":water_line_id"
+													],
+													"variable": [
+														{
+															"key": "water_line_id",
+															"value": "7116",
+															"description": "Numeric water line ID"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"value\": \"reference #/components/schemas/WaterLine not found in the OpenAPI spec\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Update water line (partial)",
+									"id": "21d354a1-30fe-472c-9e49-c505284b3a00",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"value\": \"reference #/components/schemas/WaterLineUpdate not found in the OpenAPI spec\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/water-lines/:water_line_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"water-lines",
+												":water_line_id"
+											],
+											"variable": [
+												{
+													"key": "water_line_id",
+													"value": "7116",
+													"description": "Numeric water line ID"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "4ae0ddba-fc8d-4d90-8039-624abe58fd04",
+											"name": "Water line updated",
+											"originalRequest": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"value\": \"reference #/components/schemas/WaterLineUpdate not found in the OpenAPI spec\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/admin/water-lines/:water_line_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"water-lines",
+														":water_line_id"
+													],
+													"variable": [
+														{
+															"key": "water_line_id",
+															"value": "7116",
+															"description": "Numeric water line ID"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"value\": \"reference #/components/schemas/WaterLine not found in the OpenAPI spec\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Delete water line (permanent)",
+									"id": "dbe9f5de-0402-4f9e-afe4-9972bec49f4f",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/admin/water-lines/:water_line_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"water-lines",
+												":water_line_id"
+											],
+											"variable": [
+												{
+													"key": "water_line_id",
+													"value": "7116",
+													"description": "Numeric water line ID"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "2bda06f9-2b1a-41f7-b98a-ba61137e6efa",
+											"name": "Water line permanently deleted",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/admin/water-lines/:water_line_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"water-lines",
+														":water_line_id"
+													],
+													"variable": [
+														{
+															"key": "water_line_id",
+															"value": "7116",
+															"description": "Numeric water line ID"
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": []
+										}
+									]
+								}
+							],
+							"id": "37e88126-f853-4957-a12a-223bea98d45b"
+						},
+						{
+							"name": "List water lines (paginated, filterable)",
+							"id": "9860473a-dc66-4c4f-bc36-982a151ac923",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/admin/water-lines?page=1&per_page=20&search=string",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"water-lines"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "20"
+										},
+										{
+											"key": "search",
+											"value": "string",
+											"description": "Search water lines"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "e01efc9f-4629-4256-9cf9-70a5759ad8a7",
+									"name": "Water line list",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/admin/water-lines?page=1&per_page=20&search=string",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"water-lines"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "20"
+												},
+												{
+													"description": "Search water lines",
+													"key": "search",
+													"value": "string"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"value\": \"reference #/components/schemas/WaterLineListResponse not found in the OpenAPI spec\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Create water line",
+							"id": "ef54f274-a403-4dad-bc8a-7a8e26fd5a5c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"value\": \"reference #/components/schemas/WaterLineCreate not found in the OpenAPI spec\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/water-lines",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"water-lines"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "f31d73ff-923d-4d30-b1c9-b6601f612424",
+									"name": "Water line created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"value\": \"reference #/components/schemas/WaterLineCreate not found in the OpenAPI spec\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/water-lines",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"water-lines"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"value\": \"reference #/components/schemas/WaterLine not found in the OpenAPI spec\"\n}"
+								}
+							]
+						}
+					],
+					"id": "3514a00c-483d-4f5a-a9f9-f000ebbe6586"
 				}
 			],
 			"id": "d7f14017-7f05-4744-8955-9b600ad618c6"
