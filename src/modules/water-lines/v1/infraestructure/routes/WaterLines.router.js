@@ -4,5 +4,6 @@ const WaterLineController = require('../../interfaces/controllers/water-linescon
 const controller = new WaterLineController();
 
 router.get('/', controller.index);
+router.get('/options', controller.options);
 
 module.exports = router;
