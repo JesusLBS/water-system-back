@@ -20,6 +20,16 @@ class WaterLineController {
       return this.#response.error(res, error);
     }
   };
+
+  options = async (req, res) => {
+    try {
+      const data = await this.waterLineUseCases.getAllWaterLines.execute();
+
+      return this.#response.success({ res, data });
+    } catch (error) {
+      return this.#response.error(res, error);
+    }
+  };
 }
 
 module.exports = WaterLineController;

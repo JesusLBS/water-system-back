@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class WaterTake extends Model {
     /**
@@ -18,19 +18,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      paranoid: false,
-      modelName: "WaterTake",
-      tableName: "WaterTakes",
+      paranoid: true,
+      modelName: 'WaterTake',
+      tableName: 'WaterTakes',
       scopes: {
         raw: {
           raw: true,
           nest: true,
         },
         desc: {
-          order: [["createdAt", "desc"]],
+          order: [['createdAt', 'desc']],
         },
       },
-    },
+    }
   );
   return WaterTake;
 };

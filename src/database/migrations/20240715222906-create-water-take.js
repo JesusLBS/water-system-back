@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("WaterTakes", {
+    await queryInterface.createTable('WaterTakes', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,27 +12,28 @@ module.exports = {
       socioId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        unique: true,
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
         references: {
           model: {
-            tableName: "Socios",
+            tableName: 'Socios',
           },
-          key: "id",
-          as: "socioId",
+          key: 'id',
+          as: 'socioId',
         },
       },
       waterLineId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
         references: {
           model: {
-            tableName: "WaterLines",
+            tableName: 'WaterLines',
           },
-          key: "id",
-          as: "waterLineId",
+          key: 'id',
+          as: 'waterLineId',
         },
       },
       deletedAt: {
@@ -50,6 +51,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("WaterTakes");
+    await queryInterface.dropTable('WaterTakes');
   },
 };
