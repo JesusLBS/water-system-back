@@ -2457,6 +2457,439 @@
 						}
 					],
 					"id": "3514a00c-483d-4f5a-a9f9-f000ebbe6586"
+				},
+				{
+					"name": "water-takes",
+					"item": [
+						{
+							"name": "{water_take_id}",
+							"item": [
+								{
+									"name": "deactivate",
+									"item": [
+										{
+											"name": "Soft delete water take",
+											"id": "c1f4c33e-383d-4b8e-87b9-a86031be60d2",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{bearerToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PATCH",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/admin/water-takes/:water_take_id/deactivate",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"water-takes",
+														":water_take_id",
+														"deactivate"
+													],
+													"variable": [
+														{
+															"key": "water_take_id",
+															"value": "3655"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"id": "635276e6-bb6f-4013-a54b-36774bbdf50e",
+													"name": "Water take deactivated successfully",
+													"originalRequest": {
+														"method": "PATCH",
+														"header": [
+															{
+																"description": "Added as a part of security scheme: bearer",
+																"key": "Authorization",
+																"value": "Bearer <token>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/admin/water-takes/:water_take_id/deactivate",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"admin",
+																"water-takes",
+																":water_take_id",
+																"deactivate"
+															],
+															"variable": [
+																{
+																	"key": "water_take_id",
+																	"value": "3655"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": []
+												},
+												{
+													"id": "fa16d3ca-c0d7-4ff8-b9a5-4c8c54aa8e65",
+													"name": "Invalid request",
+													"originalRequest": {
+														"method": "PATCH",
+														"header": [
+															{
+																"description": "Added as a part of security scheme: bearer",
+																"key": "Authorization",
+																"value": "Bearer <token>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/admin/water-takes/:water_take_id/deactivate",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"admin",
+																"water-takes",
+																":water_take_id",
+																"deactivate"
+															],
+															"variable": [
+																{
+																	"key": "water_take_id",
+																	"value": "3655"
+																}
+															]
+														}
+													},
+													"status": "Bad Request",
+													"code": 400,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": []
+												},
+												{
+													"id": "6987b542-d982-4741-8f9b-422d563c9dba",
+													"name": "Water take not found",
+													"originalRequest": {
+														"method": "PATCH",
+														"header": [
+															{
+																"description": "Added as a part of security scheme: bearer",
+																"key": "Authorization",
+																"value": "Bearer <token>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/admin/water-takes/:water_take_id/deactivate",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"admin",
+																"water-takes",
+																":water_take_id",
+																"deactivate"
+															],
+															"variable": [
+																{
+																	"key": "water_take_id",
+																	"value": "3655"
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": []
+												}
+											]
+										}
+									],
+									"id": "bf5fb6f8-2627-4eb3-95a9-cf694502657d"
+								},
+								{
+									"name": "restore",
+									"item": [
+										{
+											"name": "Restore soft deleted water take",
+											"id": "f4258063-228a-410d-93b2-3143711b3e95",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{bearerToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PATCH",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/admin/water-takes/:water_take_id/restore",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"water-takes",
+														":water_take_id",
+														"restore"
+													],
+													"variable": [
+														{
+															"key": "water_take_id",
+															"value": "3655"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"id": "0b483266-c520-4075-9a18-913aee8b59c9",
+													"name": "Water take restored successfully",
+													"originalRequest": {
+														"method": "PATCH",
+														"header": [
+															{
+																"description": "Added as a part of security scheme: bearer",
+																"key": "Authorization",
+																"value": "Bearer <token>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/admin/water-takes/:water_take_id/restore",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"admin",
+																"water-takes",
+																":water_take_id",
+																"restore"
+															],
+															"variable": [
+																{
+																	"key": "water_take_id",
+																	"value": "3655"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": []
+												},
+												{
+													"id": "11d3763a-9b4c-449b-b6cd-60ee12be3b19",
+													"name": "Invalid request",
+													"originalRequest": {
+														"method": "PATCH",
+														"header": [
+															{
+																"description": "Added as a part of security scheme: bearer",
+																"key": "Authorization",
+																"value": "Bearer <token>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/admin/water-takes/:water_take_id/restore",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"admin",
+																"water-takes",
+																":water_take_id",
+																"restore"
+															],
+															"variable": [
+																{
+																	"key": "water_take_id",
+																	"value": "3655"
+																}
+															]
+														}
+													},
+													"status": "Bad Request",
+													"code": 400,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": []
+												},
+												{
+													"id": "99e6625a-0de6-4a69-a86b-f8108ce88888",
+													"name": "Water take not found",
+													"originalRequest": {
+														"method": "PATCH",
+														"header": [
+															{
+																"description": "Added as a part of security scheme: bearer",
+																"key": "Authorization",
+																"value": "Bearer <token>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/admin/water-takes/:water_take_id/restore",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"admin",
+																"water-takes",
+																":water_take_id",
+																"restore"
+															],
+															"variable": [
+																{
+																	"key": "water_take_id",
+																	"value": "3655"
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": []
+												}
+											]
+										}
+									],
+									"id": "810d5fc7-8423-45a9-a4c8-ef348905f636"
+								}
+							],
+							"id": "73ec1ba9-3346-4965-bcb6-a425bc622307"
+						},
+						{
+							"name": "Assign water line to socio",
+							"id": "e4ddbb0f-cf87-4dbc-aca1-0697b9ca1002",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"socioId\": 1,\n  \"waterLineId\": 1\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/water-takes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"water-takes"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "0e8374fa-8ba1-4f3f-a855-43ab7f959bb4",
+									"name": "Water line assigned to socio",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"socioId\": 1,\n  \"waterLineId\": 1\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/water-takes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"water-takes"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": 4833,\n  \"socioId\": 3595,\n  \"waterLineId\": 8685,\n  \"createdAt\": \"1976-08-06T09:04:56.644Z\",\n  \"updatedAt\": \"2018-06-28T19:21:11.563Z\",\n  \"deletedAt\": \"1963-10-19T10:12:31.390Z\"\n}"
+								}
+							]
+						}
+					],
+					"id": "a53ae411-ac8e-4864-8a02-ccd730b64c83"
 				}
 			],
 			"id": "d7f14017-7f05-4744-8955-9b600ad618c6"

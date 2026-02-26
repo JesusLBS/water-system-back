@@ -19,7 +19,8 @@ tags:
     description: "Operaciones sobre socios desde administración"
   - name: admin/water-lines
     description: "Operaciones sobre líneas de agua desde administración"
-
+  - name: admin/water-takes
+    description: "Relación entre socios y líneas de agua"
 paths:
   # AUTH
   /auth/login:
@@ -469,7 +470,65 @@ paths:
           description: "Water line deactivated successfully"
       security:
         - bearerAuth: []
+  # ADMIN / WATER TAKES
+  /admin/water-takes:
+    post:
+      summary: "Assign water line to socio"
+      tags: [admin/water-takes]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WaterTakeAssign"
+      responses:
+        "201":
+          description: "Water line assigned to socio"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WaterTake"
+      security:
+        - bearerAuth: []
 
+  /admin/water-takes/{water_take_id}/deactivate:
+    patch:
+      summary: "Soft delete water take"
+      tags: [admin/water-takes]
+      parameters:
+        - name: water_take_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Water take deactivated successfully"
+        "404":
+          description: "Water take not found"
+        "400":
+          description: "Invalid request"
+      security:
+        - bearerAuth: []
+  /admin/water-takes/{water_take_id}/restore:
+    patch:
+      summary: "Restore soft deleted water take"
+      tags: [admin/water-takes]
+      parameters:
+        - name: water_take_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Water take restored successfully"
+        "404":
+          description: "Water take not found"
+        "400":
+          description: "Invalid request"
+      security:
+        - bearerAuth: []
 components:
   securitySchemes:
     apiKeyAuth:
@@ -693,3 +752,38 @@ components:
             $ref: "#/components/schemas/Socio"
         meta:
           type: object
+    WaterTake:
+      type: object
+      properties:
+        id:
+          type: integer
+        socioId:
+          type: integer
+        waterLineId:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    WaterTakeAssign:
+      type: object
+      required:
+        - socioId
+        - waterLineId
+      properties:
+        socioId:
+          type: integer
+          example: 1
+        waterLineId:
+          type: integer
+          example: 1
+      example:
+        socioId: 1
+        waterLineId: 1
