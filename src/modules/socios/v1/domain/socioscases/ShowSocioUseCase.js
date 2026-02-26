@@ -7,16 +7,22 @@ class ShowSocioUseCase {
     this.socioRepository = socioRepository;
   }
 
-  async execute(data) {
-    const row = await this.socioRepository.edit(data);
+  async execute(uid) {
+    const row = await this.socioRepository.edit(uid);
+
     if (!row) {
       throw { statusCode: 404, message: 'Data not found' };
     }
+
     const age = timeUtil.getAge(row.User.Profile.birthdate);
 
-    const socioShow = new SocioShow({ ...row, age });
+    const socioShow = new SocioShow({
+      ...row,
+      age,
+      waterLineId: row.WaterTake?.waterLineId || null,
+    });
 
-    return socioShow;
+    return socioShow.toResponse();
   }
 }
 

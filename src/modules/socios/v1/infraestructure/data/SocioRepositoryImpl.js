@@ -83,7 +83,7 @@ class SocioRepositoryImpl extends SocioRepository {
         {
           model: db.User,
           where: { uid },
-          attributes: ['uid', 'name', 'email'],
+          attributes: ['uid', 'name', 'email', 'catRoleId'],
           required: true,
           include: [
             {
@@ -96,6 +96,19 @@ class SocioRepositoryImpl extends SocioRepository {
                   required: true,
                 },
               ],
+            },
+          ],
+        },
+        {
+          model: db.WaterTake,
+          attributes: ['id', 'waterLineId'],
+          required: false,
+          include: [
+            {
+              model: db.WaterLine,
+              as: 'WaterLine',
+              attributes: ['id', 'name'],
+              required: false,
             },
           ],
         },
