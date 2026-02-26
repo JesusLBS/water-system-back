@@ -3,6 +3,9 @@ const router = express.Router();
 const WaterTakeController = require('../../interfaces/controllers/water-take-controller');
 const controller = new WaterTakeController();
 
-router.post('/', controller.store);
+router
+  .post('/', controller.store)
+  .patch('/:id/deactivate', controller.deactivate)
+  .patch('/:id/restore', controller.restore);
 
 module.exports = router;

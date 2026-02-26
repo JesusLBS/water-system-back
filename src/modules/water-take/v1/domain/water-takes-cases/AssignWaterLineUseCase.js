@@ -4,22 +4,31 @@ class AssignWaterLineUseCase {
   }
 
   async execute(body) {
-    // basic validation
     if (!body?.socioId || !body?.waterLineId) {
-      throw new Error('socioId and waterLineId are required');
+      throw { statusCode: 400, message: 'socioId and waterLineId are required' };
     }
 
-    // create relation
-    const waterTake = await this.waterTakesRepository.store({
-      socioId: body.socioId,
-      waterLineId: body.waterLineId,
-    });
+    try {
+      const waterTake = await this.waterTakesRepository.store({
+        socioId: body.socioId,
+        waterLineId: body.waterLineId,
+      });
 
-    if (!waterTake) {
-      throw new Error('WaterTake could not be created');
+      if (!waterTake) {
+        throw { statusCode: 500, message: 'WaterTake could not be created' };
+      }
+
+      return waterTake;
+    } catch (error) {
+      if (error.name === 'SequelizeUniqueConstraintError') {
+        throw {
+          statusCode: 409,
+          message: 'Socio already has a water line assigned',
+        };
+      }
+
+      throw error;
     }
-
-    return waterTake;
   }
 }
 

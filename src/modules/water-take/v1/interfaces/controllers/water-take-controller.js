@@ -21,6 +21,30 @@ class WaterTakeController {
       return this.#response.error(res, error);
     }
   };
+
+  deactivate = async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      await this.waterLineUseCases.deactivateWaterTakeUseCase.execute(id);
+
+      return this.#response.success({ res });
+    } catch (error) {
+      return this.#response.error(res, error);
+    }
+  };
+
+  restore = async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      await this.waterLineUseCases.restoreWaterTakeUseCase.execute(id);
+
+      return this.#response.success({ res });
+    } catch (error) {
+      return this.#response.error(res, error);
+    }
+  };
 }
 
 module.exports = WaterTakeController;

@@ -12,6 +12,7 @@ module.exports = {
       socioId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        unique: true,
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
         references: {
@@ -47,12 +48,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-    });
-
-    await queryInterface.addConstraint('WaterTakes', {
-      fields: ['socioId', 'waterLineId'],
-      type: 'unique',
-      name: 'unique_socio_waterline_pair',
     });
   },
   async down(queryInterface, Sequelize) {
