@@ -52,6 +52,7 @@ class SocioShow {
           waterTakeId: WaterTake.id,
           waterLineId: WaterTake.waterLineId,
           waterLineName: WaterTake.WaterLine ? WaterTake.WaterLine.name : null,
+          isSuspended: Boolean(WaterTake.deletedAt),
         }
       : null;
   }
