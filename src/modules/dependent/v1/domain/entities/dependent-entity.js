@@ -6,6 +6,16 @@ class Dependent {
     this.updatedAt = updatedAt;
     this.deletedAt = deletedAt;
   }
+
+  toResponse() {
+    return {
+      id: this.id,
+      name: this.name,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      deletedAt: this.deletedAt,
+    };
+  }
 }
 
 class DependentShow {
