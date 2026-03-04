@@ -6,33 +6,37 @@ class CreateDependentUseCase {
     this.socioRepository = socioRepository;
   }
 
-  async execute(data) {
+  async execute({ socioUid, dependents }) {
     const transaction = await db.sequelize.transaction();
+
     try {
-      const { socioUid, dependents } = data;
       let increment = 0;
+
       const row = await this.socioRepository.findSocioByUserUid(socioUid);
 
       if (!row) {
         throw { statusCode: 404, message: 'Data not found' };
       }
+
       const { id: socioId } = row;
 
       for (const dependent of dependents) {
         const { relationshipId, ...rest } = dependent;
+
         const body = {
           socioId,
           ...rest,
           catRelationshipId: relationshipId,
         };
-        const row = await this.dependentRepository.store(body, { transaction });
-        if (row.id) {
-          increment++;
-        }
+
+        const created = await this.dependentRepository.store(body, { transaction });
+
+        if (created?.id) increment++;
       }
 
-      const isIncrement = await this.socioRepository.incrementeSocioByUserUid(socioUid, increment, { transaction });
-      if (!isIncrement) {
+      const updated = await this.socioRepository.incrementeSocioByUserUid(socioUid, increment, { transaction });
+
+      if (!updated) {
         throw { statusCode: 404, message: 'Data not found' };
       }
 

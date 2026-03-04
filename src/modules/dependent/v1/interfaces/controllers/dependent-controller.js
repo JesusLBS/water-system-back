@@ -34,9 +34,14 @@ class DependentController {
 
   store = async (req, res) => {
     try {
+      const { socioUid } = req.params;
       const body = req.body;
 
-      await this.dependentUseCases.createDependent.execute(body);
+      await this.dependentUseCases.createDependent.execute({
+        socioUid,
+        ...body,
+      });
+
       return this.#response.success({ res, status: 201 });
     } catch (error) {
       return this.#response.error(res, error);

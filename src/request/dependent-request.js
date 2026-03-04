@@ -1,15 +1,69 @@
 const { check } = require('express-validator');
 const ValidateHelper = require('../helpers/validation/validateHelper');
 
-const errorValueParameter = 'The parameter is required';
 const valid = new ValidateHelper();
 
 exports.DependentRequest = [
-  check('name', errorValueParameter).exists().notEmpty().withMessage('Name is required'),
+  check('dependents')
+    .exists()
+    .withMessage('Dependents are required')
+    .bail()
+    .isArray({ min: 1 })
+    .withMessage('Dependents must be a non empty array'),
 
-  check('relationship', errorValueParameter).exists().notEmpty().withMessage('Relationship is required'),
+  check('dependents.*.name')
+    .exists()
+    .withMessage('Name is required')
+    .bail()
+    .notEmpty()
+    .withMessage('Name cannot be empty')
+    .bail()
+    .isLength({ min: 1, max: 50 })
+    .withMessage('Name must be between 1 and 50 characters'),
 
-  check('birthDate').optional().isISO8601().withMessage('BirthDate must be valid date'),
+  check('dependents.*.lastName')
+    .exists()
+    .withMessage('LastName is required')
+    .bail()
+    .notEmpty()
+    .withMessage('LastName cannot be empty')
+    .bail()
+    .isLength({ min: 1, max: 50 })
+    .withMessage('LastName must be between 1 and 50 characters'),
+
+  check('dependents.*.secondLastName')
+    .exists()
+    .withMessage('SecondLastName is required')
+    .bail()
+    .notEmpty()
+    .withMessage('SecondLastName cannot be empty')
+    .bail()
+    .isLength({ min: 1, max: 50 })
+    .withMessage('SecondLastName must be between 1 and 50 characters'),
+
+  check('dependents.*.mobile')
+    .exists()
+    .withMessage('Mobile is required')
+    .bail()
+    .notEmpty()
+    .withMessage('Mobile cannot be empty')
+    .bail()
+    .isLength({ min: 10, max: 15 })
+    .withMessage('Mobile must be between 10 and 15 characters'),
+
+  check('dependents.*.birthdate')
+    .exists()
+    .withMessage('Birthdate is required')
+    .bail()
+    .isISO8601()
+    .withMessage('Birthdate must be valid date'),
+
+  check('dependents.*.relationshipId')
+    .exists()
+    .withMessage('RelationshipId is required')
+    .bail()
+    .isInt()
+    .withMessage('RelationshipId must be integer'),
 ];
 
 exports.DependentValidation = (req, res, next) => {

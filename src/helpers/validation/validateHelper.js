@@ -10,7 +10,7 @@ class ValidateHelper {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return this.response.error(res, errors.array(), 400);
+      return this.response.error(res, errors.array(), 422);
     }
 
     next();
