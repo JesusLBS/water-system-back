@@ -8,7 +8,7 @@ class DependentUseCases {
   constructor(dependentRepository, socioRepository) {
     this.createDependent = new CreateDependentUseCase(dependentRepository, socioRepository);
     this.getDependentsPerSocio = new GetDependentsPerSocio(dependentRepository);
-    this.showDependent = new ShowDependentUseCase(dependentRepository);
+    this.showDependent = new ShowDependentUseCase(dependentRepository, socioRepository);
     this.destroyDependent = new DestroyDependentUseCase(dependentRepository, socioRepository);
     this.updateDependent = new UpdateDependentUseCase(dependentRepository);
   }

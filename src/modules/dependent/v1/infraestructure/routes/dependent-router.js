@@ -5,6 +5,10 @@ const {
   DependentParamsValidation,
 } = require('../../../../../request/dependent-params-request');
 const { DependentValidation, DependentRequest } = require('../../../../../request/dependent-request');
+const {
+  DependentShowParamsRequest,
+  DependentShowParamsValidation,
+} = require('../../../../../request/dependent-request-show-request');
 
 const router = express.Router();
 const controller = new DependentController();
@@ -19,9 +23,14 @@ router
     DependentValidation,
     controller.store
   )
-  .get('/socios/:socioUid/dependents/:dependentUid', DependentParamsRequest, DependentParamsValidation, controller.show)
+  .get(
+    '/socios/:socioUid/dependents/:dependentId',
+    DependentShowParamsRequest,
+    DependentShowParamsValidation,
+    controller.show
+  )
   .patch(
-    '/socios/:socioUid/dependents/:dependentUid',
+    '/socios/:socioUid/dependents/:dependentId',
     DependentParamsRequest,
     DependentParamsValidation,
     DependentRequest,
@@ -29,7 +38,7 @@ router
     controller.update
   )
   .delete(
-    '/socios/:socioUid/dependents/:dependentUid',
+    '/socios/:socioUid/dependents/:dependentId',
     DependentParamsRequest,
     DependentParamsValidation,
     controller.destroy

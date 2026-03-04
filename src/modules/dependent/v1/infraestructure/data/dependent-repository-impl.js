@@ -133,6 +133,15 @@ class DependentRepositoryImpl extends DependentRepository {
     await row.destroy({ force: true, transaction });
     return true;
   }
+
+  async findById(id) {
+    const row = await db.Dependent.scope('raw').findByPk(id, {
+      attributes: { exclude: ['createdAt', 'updatedAt'] },
+    });
+
+    if (!row) return null;
+    return row;
+  }
 }
 
 module.exports = DependentRepositoryImpl;

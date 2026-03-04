@@ -50,11 +50,17 @@ class DependentController {
 
   show = async (req, res) => {
     try {
-      const dependentId = req.params.dataId;
+      const { socioUid, dependentId } = req.params;
 
-      const data = await this.dependentUseCases.showDependent.execute(dependentId);
+      const data = await this.dependentUseCases.showDependent.execute({
+        socioUid,
+        dependentId,
+      });
 
-      return this.#response.success({ res, data });
+      return this.#response.success({
+        res,
+        data: data.toResponse(),
+      });
     } catch (error) {
       return this.#response.error(res, error);
     }

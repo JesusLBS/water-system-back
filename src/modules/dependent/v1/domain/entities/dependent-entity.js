@@ -29,6 +29,19 @@ class DependentShow {
     this.age = age;
     this.relationshipId = catRelationshipId;
   }
+
+  toResponse() {
+    return {
+      id: this.id,
+      name: this.name,
+      lastName: this.lastName,
+      secondLastName: this.secondLastName,
+      mobile: this.mobile,
+      birthdate: this.birthdate,
+      age: this.age,
+      relationshipId: this.relationshipId,
+    };
+  }
 }
 
 module.exports = {
