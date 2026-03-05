@@ -21,6 +21,8 @@ tags:
     description: "Operaciones sobre líneas de agua desde administración"
   - name: admin/water-takes
     description: "Relación entre socios y líneas de agua"
+  - name: admin/socios/dependents
+    description: "Dependientes asociados a un socio"
 paths:
   # AUTH
   /auth/login:
@@ -52,7 +54,6 @@ paths:
           description: "Logged out"
       security:
         - bearerAuth: []
-
 
   # ADMIN / USERS
   /admin/users:
@@ -510,6 +511,7 @@ paths:
           description: "Invalid request"
       security:
         - bearerAuth: []
+
   /admin/water-takes/{water_take_id}/restore:
     patch:
       summary: "Restore soft deleted water take"
@@ -529,6 +531,92 @@ paths:
           description: "Invalid request"
       security:
         - bearerAuth: []
+
+  # ADMIN / DEPENDENTS
+
+  /admin/socios/{socioUid}/dependents:
+    parameters:
+      - $ref: "#/components/parameters/socioUid"
+
+    get:
+      summary: List dependents of a socio
+      tags: [admin/socios/dependents]
+      responses:
+        "200":
+          description: Dependents list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DependentListResponse"
+      security:
+        - bearerAuth: []
+
+    post:
+      summary: Create dependents for socio
+      tags: [admin/socios/dependents]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DependentCreate"
+      responses:
+        "201":
+          description: Dependents created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dependent"
+      security:
+        - bearerAuth: []
+
+
+  /admin/socios/{socioUid}/dependents/{dependentId}:
+    parameters:
+      - $ref: "#/components/parameters/socioUid"
+      - $ref: "#/components/parameters/dependentId"
+
+    get:
+      summary: Get dependent by id
+      tags: [admin/socios/dependents]
+      responses:
+        "200":
+          description: Dependent object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dependent"
+      security:
+        - bearerAuth: []
+
+    patch:
+      summary: Update dependent (partial)
+      tags: [admin/socios/dependents]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DependentUpdate"
+      responses:
+        "200":
+          description: Dependent updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dependent"
+      security:
+        - bearerAuth: []
+
+    delete:
+      summary: Delete dependent
+      tags: [admin/socios/dependents]
+      responses:
+        "204":
+          description: Dependent deleted
+      security:
+        - bearerAuth: []
+
 components:
   securitySchemes:
     apiKeyAuth:
@@ -564,6 +652,19 @@ components:
       schema:
         type: integer
       description: "Numeric water line ID"
+    socioUid:
+      name: socioUid
+      in: path
+      required: true
+      schema:
+        type: string
+
+    dependentId:
+      name: dependentId
+      in: path
+      required: true
+      schema:
+        type: integer
 
   schemas:
     LoginRequest:
@@ -775,15 +876,101 @@ components:
     WaterTakeAssign:
       type: object
       required:
-        - socioId
+        - uid
         - waterLineId
       properties:
-        socioId:
-          type: integer
-          example: 1
+        uid:
+          type: string
+          format: uuid
+          example: "efa0835d-0e82-4843-9c14-319c41d26f90"
         waterLineId:
           type: integer
           example: 1
       example:
-        socioId: 1
+        uid: "efa0835d-0e82-4843-9c14-319c41d26f90"
         waterLineId: 1
+    Dependent:
+      type: object
+      properties:
+        uid:
+          type: string
+          format: uuid
+        socio_uid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        relationship:
+          type: string
+        birth_date:
+          type: string
+          format: date
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    DependentCreate:
+      type: object
+      required:
+        - dependents
+      properties:
+        dependents:
+          type: array
+          items:
+            type: object
+            required:
+              - name
+              - lastName
+              - secondLastName
+              - mobile
+              - birthdate
+              - relationshipId
+            properties:
+              name:
+                type: string
+              lastName:
+                type: string
+              secondLastName:
+                type: string
+              mobile:
+                type: string
+              birthdate:
+                type: string
+                format: date
+              relationshipId:
+                type: integer
+              isFamilyHead:
+                type: boolean
+
+    DependentUpdate:
+      type: object
+      required:
+        - relationshipId
+      properties:
+        name:
+          type: string
+        lastName:
+          type: string
+        secondLastName:
+          type: string
+        mobile:
+          type: string
+        birthdate:
+          type: string
+          format: date
+        relationshipId:
+          type: integer
+        isFamilyHead:
+          type: boolean
+
+    DependentListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Dependent"
+        meta:
+          type: object
