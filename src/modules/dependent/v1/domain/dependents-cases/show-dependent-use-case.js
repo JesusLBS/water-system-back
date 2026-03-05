@@ -11,10 +11,10 @@ class ShowDependentUseCase {
 
   async execute({ socioUid, dependentId }) {
     const socio = await this.socioRepository.findSocioByUserUid(socioUid);
-    if (!socio) throw { statusCode: 404, message: 'Data not found 01' };
+    if (!socio) throw { statusCode: 404, message: 'Data not found' };
 
     const row = await this.dependentRepository.findById(dependentId, socio.id);
-    if (!row) throw { statusCode: 404, message: 'Data not found 02' };
+    if (!row) throw { statusCode: 404, message: 'Data not found' };
 
     const age = timeUtil.getAge(row.birthdate);
 

@@ -85,8 +85,7 @@ class DependentController {
 
   destroy = async (req, res) => {
     try {
-      const dependentId = req.params.dataId;
-      const socioUid = req.params.socioUid;
+      const { socioUid, dependentId } = req.params;
 
       await this.dependentUseCases.destroyDependent.execute({ dependentId, socioUid });
       return this.#response.destroy(res);
