@@ -9,6 +9,10 @@ const {
   DependentShowParamsRequest,
   DependentShowParamsValidation,
 } = require('../../../../../request/dependent-request-show-request');
+const {
+  DependentUpdateRequest,
+  DependentUpdateValidation,
+} = require('../../../../../request/dependent-update-request');
 
 const router = express.Router();
 const controller = new DependentController();
@@ -31,10 +35,10 @@ router
   )
   .patch(
     '/socios/:socioUid/dependents/:dependentId',
-    DependentParamsRequest,
-    DependentParamsValidation,
-    DependentRequest,
-    DependentValidation,
+    DependentShowParamsRequest,
+    DependentShowParamsValidation,
+    DependentUpdateRequest,
+    DependentUpdateValidation,
     controller.update
   )
   .delete(

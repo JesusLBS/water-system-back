@@ -134,8 +134,12 @@ class DependentRepositoryImpl extends DependentRepository {
     return true;
   }
 
-  async findById(id) {
-    const row = await db.Dependent.scope('raw').findByPk(id, {
+  async findById(id, socioId) {
+    const row = await db.Dependent.scope('raw').findOne({
+      where: {
+        id,
+        socioId,
+      },
       attributes: { exclude: ['createdAt', 'updatedAt'] },
     });
 

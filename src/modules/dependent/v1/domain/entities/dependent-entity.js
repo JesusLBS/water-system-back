@@ -19,7 +19,7 @@ class Dependent {
 }
 
 class DependentShow {
-  constructor({ id, name, lastName, secondLastName, mobile, birthdate, age, catRelationshipId }) {
+  constructor({ id, name, lastName, secondLastName, mobile, birthdate, age, catRelationshipId, isFamilyHead }) {
     this.id = id;
     this.name = name;
     this.lastName = lastName;
@@ -28,6 +28,7 @@ class DependentShow {
     this.birthdate = birthdate;
     this.age = age;
     this.relationshipId = catRelationshipId;
+    this.isFamilyHead = isFamilyHead;
   }
 
   toResponse() {
@@ -40,6 +41,7 @@ class DependentShow {
       birthdate: this.birthdate,
       age: this.age,
       relationshipId: this.relationshipId,
+      isFamilyHead: !!this.isFamilyHead,
     };
   }
 }

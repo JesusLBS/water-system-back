@@ -10,7 +10,7 @@ class DependentUseCases {
     this.getDependentsPerSocio = new GetDependentsPerSocio(dependentRepository);
     this.showDependent = new ShowDependentUseCase(dependentRepository, socioRepository);
     this.destroyDependent = new DestroyDependentUseCase(dependentRepository, socioRepository);
-    this.updateDependent = new UpdateDependentUseCase(dependentRepository);
+    this.updateDependent = new UpdateDependentUseCase(dependentRepository, socioRepository);
   }
 }
 

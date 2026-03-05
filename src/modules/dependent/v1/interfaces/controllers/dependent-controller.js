@@ -68,9 +68,14 @@ class DependentController {
 
   update = async (req, res) => {
     try {
+      const { socioUid, dependentId } = req.params;
       const body = req.body;
 
-      await this.dependentUseCases.updateDependent.execute(body);
+      await this.dependentUseCases.updateDependent.execute({
+        socioUid,
+        dependentId,
+        dependent: body,
+      });
 
       return this.#response.success({ res });
     } catch (error) {

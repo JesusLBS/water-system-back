@@ -64,6 +64,12 @@ exports.DependentRequest = [
     .bail()
     .isInt()
     .withMessage('RelationshipId must be integer'),
+  check('dependents.*.isFamilyHead')
+    .exists()
+    .withMessage('isFamilyHead is required')
+    .bail()
+    .isBoolean()
+    .withMessage('isFamilyHead must be boolean'),
 ];
 
 exports.DependentValidation = (req, res, next) => {
