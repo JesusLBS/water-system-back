@@ -41,7 +41,7 @@ class GetDependentsPerSocio {
     const { active, inactive } = await this.dependentRepository.countByStatus({ uid });
 
     return {
-      rows: rows.map((row) => this.mapDataEntity(row).toResponse()),
+      rows: rows.map((row) => this.mapDataEntity(row)),
       meta: buildPaginationMeta({
         total: countAll,
         filtered: count,
@@ -88,14 +88,15 @@ class GetDependentsPerSocio {
     const { id, name, lastName, secondLastName, createdAt, updatedAt, deletedAt } = value;
 
     const fullName = [name, lastName, secondLastName].filter(Boolean).join(' ');
-
-    return new Dependent(
+    const dependent = new Dependent(
       id,
       fullName,
+      deletedAt ? 'inactive' : 'active',
       timeUtil.transformTime(createdAt),
       timeUtil.transformTime(updatedAt),
       timeUtil.transformTime(deletedAt)
     );
+    return dependent.toResponse();
   }
 }
 
