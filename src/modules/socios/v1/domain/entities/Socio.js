@@ -24,17 +24,20 @@ class Socio {
 }
 
 class SocioShow {
-  constructor({ User, age, totalDependents }) {
+  constructor({ User, age, totalDependents, WaterTake }) {
     this.userData = {
       uid: User.uid,
       name: User.name,
       email: User.email,
+      roleId: User.catRoleId,
     };
+
     this.addressData = {
       address: User.Profile.Address.address,
       city: User.Profile.Address.city,
       country: User.Profile.Address.country,
     };
+
     this.profileData = {
       lastName: User.Profile.lastName,
       secondLastName: User.Profile.secondLastName,
@@ -42,6 +45,24 @@ class SocioShow {
       birthdate: User.Profile.birthdate,
       age,
       totalDependents,
+    };
+
+    this.waterTakeData = WaterTake
+      ? {
+          waterTakeId: WaterTake.id,
+          waterLineId: WaterTake.waterLineId,
+          waterLineName: WaterTake.WaterLine ? WaterTake.WaterLine.name : null,
+          isSuspended: Boolean(WaterTake.deletedAt),
+        }
+      : null;
+  }
+
+  toResponse() {
+    return {
+      user: this.userData,
+      address: this.addressData,
+      profile: this.profileData,
+      waterTake: this.waterTakeData,
     };
   }
 }

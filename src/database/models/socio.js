@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Socio.belongsTo(models.User, { foreignKey: 'userId' });
       Socio.hasMany(models.Dependent, { foreignKey: 'socioId' });
+      Socio.hasOne(models.WaterTake, { foreignKey: 'socioId' });
     }
   }
   Socio.init(

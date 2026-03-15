@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class WaterLine extends Model {
     /**
@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      WaterLine.hasMany(models.WaterTake, {
+        foreignKey: 'waterLineId',
+        as: 'WaterTakes',
+      });
     }
   }
   WaterLine.init(
@@ -18,11 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Please enter a name",
+            msg: 'Please enter a name',
           },
           len: {
             args: [1, 50],
-            msg: "Name must be between 1 and 50 characters long",
+            msg: 'Name must be between 1 and 50 characters long',
           },
         },
       },
@@ -30,18 +33,18 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       paranoid: true,
-      modelName: "WaterLine",
-      tableName: "WaterLines",
+      modelName: 'WaterLine',
+      tableName: 'WaterLines',
       scopes: {
         raw: {
           raw: true,
           nest: true,
         },
         desc: {
-          order: [["createdAt", "desc"]],
+          order: [['createdAt', 'desc']],
         },
       },
-    },
+    }
   );
   return WaterLine;
 };

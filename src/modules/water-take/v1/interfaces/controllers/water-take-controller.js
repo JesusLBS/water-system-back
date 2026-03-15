@@ -1,4 +1,6 @@
 const ResponseHelper = require('../../../../../helpers/response/responseHelper');
+const SocioRepositoryImpl = require('../../../../socios/v1/infraestructure/data/SocioRepositoryImpl');
+const UserRepositoryImpl = require('../../../../users/v1/infraestructure/data/UserRepositoryImpl');
 const WaterTakesUseCases = require('../../domain/water-takes-cases/water-take-use-case');
 const WaterTakesRepositoryImpl = require('../../infraestructure/data/water-take-repository-impl');
 
@@ -7,8 +9,15 @@ class WaterTakeController {
 
   constructor() {
     this.#response = new ResponseHelper();
-    this.waterLinesRepository = new WaterTakesRepositoryImpl();
-    this.waterLineUseCases = new WaterTakesUseCases(this.waterLinesRepository);
+    const usersRepository = new UserRepositoryImpl();
+    const sociosRepository = new SocioRepositoryImpl();
+    const waterTakesRepository = new WaterTakesRepositoryImpl();
+
+    this.waterLineUseCases = new WaterTakesUseCases({
+      waterTakesRepository,
+      usersRepository,
+      sociosRepository,
+    });
   }
 
   store = async (req, res) => {

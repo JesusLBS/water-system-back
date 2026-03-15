@@ -83,7 +83,7 @@ class SocioRepositoryImpl extends SocioRepository {
         {
           model: db.User,
           where: { uid },
-          attributes: ['uid', 'name', 'email'],
+          attributes: ['uid', 'name', 'email', 'catRoleId'],
           required: true,
           include: [
             {
@@ -96,6 +96,20 @@ class SocioRepositoryImpl extends SocioRepository {
                   required: true,
                 },
               ],
+            },
+          ],
+        },
+        {
+          model: db.WaterTake,
+          attributes: ['id', 'waterLineId', 'deletedAt'],
+          required: false,
+          paranoid: false,
+          include: [
+            {
+              model: db.WaterLine,
+              as: 'WaterLine',
+              attributes: ['id', 'name'],
+              required: false,
             },
           ],
         },
@@ -192,6 +206,23 @@ class SocioRepositoryImpl extends SocioRepository {
     await row.restore({ transaction });
     await row.User.restore({ transaction });
     return true;
+  }
+
+  async findByUserId(id) {
+    const row = await db.Socio.findOne({
+      attributes: ['id', 'userId'],
+      include: [
+        {
+          model: db.User,
+          where: { id },
+          attributes: ['id', 'uid'],
+          required: true,
+        },
+      ],
+    });
+
+    if (!row) return null;
+    return row;
   }
 }
 

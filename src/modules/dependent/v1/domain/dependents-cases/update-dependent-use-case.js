@@ -6,15 +6,26 @@ class UpdateDependentUseCase {
     this.socioRepository = socioRepository;
   }
 
-  async execute(data) {
+  async execute({ socioUid, dependentId, dependent }) {
     const transaction = await db.sequelize.transaction();
+
     try {
-      const {
-        dataId,
-        dependent: { relationshipId, ...rest },
-      } = data;
+      const socio = await this.socioRepository.findSocioByUserUid(socioUid);
+
+      if (!socio) {
+        throw { statusCode: 404, message: 'Data not found' };
+      }
+
+      const existing = await this.dependentRepository.findById(dependentId, socio.id);
+
+      if (!existing) {
+        throw { statusCode: 404, message: 'Data not found' };
+      }
+
+      const { relationshipId, ...rest } = dependent;
+
       const body = {
-        id: dataId,
+        id: dependentId,
         catRelationshipId: relationshipId,
         ...rest,
       };

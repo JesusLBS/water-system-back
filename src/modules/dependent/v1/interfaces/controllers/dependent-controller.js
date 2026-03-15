@@ -13,24 +13,36 @@ class DependentController {
     this.dependentUseCases = new DependentUseCases(this.dependentRepository, this.socioRepository);
   }
 
-  store = async (req, res) => {
+  indexBySocio = async (req, res) => {
     try {
-      const body = req.body;
+      const uid = req.params.socioUid;
+      const params = {
+        search: req.query.search,
+        sort: req.query.sort,
+        direction: req.query.direction,
+        page: req.query.page ? Number(req.query.page) : undefined,
+        limit: req.query.limit ? Number(req.query.limit) : undefined,
+        withTrashed: req.query.withTrashed,
+      };
+      const data = await this.dependentUseCases.getDependentsPerSocio.execute({ uid, params });
 
-      await this.dependentUseCases.createDependent.execute(body);
-      return this.#response.success({ res, status: 201 });
+      return this.#response.success({ res, data });
     } catch (error) {
       return this.#response.error(res, error);
     }
   };
 
-  getDependentsPerSocio = async (req, res) => {
+  store = async (req, res) => {
     try {
-      const uid = req.params.dataId;
+      const { socioUid } = req.params;
+      const body = req.body;
 
-      const data = await this.dependentUseCases.getDependentsPerSocio.execute(uid);
+      await this.dependentUseCases.createDependent.execute({
+        socioUid,
+        ...body,
+      });
 
-      return this.#response.success({ res, data });
+      return this.#response.success({ res, status: 201 });
     } catch (error) {
       return this.#response.error(res, error);
     }
@@ -38,11 +50,17 @@ class DependentController {
 
   show = async (req, res) => {
     try {
-      const dependentId = req.params.dataId;
+      const { socioUid, dependentId } = req.params;
 
-      const data = await this.dependentUseCases.showDependent.execute(dependentId);
+      const data = await this.dependentUseCases.showDependent.execute({
+        socioUid,
+        dependentId,
+      });
 
-      return this.#response.success({ res, data });
+      return this.#response.success({
+        res,
+        data: data.toResponse(),
+      });
     } catch (error) {
       return this.#response.error(res, error);
     }
@@ -50,9 +68,14 @@ class DependentController {
 
   update = async (req, res) => {
     try {
+      const { socioUid, dependentId } = req.params;
       const body = req.body;
 
-      await this.dependentUseCases.updateDependent.execute(body);
+      await this.dependentUseCases.updateDependent.execute({
+        socioUid,
+        dependentId,
+        dependent: body,
+      });
 
       return this.#response.success({ res });
     } catch (error) {
@@ -62,8 +85,7 @@ class DependentController {
 
   destroy = async (req, res) => {
     try {
-      const dependentId = req.params.dataId;
-      const socioUid = req.params.socioUid;
+      const { socioUid, dependentId } = req.params;
 
       await this.dependentUseCases.destroyDependent.execute({ dependentId, socioUid });
       return this.#response.destroy(res);
