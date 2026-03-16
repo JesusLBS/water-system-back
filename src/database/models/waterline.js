@@ -17,8 +17,11 @@ module.exports = (sequelize, DataTypes) => {
   WaterLine.init(
     {
       name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: false,
+        unique: {
+          msg: 'Water line name must be unique',
+        },
         validate: {
           notEmpty: {
             msg: 'Please enter a name',
@@ -27,6 +30,9 @@ module.exports = (sequelize, DataTypes) => {
             args: [1, 50],
             msg: 'Name must be between 1 and 50 characters long',
           },
+        },
+        set(value) {
+          this.setDataValue('name', value.trim().replace(/\s+/g, ' '));
         },
       },
     },

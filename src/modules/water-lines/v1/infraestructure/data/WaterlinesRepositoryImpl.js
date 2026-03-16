@@ -58,7 +58,7 @@ class WaterLinesRepositoryImpl extends WaterLineRepository {
 
     if (!row) return null;
 
-    return row;
+    return row.toJSON();
   }
 
   async edit(id) {
@@ -102,7 +102,7 @@ class WaterLinesRepositoryImpl extends WaterLineRepository {
 
     await row.update({ ...rest }, { transaction });
 
-    return row;
+    return row.toJSON();
   }
 
   async destroy(id, options = {}) {

@@ -1,29 +1,39 @@
 const express = require('express');
-const { param } = require('express-validator');
-
 const router = express.Router();
-const WaterLineController = require('../../interfaces/controllers/water-linescontroller');
-const ValidateHelper = require('../../../../../helpers/validation/validateHelper');
-const controller = new WaterLineController();
 
-const valid = new ValidateHelper();
+const WaterLineController = require('../../interfaces/controllers/water-linescontroller');
+const {
+  WaterLineIdParamRequest,
+  WaterLineIdParamValidation,
+  CreateWaterLineBodyRequest,
+  CreateWaterLineBodyValidation,
+  UpdateWaterLineBodyRequest,
+  UpdateWaterLineBodyValidation,
+} = require('../../../../../request/waterLine-request');
+
+const controller = new WaterLineController();
 
 router
   .get('/', controller.index)
+
   .get('/options', controller.options)
-  .get(
-    '/:dataId',
-    [
-      param('dataId')
-        .exists()
-        .withMessage('dataId is required')
-        .notEmpty()
-        .withMessage('dataId cannot be empty')
-        .isInt()
-        .withMessage('dataId must be an integer'),
-    ],
-    (req, res, next) => valid.handleValidation(req, res, next),
-    controller.show
-  );
+
+  .post('/', CreateWaterLineBodyRequest, CreateWaterLineBodyValidation, controller.store)
+
+  .get('/:waterLineId', WaterLineIdParamRequest, WaterLineIdParamValidation, controller.show)
+
+  .patch(
+    '/:waterLineId',
+    WaterLineIdParamRequest,
+    UpdateWaterLineBodyRequest,
+    UpdateWaterLineBodyValidation,
+    controller.update
+  )
+
+  .delete('/:waterLineId', WaterLineIdParamRequest, WaterLineIdParamValidation, controller.destroy)
+
+  .post('/:waterLineId/activate', WaterLineIdParamRequest, WaterLineIdParamValidation, controller.activate)
+
+  .post('/:waterLineId/deactivate', WaterLineIdParamRequest, WaterLineIdParamValidation, controller.deactivate);
 
 module.exports = router;
