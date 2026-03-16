@@ -54,9 +54,9 @@ class WaterLineController {
 
   show = async (req, res) => {
     try {
-      const uid = req.params.dataId;
+      const id = req.params.dataId;
 
-      const data = await this.waterLineUseCases.showWaterLine.execute(uid);
+      const data = await this.waterLineUseCases.showWaterLine.execute(id);
 
       return this.#response.success({ res, data });
     } catch (error) {
@@ -78,9 +78,9 @@ class WaterLineController {
 
   deactivate = async (req, res) => {
     try {
-      const uid = req.body.dataId;
+      const id = req.body.dataId;
 
-      const data = await this.waterLineUseCases.deactivateWaterLine.execute(uid);
+      const data = await this.waterLineUseCases.deactivateWaterLine.execute(id);
 
       return this.#response.success({ res, data });
     } catch (error) {
@@ -90,9 +90,9 @@ class WaterLineController {
 
   activate = async (req, res) => {
     try {
-      const uid = req.body.dataId;
+      const id = req.body.dataId;
 
-      const data = await this.waterLineUseCases.activateWaterLine.execute(uid);
+      const data = await this.waterLineUseCases.activateWaterLine.execute(id);
 
       return this.#response.success({ res, data });
     } catch (error) {
@@ -102,9 +102,9 @@ class WaterLineController {
 
   destroy = async (req, res) => {
     try {
-      const uid = req.params.dataId;
+      const id = req.params.dataId;
 
-      await this.waterLineUseCases.destroyWaterLine.execute(uid);
+      await this.waterLineUseCases.destroyWaterLine.execute(id);
 
       return this.#response.destroy(res);
     } catch (error) {
