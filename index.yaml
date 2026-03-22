@@ -493,7 +493,7 @@ paths:
         - bearerAuth: []
 
   /admin/water-takes/{water_take_id}/deactivate:
-    patch:
+    post:
       summary: "Soft delete water take"
       tags: [admin/water-takes]
       parameters:
@@ -513,7 +513,7 @@ paths:
         - bearerAuth: []
 
   /admin/water-takes/{water_take_id}/restore:
-    patch:
+    post:
       summary: "Restore soft deleted water take"
       tags: [admin/water-takes]
       parameters:
@@ -974,3 +974,52 @@ components:
             $ref: "#/components/schemas/Dependent"
         meta:
           type: object
+    WaterLine:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Línea 1"
+        status:
+          type: string
+          example: active
+        createdAt:
+          type: string
+          format: date-time
+          example: "2026-03-03T21:52:34.000Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2026-03-03T21:52:34.000Z"
+        waterTakesCount:
+          type: integer
+          example: 13
+
+    WaterLineCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: "Línea 5"
+
+    WaterLineUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Línea 6"
+
+    WaterLineOption:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Línea 1"

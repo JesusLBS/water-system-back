@@ -2289,7 +2289,7 @@
 							"item": [
 								{
 									"name": "Get water lines for select options",
-									"id": "0d10655c-e660-4073-a012-717c366554e7",
+									"id": "2d96c54a-1e7a-4c0f-ad0b-4ccc6f44f094",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -2325,7 +2325,7 @@
 									},
 									"response": [
 										{
-											"id": "a75eb4c2-89c7-419d-b88e-2341931ceb96",
+											"id": "5288717f-4d1d-4689-84d2-e2c05fe4a461",
 											"name": "Water line options list",
 											"originalRequest": {
 												"method": "GET",
@@ -2362,12 +2362,12 @@
 												}
 											],
 											"cookie": [],
-											"body": "[\n  {\n    \"value\": \"reference #/components/schemas/WaterLineOption not found in the OpenAPI spec\"\n  },\n  {\n    \"value\": \"reference #/components/schemas/WaterLineOption not found in the OpenAPI spec\"\n  }\n]"
+											"body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Línea 1\"\n  },\n  {\n    \"id\": 1,\n    \"name\": \"Línea 1\"\n  }\n]"
 										}
 									]
 								}
 							],
-							"id": "3de16787-885b-4dad-bb2c-1b392e563de4"
+							"id": "f2fa5405-3bd0-480a-b443-517543514f60"
 						},
 						{
 							"name": "{water_line_id}",
@@ -2377,7 +2377,7 @@
 									"item": [
 										{
 											"name": "Activate a water line",
-											"id": "2233480b-fa56-4684-a705-e96a75c430ff",
+											"id": "6ede535a-2fdb-4ff4-8235-1be9724aebb0",
 											"protocolProfileBehavior": {
 												"disableBodyPruning": true
 											},
@@ -2408,7 +2408,7 @@
 													"variable": [
 														{
 															"key": "water_line_id",
-															"value": "7116",
+															"value": "5837",
 															"description": "Numeric water line ID"
 														}
 													]
@@ -2416,7 +2416,7 @@
 											},
 											"response": [
 												{
-													"id": "52fe37db-4c77-4ef3-8c9b-11e39f9c1b6e",
+													"id": "d44e0955-c1ad-47cd-b251-bc3519b16f04",
 													"name": "Water line activated successfully",
 													"originalRequest": {
 														"method": "POST",
@@ -2441,7 +2441,7 @@
 															"variable": [
 																{
 																	"key": "water_line_id",
-																	"value": "7116",
+																	"value": "5837",
 																	"description": "Numeric water line ID"
 																}
 															]
@@ -2456,14 +2456,14 @@
 											]
 										}
 									],
-									"id": "4194d151-313e-4885-8bbe-00b02ff27575"
+									"id": "264f59e8-2d8d-4a13-b150-63c0798872e9"
 								},
 								{
 									"name": "deactivate",
 									"item": [
 										{
 											"name": "Deactivate a water line",
-											"id": "2f98e56f-d17a-4f1d-a50c-e8d5b8d7b478",
+											"id": "b21f9f69-b882-4247-8312-7a14de2011f1",
 											"protocolProfileBehavior": {
 												"disableBodyPruning": true
 											},
@@ -2494,7 +2494,7 @@
 													"variable": [
 														{
 															"key": "water_line_id",
-															"value": "7116",
+															"value": "5837",
 															"description": "Numeric water line ID"
 														}
 													]
@@ -2502,7 +2502,7 @@
 											},
 											"response": [
 												{
-													"id": "102c16f3-e681-40a1-9a7f-c3223c2a33c3",
+													"id": "06feeade-0bc1-46e0-bad8-a63e03162ae7",
 													"name": "Water line deactivated successfully",
 													"originalRequest": {
 														"method": "POST",
@@ -2527,7 +2527,7 @@
 															"variable": [
 																{
 																	"key": "water_line_id",
-																	"value": "7116",
+																	"value": "5837",
 																	"description": "Numeric water line ID"
 																}
 															]
@@ -2542,11 +2542,11 @@
 											]
 										}
 									],
-									"id": "ee39e834-24b4-4846-a30f-6a1317d83dcf"
+									"id": "e7162549-50e2-4d8a-98c4-8264db880f75"
 								},
 								{
 									"name": "Get water line by id",
-									"id": "baa316b1-a499-4ad3-9353-3fdc8308f5d3",
+									"id": "05e39fb8-af3d-4611-9e8b-c87aec516ea2",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -2581,7 +2581,7 @@
 											"variable": [
 												{
 													"key": "water_line_id",
-													"value": "7116",
+													"value": "5837",
 													"description": "Numeric water line ID"
 												}
 											]
@@ -2589,7 +2589,7 @@
 									},
 									"response": [
 										{
-											"id": "1c91e4e5-650b-4a16-b11c-db8740cae972",
+											"id": "3cc02dcf-7044-467b-93bb-ebd8cb3aecc9",
 											"name": "Water line object",
 											"originalRequest": {
 												"method": "GET",
@@ -2617,7 +2617,7 @@
 													"variable": [
 														{
 															"key": "water_line_id",
-															"value": "7116",
+															"value": "5837",
 															"description": "Numeric water line ID"
 														}
 													]
@@ -2633,13 +2633,13 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"value\": \"reference #/components/schemas/WaterLine not found in the OpenAPI spec\"\n}"
+											"body": "{\n  \"id\": 1,\n  \"name\": \"Línea 1\",\n  \"status\": \"active\",\n  \"createdAt\": \"2026-03-03T21:52:34.000Z\",\n  \"updatedAt\": \"2026-03-03T21:52:34.000Z\",\n  \"waterTakesCount\": 13\n}"
 										}
 									]
 								},
 								{
 									"name": "Update water line (partial)",
-									"id": "21d354a1-30fe-472c-9e49-c505284b3a00",
+									"id": "2575aed3-9fc5-471e-9115-daceae2ed997",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -2667,7 +2667,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"value\": \"reference #/components/schemas/WaterLineUpdate not found in the OpenAPI spec\"\n}",
+											"raw": "{\n  \"name\": \"Línea 6\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -2688,7 +2688,7 @@
 											"variable": [
 												{
 													"key": "water_line_id",
-													"value": "7116",
+													"value": "5837",
 													"description": "Numeric water line ID"
 												}
 											]
@@ -2696,7 +2696,7 @@
 									},
 									"response": [
 										{
-											"id": "4ae0ddba-fc8d-4d90-8039-624abe58fd04",
+											"id": "c6cb1644-725f-47a1-8c8a-d2a6dc2fde7b",
 											"name": "Water line updated",
 											"originalRequest": {
 												"method": "PATCH",
@@ -2717,7 +2717,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n  \"value\": \"reference #/components/schemas/WaterLineUpdate not found in the OpenAPI spec\"\n}",
+													"raw": "{\n  \"name\": \"Línea 6\"\n}",
 													"options": {
 														"raw": {
 															"headerFamily": "json",
@@ -2738,7 +2738,7 @@
 													"variable": [
 														{
 															"key": "water_line_id",
-															"value": "7116",
+															"value": "5837",
 															"description": "Numeric water line ID"
 														}
 													]
@@ -2754,13 +2754,13 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"value\": \"reference #/components/schemas/WaterLine not found in the OpenAPI spec\"\n}"
+											"body": "{\n  \"id\": 1,\n  \"name\": \"Línea 1\",\n  \"status\": \"active\",\n  \"createdAt\": \"2026-03-03T21:52:34.000Z\",\n  \"updatedAt\": \"2026-03-03T21:52:34.000Z\",\n  \"waterTakesCount\": 13\n}"
 										}
 									]
 								},
 								{
 									"name": "Delete water line (permanent)",
-									"id": "dbe9f5de-0402-4f9e-afe4-9972bec49f4f",
+									"id": "508fbdd7-ae37-43a7-b571-d2c006ded588",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -2790,7 +2790,7 @@
 											"variable": [
 												{
 													"key": "water_line_id",
-													"value": "7116",
+													"value": "5837",
 													"description": "Numeric water line ID"
 												}
 											]
@@ -2798,7 +2798,7 @@
 									},
 									"response": [
 										{
-											"id": "2bda06f9-2b1a-41f7-b98a-ba61137e6efa",
+											"id": "10cd814e-eec7-42ff-aafb-61bfd5e2ae5a",
 											"name": "Water line permanently deleted",
 											"originalRequest": {
 												"method": "DELETE",
@@ -2822,7 +2822,7 @@
 													"variable": [
 														{
 															"key": "water_line_id",
-															"value": "7116",
+															"value": "5837",
 															"description": "Numeric water line ID"
 														}
 													]
@@ -2837,11 +2837,11 @@
 									]
 								}
 							],
-							"id": "37e88126-f853-4957-a12a-223bea98d45b"
+							"id": "141d74e7-c8ad-4c85-8f25-57c1c0fee054"
 						},
 						{
 							"name": "List water lines (paginated, filterable)",
-							"id": "9860473a-dc66-4c4f-bc36-982a151ac923",
+							"id": "8ff2ec6a-36bc-4792-80ee-dcd5cccdaba6",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2891,7 +2891,7 @@
 							},
 							"response": [
 								{
-									"id": "e01efc9f-4629-4256-9cf9-70a5759ad8a7",
+									"id": "c89a7bea-90a7-44a2-baaf-6d06f45230b4",
 									"name": "Water line list",
 									"originalRequest": {
 										"method": "GET",
@@ -2948,7 +2948,7 @@
 						},
 						{
 							"name": "Create water line",
-							"id": "ef54f274-a403-4dad-bc8a-7a8e26fd5a5c",
+							"id": "fdb104e8-7799-44e1-a5ad-79cf64ca502c",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2976,7 +2976,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"value\": \"reference #/components/schemas/WaterLineCreate not found in the OpenAPI spec\"\n}",
+									"raw": "{\n  \"name\": \"Línea 5\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -2997,7 +2997,7 @@
 							},
 							"response": [
 								{
-									"id": "f31d73ff-923d-4d30-b1c9-b6601f612424",
+									"id": "91d1db7d-b9d9-4369-81e9-2df8176dab98",
 									"name": "Water line created",
 									"originalRequest": {
 										"method": "POST",
@@ -3018,7 +3018,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"value\": \"reference #/components/schemas/WaterLineCreate not found in the OpenAPI spec\"\n}",
+											"raw": "{\n  \"name\": \"Línea 5\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -3047,12 +3047,12 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"value\": \"reference #/components/schemas/WaterLine not found in the OpenAPI spec\"\n}"
+									"body": "{\n  \"id\": 1,\n  \"name\": \"Línea 1\",\n  \"status\": \"active\",\n  \"createdAt\": \"2026-03-03T21:52:34.000Z\",\n  \"updatedAt\": \"2026-03-03T21:52:34.000Z\",\n  \"waterTakesCount\": 13\n}"
 								}
 							]
 						}
 					],
-					"id": "3514a00c-483d-4f5a-a9f9-f000ebbe6586"
+					"id": "604f0308-9b9c-4e40-b680-e5e082a3edc7"
 				},
 				{
 					"name": "water-takes",
