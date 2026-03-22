@@ -2545,6 +2545,107 @@
 									"id": "e7162549-50e2-4d8a-98c4-8264db880f75"
 								},
 								{
+									"name": "water-takes",
+									"item": [
+										{
+											"name": "Get water takes by water line",
+											"id": "664a6daf-4537-4d4b-925c-f6fb4e90ce04",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{bearerToken}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/admin/water-lines/:water_line_id/water-takes",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"water-lines",
+														":water_line_id",
+														"water-takes"
+													],
+													"variable": [
+														{
+															"key": "water_line_id",
+															"value": "5410",
+															"description": "Numeric water line ID"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"id": "362f5b14-0d13-4a2c-8aac-68566d68bdc5",
+													"name": "Water takes list for a water line",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "application/json"
+															},
+															{
+																"description": "Added as a part of security scheme: bearer",
+																"key": "Authorization",
+																"value": "Bearer <token>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/admin/water-lines/:water_line_id/water-takes",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"admin",
+																"water-lines",
+																":water_line_id",
+																"water-takes"
+															],
+															"variable": [
+																{
+																	"key": "water_line_id",
+																	"value": "5410",
+																	"description": "Numeric water line ID"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "[\n  \"\",\n  \"\"\n]"
+												}
+											]
+										}
+									],
+									"id": "1d63368d-6180-4f11-98ec-c17f9f061733"
+								},
+								{
 									"name": "Get water line by id",
 									"id": "05e39fb8-af3d-4611-9e8b-c87aec516ea2",
 									"protocolProfileBehavior": {
