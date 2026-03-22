@@ -34,6 +34,8 @@ router
 
   .post('/:waterLineId/activate', WaterLineIdParamRequest, WaterLineIdParamValidation, controller.activate)
 
-  .post('/:waterLineId/deactivate', WaterLineIdParamRequest, WaterLineIdParamValidation, controller.deactivate);
+  .post('/:waterLineId/deactivate', WaterLineIdParamRequest, WaterLineIdParamValidation, controller.deactivate)
+
+  .get('/:waterLineId/water-takes', WaterLineIdParamRequest, WaterLineIdParamValidation, controller.getWaterTakes);
 
 module.exports = router;

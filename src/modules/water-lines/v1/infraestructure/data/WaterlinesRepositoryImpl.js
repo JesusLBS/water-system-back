@@ -151,6 +151,58 @@ class WaterLinesRepositoryImpl extends WaterLineRepository {
 
     return true;
   }
+
+  async getWaterTakesByWaterLine(waterLineId, options = {}) {
+    const { limit = 50, page = 1 } = options;
+
+    const { count, rows } = await db.WaterTake.findAndCountAll({
+      where: { waterLineId },
+      attributes: [
+        'id',
+        'createdAt',
+        'updatedAt',
+        [
+          Sequelize.literal(`
+          CASE
+            WHEN WaterTake.deletedAt IS NULL THEN 'active'
+            ELSE 'inactive'
+          END
+        `),
+          'status',
+        ],
+      ],
+      include: [
+        {
+          model: db.Socio,
+          as: 'Socio',
+          attributes: ['id', 'totalDependents'],
+          include: [
+            {
+              model: db.User,
+              as: 'User',
+              attributes: ['uid', 'name'],
+            },
+          ],
+        },
+      ],
+      offset: (page - 1) * limit,
+      limit,
+      paranoid: false,
+    });
+
+    return {
+      count,
+      rows: rows.map((row) => ({
+        id: row.id,
+        uid: row.Socio?.User?.uid,
+        socioName: row.Socio?.User?.name,
+        dependentsCount: row.Socio?.totalDependents || 0,
+        status: row.get('status'),
+        createdAt: row.createdAt,
+        updatedAt: row.updatedAt,
+      })),
+    };
+  }
 }
 
 module.exports = WaterLinesRepositoryImpl;

@@ -118,6 +118,18 @@ class WaterLineController {
       return this.#response.error(res, error);
     }
   };
+
+  getWaterTakes = async (req, res) => {
+    try {
+      const id = req.params.waterLineId;
+
+      const data = await this.waterLineUseCases.getWaterLineWaterTakes.execute(id);
+
+      return this.#response.success({ res, data });
+    } catch (error) {
+      return this.#response.error(res, error);
+    }
+  };
 }
 
 module.exports = WaterLineController;
