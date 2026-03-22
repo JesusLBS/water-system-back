@@ -471,6 +471,24 @@ paths:
           description: "Water line deactivated successfully"
       security:
         - bearerAuth: []
+  
+  /admin/water-lines/{water_line_id}/water-takes:
+    get:
+      summary: "Get water takes by water line"
+      tags: [admin/water-lines]
+      parameters:
+        - $ref: "#/components/parameters/waterLineId"
+      responses:
+        "200":
+          description: "Water takes list for a water line"
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/WaterTakeByWaterLine"
+      security:
+        - bearerAuth: []
+
   # ADMIN / WATER TAKES
   /admin/water-takes:
     post:
@@ -1023,3 +1041,24 @@ components:
         name:
           type: string
           example: "Línea 1"
+    WaterTakeByWaterLine:
+      type: object
+      properties:
+        id:
+          type: integer
+        uid:
+          type: string
+          format: uuid
+        socioName:
+          type: string
+        dependentsCount:
+          type: integer
+        status:
+          type: string
+          enum: ["active", "inactive"]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
