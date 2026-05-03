@@ -1,10 +1,10 @@
-const config = require("../../config/config");
+const config = require('../../config/config');
 
 class ResponseHelper {
   static instanceCount = 0;
   static instance;
 
-  constructor(defaultErrorMessage = "An unexpected error has occurred") {
+  constructor(defaultErrorMessage = 'An unexpected error has occurred') {
     if (ResponseHelper.instance) {
       return ResponseHelper.instance;
     }
@@ -17,16 +17,16 @@ class ResponseHelper {
     const response = {
       ok: true,
       status,
-      message: "Success request",
-      data: { ...data },
+      message: 'Success request',
+      data,
     };
     return res.status(status).json(response);
   }
 
   error(res, error, status = 500) {
-    console.log("=====================");
-    console.log("======  Error  ======");
-    console.log("===================== \n");
+    console.log('=====================');
+    console.log('======  Error  ======');
+    console.log('===================== \n');
     console.error(error);
 
     if (error.statusCode) {
@@ -40,7 +40,7 @@ class ResponseHelper {
       message: this.defaultErrorMessage,
     };
 
-    if (config.nodeEnv !== "production") {
+    if (config.nodeEnv !== 'production') {
       response.errors = error;
     }
 
