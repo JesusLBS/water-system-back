@@ -14,10 +14,22 @@ module.exports = (sequelize, DataTypes) => {
   CatGender.init(
     {
       name: DataTypes.STRING,
+      description: DataTypes.STRING,
     },
     {
       sequelize,
+      paranoid: false,
       modelName: "CatGender",
+      tableName: "CatGenders",
+      scopes: {
+        raw: {
+          raw: true,
+          nest: true,
+        },
+        desc: {
+          order: [["createdAt", "desc"]],
+        },
+      },
     },
   );
   return CatGender;

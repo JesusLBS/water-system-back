@@ -1,4 +1,4 @@
-FROM node:20.15-alpine3.19
+FROM node:22-alpine
 
 # Create working directory
 RUN mkdir -p /home/app

@@ -14,7 +14,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      name: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       email: {
+        unique: true,
         allowNull: false,
         type: Sequelize.STRING,
       },
@@ -29,19 +34,6 @@ module.exports = {
           },
           key: "id",
           as: "catRoleId",
-        },
-      },
-      addressId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-        references: {
-          model: {
-            tableName: "Addresses",
-          },
-          key: "id",
-          as: "addressId",
         },
       },
       deletedAt: {

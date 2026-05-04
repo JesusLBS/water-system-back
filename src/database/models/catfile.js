@@ -18,7 +18,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
+      paranoid: false,
       modelName: "CatFile",
+      tableName: "CatFiles",
+      scopes: {
+        raw: {
+          raw: true,
+          nest: true,
+        },
+        desc: {
+          order: [["createdAt", "desc"]],
+        },
+      },
     },
   );
   return CatFile;

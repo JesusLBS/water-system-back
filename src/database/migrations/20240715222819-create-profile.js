@@ -22,9 +22,18 @@ module.exports = {
           as: "userId",
         },
       },
-      name: {
+      addressId: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: {
+            tableName: "Addresses",
+          },
+          key: "id",
+          as: "addressId",
+        },
       },
       lastName: {
         allowNull: false,

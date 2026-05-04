@@ -8,4 +8,7 @@ module.exports = {
     dbName: process.env.DB_DATABASE,
     dbHost: process.env.DB_HOST,
   },
+  apiKey: process.env.API_KEY,
+  cryptokey: process.env.CRYPTO_KEY,
+  jwtKey: process.env.JWT_KEY,
 };

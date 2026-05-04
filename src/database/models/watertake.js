@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class WaterTake extends Model {
     /**
@@ -8,7 +8,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      WaterTake.belongsTo(models.Socio, {
+        foreignKey: 'socioId',
+        as: 'Socio',
+      });
+      WaterTake.belongsTo(models.WaterLine, {
+        foreignKey: 'waterLineId',
+      });
     }
   }
   WaterTake.init(
@@ -18,19 +24,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      paranoid: false,
-      modelName: "WaterTake",
-      tableName: "WaterTakes",
+      paranoid: true,
+      modelName: 'WaterTake',
+      tableName: 'WaterTakes',
       scopes: {
         raw: {
           raw: true,
           nest: true,
         },
         desc: {
-          order: [["createdAt", "desc"]],
+          order: [['createdAt', 'desc']],
         },
       },
-    },
+    }
   );
   return WaterTake;
 };

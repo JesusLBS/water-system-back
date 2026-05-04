@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Profile.belongsTo(models.User, { foreignKey: "userId" });
+      Profile.belongsTo(models.Address, { foreignKey: "addressId" });
     }
   }
   Profile.init(
@@ -27,16 +28,13 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      name: {
-        type: DataTypes.STRING,
+      addressId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          notEmpty: {
-            msg: "Please enter a name",
-          },
-          len: {
-            args: [1, 50],
-            msg: "Name must be between 1 and 50 characters long",
+          notEmpty: true,
+          notNull: {
+            msg: "Please enter an address",
           },
         },
       },
