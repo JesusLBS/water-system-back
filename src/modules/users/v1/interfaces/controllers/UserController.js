@@ -37,8 +37,8 @@ class UserController {
         catRoleId,
         ...rest,
       };
-      await this.userUseCases.createUser.execute(body);
-      return this.#response.success({ res, status: 201 });
+      const result = await this.userUseCases.createUser.execute(body);
+      return this.#response.success({ res, status: 201, data: result });
     } catch (error) {
       return this.#response.error(res, error);
     }
